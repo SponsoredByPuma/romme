@@ -1,0 +1,4 @@
+/.metals
+/.scalafmt.conf
+/.vscode
+/target
