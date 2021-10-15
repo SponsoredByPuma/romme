@@ -5,6 +5,7 @@ import scala.io.StdIn._
 object test {
   def main(args: Array[String]) = {
     println("Welcome to RommÃ© \n")
+    println("Scala is fun 😒")
     val greeting = "Hello " + signUp(args)
     println(greeting)
   }
