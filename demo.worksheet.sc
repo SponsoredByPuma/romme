@@ -27,3 +27,5 @@ def testfunktion(breite: Int) {
 val test = testfunktion(4)
 
 val stern = "*"
+
+val drei = 3
