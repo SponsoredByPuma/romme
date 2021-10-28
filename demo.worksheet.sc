@@ -54,6 +54,7 @@ test3.neueArt(Arten.Herz)
 test3.neueZahl(Zahlen.Bube)
 
 print(test3.a)
+print(test3.z)
 
 /*case class herzkarten(kartenArt: Herz):
     def zeigeKarte() = print(this.kartenArt)

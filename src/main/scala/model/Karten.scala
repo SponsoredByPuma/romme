@@ -11,3 +11,4 @@ case class Karte(art: Blatt, wert: Ziffer):
     def showCard() = print(this.art, this.wert)
     def changeBlatt(neuesBlatt: Blatt): Karte = copy(neuesBlatt, wert)
     def changeZiffer(neuerWert: Ziffer): Karte = copy(art, neuerWert)
+    
