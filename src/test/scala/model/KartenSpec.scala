@@ -8,7 +8,6 @@ class KartenSpec extends AnyWordSpec {
   "A Karte" when {
     "Karo, Acht" should {
       "show Karo, Acht" in {
-
         val karoAcht = new Karte(Blatt.Karo, Ziffer.Acht)
         karoAcht.showCard should be(Karo, Acht)
       }
@@ -16,6 +15,14 @@ class KartenSpec extends AnyWordSpec {
         val karoAcht = new Karte(Blatt.Karo, Ziffer.Acht)
         karoAcht.changeBlatt(Blatt.Herz)
         karoAcht.art should be(Herz)
+      }
+      "have Karo as Blatt" in {
+        val karoAcht = new Karte(Blatt.Karo, Ziffer.Acht)
+        karoAcht.art shouldBe a[Karo]
+      }
+      "have Acht as Value" in {
+        val karoAcht = new Karte(Blatt.Karo, Ziffer.Acht)
+        karoAcht.wert shouldBe a[Acht]
       }
     }
   }
