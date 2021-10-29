@@ -7,22 +7,35 @@ class KartenSpec extends AnyWordSpec {
 
   "A Karte" when {
     "Karo, Acht" should {
-      "show Karo, Acht" in {
+      "start with Karo, Acht" in {
         val karoAcht = new Karte(Blatt.Karo, Ziffer.Acht)
-        karoAcht.showCard should be(Karo, Acht)
+        karoAcht.cardAsString() should startWith("Karo")
+      }
+      "end with Acht" in {
+        val karoAcht = new Karte(Blatt.Karo, Ziffer.Acht)
+        karoAcht.cardAsString() should endWith("Acht")
+      }
+      "be Karo, Acht" in {
+        val karoAcht = new Karte(Blatt.Karo, Ziffer.Acht)
+        karoAcht.cardAsString() should be("Karo, Acht")
       }
       "swap its Blatt to Herz" in {
         val karoAcht = new Karte(Blatt.Karo, Ziffer.Acht)
         karoAcht.changeBlatt(Blatt.Herz)
-        karoAcht.art should be(Herz)
+        karoAcht.art should be(Blatt.Herz)
+      }
+      "swap its value to Neun" in {
+        val karoAcht = new Karte(Blatt.Karo, Ziffer.Acht)
+        karoAcht.changeZiffer(Ziffer.Neun)
+        karoAcht.wert should be(Ziffer.Neun)
       }
       "have Karo as Blatt" in {
         val karoAcht = new Karte(Blatt.Karo, Ziffer.Acht)
-        karoAcht.art shouldBe a[Karo]
+        karoAcht.art should be(Blatt.Karo)
       }
       "have Acht as Value" in {
         val karoAcht = new Karte(Blatt.Karo, Ziffer.Acht)
-        karoAcht.wert shouldBe a[Acht]
+        karoAcht.wert should be(Ziffer.Acht)
       }
     }
   }

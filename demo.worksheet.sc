@@ -42,13 +42,23 @@ enum Arten:
     case Herz, Karo, Kreuz, Pick
 
 
-case class testKarten(a: Arten, z: Zahlen):
+case class testKarten(var a: Arten,var z: Zahlen):
     def zeigeKarte() = print(a,z)
-    def neueZahl(nz: Zahlen): testKarten = copy(a,nz)
-    def neueArt(na: Arten): testKarten = copy(na,z)
+    def zeigeKarteAlsString() : Unit = {
+        var s:String = this.a.toString +", " + this.z.toString
+    }
+    def neueZahl(nz: Zahlen): testKarten = {
+        this.z = nz
+        return this
+    }
+    def neueArt(na: Arten): testKarten = {
+        this.a = na
+        return this
+    }
     
 val test3 = new testKarten(Arten.Karo,Zahlen.Acht)
 
+print(test3.zeigeKarteAlsString())
 test3.zeigeKarte()
 test3.neueArt(Arten.Herz)
 test3.neueZahl(Zahlen.Bube)
