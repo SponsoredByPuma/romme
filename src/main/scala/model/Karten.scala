@@ -8,7 +8,7 @@ enum Blatt:
 case class Karte(var art: Blatt,var wert: Ziffer):
     //def this(zeichen: Blatt, value: Ziffer) = this(zeichen, value)
     //def showCard() = print(this.art, this.wert)
-    // def changeBlatt(neuesBlatt: Blatt): Karte = copy(neuesBlatt, wert) 
+    // def changeBlatt(neuesBlatt: Blatt): Karte = copy(neuesBlatt, wert)
     //def changeZiffer(neuerWert: Ziffer): Karte = copy(art, neuerWert)
     def changeBlatt(newBlatt: Blatt): Karte = {
         this.art = newBlatt
@@ -22,4 +22,5 @@ case class Karte(var art: Blatt,var wert: Ziffer):
         var s:String = this.art.toString +", " + this.wert.toString
         return s
     }
-    
+
+

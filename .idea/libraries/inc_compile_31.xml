@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="inc_compile_31">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/target/streams/test/bloopAnalysisOut/_global/streams/inc_compile_3.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

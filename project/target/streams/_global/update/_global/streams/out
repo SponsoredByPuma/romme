@@ -1,3 +1,37 @@
-[debug] not up to date. inChanged = true, force = false
-[debug] Updating ProjectRef(uri("file:/C:/Users/Till/Desktop/SoftwareEngineering/Romme/romme/project/"), "romme-build")...
-[debug] Done updating ProjectRef(uri("file:/C:/Users/Till/Desktop/SoftwareEngineering/Romme/romme/project/"), "romme-build")
+[0m[[0m[31merror[0m] [0m[0mjava.io.FileNotFoundException: C:\Users\Till\Desktop\SoftwareEngineering\Romme\romme\project\target\scala-2.12\sbt-1.0\update\update_cache_2.12\output (Der Vorgang ist bei einer Datei mit einem geöffneten Bereich, der einem Benutzer zugeordnet ist, nicht anwendbar)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.io.FileOutputStream.open0(Native Method)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:291)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:234)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.io.Using$.$anonfun$fileOutputStream$1(Using.scala:96)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.io.Using$$anon$3.openImpl(Using.scala:86)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.io.OpenFile.open(Using.scala:53)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.io.OpenFile.open$(Using.scala:47)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.io.Using$$anon$3.open(Using.scala:85)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.io.Using$$anon$3.open(Using.scala:85)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.io.Using.apply(Using.scala:25)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.util.FileOutput.write(Output.scala:39)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.util.FileBasedStore.write(CacheStore.scala:89)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.util.Tracked$.$anonfun$lastOutput$1(Tracked.scala:74)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.internal.LibraryManagement$.$anonfun$cachedUpdate$20(LibraryManagement.scala:146)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.util.control.Exception$Catch.apply(Exception.scala:228)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.internal.LibraryManagement$.$anonfun$cachedUpdate$11(LibraryManagement.scala:146)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.internal.LibraryManagement$.$anonfun$cachedUpdate$11$adapted(LibraryManagement.scala:127)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.util.Tracked$.$anonfun$inputChangedW$1(Tracked.scala:219)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.internal.LibraryManagement$.cachedUpdate(LibraryManagement.scala:160)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Classpaths$.$anonfun$updateTask0$1(Defaults.scala:3678)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.Function1.$anonfun$compose$1(Function1.scala:49)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.internal.util.$tilde$greater.$anonfun$$u2219$1(TypeFunctions.scala:62)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.std.Transform$$anon$4.work(Transform.scala:68)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Execute.$anonfun$submit$2(Execute.scala:282)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.internal.util.ErrorHandling$.wideConvert(ErrorHandling.scala:23)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Execute.work(Execute.scala:291)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Execute.$anonfun$submit$1(Execute.scala:282)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.ConcurrentRestrictions$$anon$4.$anonfun$submitValid$1(ConcurrentRestrictions.scala:265)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.CompletionService$$anon$2.call(CompletionService.scala:64)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.lang.Thread.run(Thread.java:832)[0m
+[0m[[0m[31merror[0m] [0m[0m([31mupdate[0m) java.io.FileNotFoundException: C:\Users\Till\Desktop\SoftwareEngineering\Romme\romme\project\target\scala-2.12\sbt-1.0\update\update_cache_2.12\output (Der Vorgang ist bei einer Datei mit einem geöffneten Bereich, der einem Benutzer zugeordnet ist, nicht anwendbar)[0m

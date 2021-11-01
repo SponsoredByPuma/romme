@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="romme_3-0.1.0-SNAPSHOT5">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/target/scala-3.0.2/romme_3-0.1.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

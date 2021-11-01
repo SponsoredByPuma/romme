@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="inc_compile_33">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/target/scala-3.0.2/zinc/inc_compile_3.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
