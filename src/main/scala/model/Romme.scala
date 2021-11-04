@@ -1,41 +1,80 @@
 package model
 import scala.io.StdIn.readLine
+import scala.collection.mutable.ListBuffer
+
 
 trait global {
     var cardAmount = 0
     var yourTurn = true
+    var droppedCardsAlready = false // Um zu überprüfen, ob man schon draußen ist
     var victory = false
 
 
     enum Suit:
         case Heart, Diamond, Club, Spades // Herz, Karo, Kreuz , Pik
-    enum Numbers:
+    enum Rank:
         case two, three, four, five, six, seven, eight, nine, ten, jack, queen, king, ace // 1,2,3,4,5,6,7,8,9,10, Bube, Dame, König, Ass
 }
 
 object Romme extends global {
 
-    case class Cards(suit: Suit, number: Numbers) {
+    case class Cards(suit: Suit, number: Rank) { // Klasse für die Karten die es in dem Spiel gibt
 
+        def printing(): Unit = {
+            println(this.suit.toString + ", " + this.number.toString)
+        }
+        
 
 
     }
 
-    case class deck() {
+    case class playerHands(d: deck) { // Die Karten die man auf der Hand hat
+
+        var playerOneCard: Array[Cards] = new Array[Cards] (14) // Ein Cards-Array, das 14 Groß ist, da man am jeweils 13 Karten hat + 1 aufnimmt
+
+        def startingTheGame(): Unit = {
+            var i = 0
+            for (i <- 1 to 13)
+                playerOneCard(i) = d.drawFromDeck()
+                playerOneCard(i).printing()
+        }
+    }
+
+    case class deck() { // Klasse, für das ganze Deck
+
+        var deck: ListBuffer[Cards] = ListBuffer() // Liste voller Karten
 
         def newDeck(): Unit = {
-          //  List[String] list = List(Suit.Heart, Numbers.nine)
+            var i = 0
+            for (d <- Suit.values) // für jede Suit
+                for (e <- Rank.values) // für jeden Rank
+                    deck :+ new Cards(d,e) // adde in das Kartendeck die jeweilige Karte
             
+        }
+
+        def drawFromDeck(): Cards = {
+            val random = scala.util.Random
+            val pickACard = random.nextInt(110) // zufälliger Wert zwischen 0 und 109
+            print(pickACard)
+            val m = deck(pickACard) //Speichere die gezogene Karte
+            deck.remove(pickACard) // lösche die gezogene Karte aus dem Deck 
+            return m // gebe die gezogene Karte dem Spieler auf die Hand
         }
 
     }
 
-    case class playerAction() {
+    case class playerAction() { // für die Logik eine eigene Klasse
 
-        def checkVictory(): Unit = { // Methode die prüft ob man das Spiel gewonnen hat
+        def gameStartForTesting(): Integer = { // Methode, um zu überprüfen, ob checkVictory() funktioniert
+            return 0;
+        }
+
+
+        def checkVictory(): Boolean = { // Methode die prüft ob man das Spiel gewonnen hat
           if (cardAmount == 0)
-            victory = true
+            return true
           end if
+          return false
         }
 
         def gameStart(): Integer = { // Methode die jedem Spieler am Anfang genau 13 Karten austeilt
@@ -44,10 +83,11 @@ object Romme extends global {
             return s
         }
 
-        def pickUpACard(): Unit = { // Methode um eine Karte am Anfang des Zuges aufzuheben
+        def pickUpACard(): Integer = { // Methode um eine Karte am Anfang des Zuges aufzuheben
             println("You have picked up a card !")
-            cardAmount = cardAmount + 1
-            println("You have now " + cardAmount + " cards on your hand.")
+            //cardAmount = cardAmount + 1 // removed for testing
+            println("You have now " + cardAmount + 1 + " cards on your hand.") // added + 1 since it is needed for the testing
+            return cardAmount + 1 // for testing pourpose
         }
 
         def placeCards(): Unit = { //Methode um Karten abzulegen, sei es nun anlegen oder eine neue Reihe zu erstellen
@@ -72,22 +112,30 @@ object Romme extends global {
         }
 
     }
+    
 
     def main(args: Array[String]) = {
 
-    println("Welcome to Romme !")
-    print("Please enter your name: ")
-    val firstName = readLine()
-    val pA = new playerAction()
-    cardAmount = pA.gameStart()
+/*
+        val d = new deck()
+        d.newDeck()
+        val pH = new playerHands(d)
+        pH.startingTheGame()
+*/
+        println("Welcome to Romme !")
+        print("Please enter your name: ")
+        val firstName = readLine()
+        val pA = new playerAction()
+        cardAmount = pA.gameStart()
+        
 
-    while (victory == false) 
-        if (yourTurn == true)
-            pA.pickUpACard()
-            pA.placeCards()
-            pA.dropSingleCard()
-        end if
-        pA.checkVictory()
-    println("Congratulations you won !")    
-  }
+        while (victory == false) 
+            if (yourTurn == true)
+                cardAmount = pA.pickUpACard() // for testing pourpose in before it was pA.pickUpACard()
+                pA.placeCards()
+                pA.dropSingleCard()
+            end if
+            victory = pA.checkVictory()
+        println("Congratulations you won !")    
+    }
 }
