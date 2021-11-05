@@ -2,16 +2,22 @@ package de.htwg.se.romme
 
 import de.htwg.se.romme.model.{Card, Deck, Player, PlayerHands}
 import de.htwg.se.romme.controller.Controller
+import de.htwg.se.romme.aview.Tui
 import scala.io.StdIn.readLine
 
 object Romme {
-  def main(args: Array[String]): Unit = {
-    val controller = new Controller()
+  val controller = new Controller()
+  val tui = new Tui(controller)
+  controller.notifyObservers
 
-    controller.gameStart()
-    controller.pickUpACard()
-    println("Which card would you like to drop ?")
-    var tmp = readLine()
-    controller.dropASpecificCard(tmp.toInt)
+  def main(args: Array[String]): Unit = {
+
+    var input: String = ""
+
+    input = readLine()
+    while (input != "quit") {
+      tui.processInputReadLine(input)
+      input = readLine()
+    }
   }
 }
