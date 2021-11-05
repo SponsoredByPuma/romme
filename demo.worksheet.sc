@@ -1,3 +1,4 @@
+/*
 import scala.reflect.internal.pickling.PickleFormat
 1 + 2
 val x = 3
@@ -55,7 +56,7 @@ case class testKarten(var a: Arten,var z: Zahlen):
         this.a = na
         return this
     }
-    
+
 val test3 = new testKarten(Arten.Karo,Zahlen.Acht)
 
 print(test3.zeigeKarteAlsString())
@@ -68,9 +69,85 @@ print(test3.z)
 
 /*case class herzkarten(kartenArt: Herz):
     def zeigeKarte() = print(this.kartenArt)
-    
+
 
 
 val k = herzkarten(Herz.Acht)
 k.zeigeKarte()
-*/
+ */
+ */
+import scala.collection.mutable.ListBuffer
+
+class Card(suit: Integer, rank: Integer) {
+
+  val suitList: List[String] =
+    List("Heart", "Diamond", "Club", "Spades", "Joker")
+  val rankList: List[String] = List(
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+    "ten",
+    "jack",
+    "queen",
+    "king",
+    "ace",
+    ""
+  )
+
+  def getCardName(): (String, String) = {
+    val suitAsString = suitList(suit)
+    val rankAsString = rankList(rank)
+    return (suitAsString, rankAsString)
+  }
+
+}
+class Deck() {
+
+  var deckList: ListBuffer[Card] = ListBuffer()
+
+  def createNewDeck(): Unit = {
+
+    var suitCounter = 0
+    var rankCounter = 0
+
+    for (suitCounter <- 0 to 3) {
+      for (rankCounter <- 0 to 12) {
+        val c = new Card(suitCounter, rankCounter)
+        deckList :+ c // add every Card twice
+        deckList :+ c
+      }
+    }
+
+    var jokerCounter = 0
+    for (jokerCounter <- 1 to 6) {
+      val jokerCard = new Card(4, 13)
+      deckList :+ jokerCard
+    }
+    print(deckList.length)
+  }
+
+  def drawFromDeck(): Card = {
+    val random = new scala.util.Random // random generator
+    // safe a random value between 0 and the size of the current deck - 1
+    val tmp = random.nextInt(deckList.length - 1)
+    // safe the card which will be drawn from the deck
+    val tmpsafe = deckList(tmp)
+    deckList.remove(tmp) // remove the card from the game
+    return tmpsafe // return the card
+  }
+
+}
+
+var d = new Deck()
+
+var deckLiest: ListBuffer[Integer] = ListBuffer()
+
+var i = 0
+for (i <- 0 to 100)
+  deckLiest.addOne(i)
+print(deckLiest.size)
