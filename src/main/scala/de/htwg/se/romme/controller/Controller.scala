@@ -43,6 +43,10 @@ class Controller() extends Observable {
     println()
     //notifyObservers
   }
+  def dropASpecificCardTEST(): Unit = { // Only for testing
+    hand.playerOneHand.remove(0)
+    println()
+  }
 
   def victory(): Boolean = {
     if (hand.playerOneHand.isEmpty == true)

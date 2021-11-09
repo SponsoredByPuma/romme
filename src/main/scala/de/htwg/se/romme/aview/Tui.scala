@@ -16,6 +16,7 @@ class Tui(controller: Controller) extends Observer {
       case "pick"    => controller.pickUpACard()
       case "drop"    => controller.dropASpecificCard()
       case "show"    => controller.showCards()
+      case "dropTest" => controller.dropASpecificCardTEST() // only for testing can be deleted
       case "victory" => 
         val victory = controller.victory()
         if (victory == true) 
