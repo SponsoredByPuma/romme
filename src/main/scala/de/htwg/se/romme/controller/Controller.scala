@@ -1,68 +1,90 @@
 package de.htwg.se.romme
 package controller
 
-import model.{Card, Deck, Player, PlayerHands}
+import model.{Card, Deck, Player, PlayerHands,Table}
 import _root_.de.htwg.se.romme.util.Observable
 import scala.io.StdIn.readLine
-import util.Observer
+import util.Observable
+import scala.collection.mutable.ListBuffer
 
 class Controller() extends Observable {
   val deck = new Deck() // Deck-Instanz erstellt
-  val hand = new PlayerHands()
+  val table = new Table()
+  val hand = new PlayerHands(table)
+  
 
   def gameStart(): Unit = {
     deck.createNewDeck() // neues Deck erstellen
     hand.draw13Cards(deck)
     var tmp = 0
-    //for (tmp <- 0 to 12)
-    //  print(
-    //    hand.playerOneHand(tmp).getCardName()
-    //  ) // Gebe mir alle gezogenen Karten aus
     println()
-    //notifyObservers
+    notifyObservers
+  }
+
+  def pickUpGraveYard(): Unit = {
+    hand.playerOneHand.addOne(table.grabGraveYard())
+    notifyObservers
   }
 
   def pickUpACard(): Unit = {
     hand.playerOneHand.addOne(deck.drawFromDeck())
-    //for (tmp <- 0 to hand.playerOneHand.size - 1)
-    //  print(
-    //    hand.playerOneHand(tmp).getCardName()
-    //  ) // Gebe mir alle gezogenen Karten aus
-    //println()
-    //notifyObservers
+    notifyObservers
   }
 
   def dropASpecificCard(): Unit = {
     println("Which card would you like to drop ?")
     var index = readLine()
-    hand.playerOneHand.remove(index.toInt)
-    //for (tmp <- 0 to hand.playerOneHand.size - 1)
-    //  print(
-    //    hand.playerOneHand(tmp).getCardName()
-    //  )
+    hand.dropASingleCard(index.toInt)
     println()
-    //notifyObservers
+    notifyObservers
   }
   def dropASpecificCardTEST(): Unit = { // Only for testing
     hand.playerOneHand.remove(0)
     println()
+    notifyObservers
+  }
+
+  def dropMultipleCards() : Unit = {
+    var scanner = " "
+    var list : ListBuffer[Integer] = new ListBuffer()
+    var counter = 0
+    while (counter < 5)
+      println("Which card would you like to drop ? It must be something between 0 and " + (hand.playerOneHand.size - 1))
+      scanner = readLine()
+      list.addOne(scanner.toInt)
+      counter = counter + 1 
+    if(hand.dropCardsOnTable(list) == true)
+      list.sorted // sotiere die Liste
+      for(counter <- 0 to list.size - 1) { // gehe die Liste durch
+        // falls die Zahl 0 < 12 ist müssen die restlichen Cards um 1 verringert werden, da bei remove eins weggenommen wird
+        if (list(counter) < hand.playerOneHand.size - 1) 
+          for (counter <- counter + 1 to list.size - 1) { // go through the next inputs
+            list(counter) = list(counter) - 1 // decrement the next input for one
+          }
+        end if
+        hand.playerOneHand.remove(list(counter)) // remove the Card
+      }
+      println("it worked")
+    end if
+    notifyObservers
   }
 
   def victory(): Boolean = {
+    notifyObservers
     if (hand.playerOneHand.isEmpty == true)
-      //notifyObservers
       return true
     end if
-    //notifyObservers
     return false
   }
 
   def showCards(): Unit = {
-    for (tmp <- 0 to hand.playerOneHand.size - 1)
-      print(
-        hand.playerOneHand(tmp).getCardName()
-      )
-      //notifyObservers
+    hand.showYourCards()
+    notifyObservers
+  }
+
+  def showTable(): Unit = {
+    table.showPlacedCardsOnTable()
+    notifyObservers
   }
 
 }

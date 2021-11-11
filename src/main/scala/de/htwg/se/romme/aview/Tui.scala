@@ -4,9 +4,9 @@ package aview
 
 import controller.Controller
 import model.{Card, Deck, Player, PlayerHands, Table}
-import util.Observer
+import util.Observable
 
-class Tui(controller: Controller) extends Observer {
+class Tui(controller: Controller) extends de.htwg.se.romme.util.Observer {
   controller.add(this)
 
   def processInputReadLine(input: String): Unit = {
@@ -14,8 +14,11 @@ class Tui(controller: Controller) extends Observer {
       case "quit"    =>
       case "new"     => controller.gameStart()
       case "pick"    => controller.pickUpACard()
+      case "graveYard" => controller.pickUpGraveYard() // picking up the graveYard Card
       case "drop"    => controller.dropASpecificCard()
+      case "dropM" => controller.dropMultipleCards() // Test
       case "show"    => controller.showCards()
+      case "showTable" => controller.showTable()
       case "dropTest" => controller.dropASpecificCardTEST() // only for testing can be deleted
       case "victory" => 
         val victory = controller.victory()
@@ -27,5 +30,5 @@ class Tui(controller: Controller) extends Observer {
     }
   }
 
-  override def update: Unit = println(controller.showCards())
+  override def update: Unit = println() // showCards()
 }

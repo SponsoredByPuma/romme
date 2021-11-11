@@ -34,5 +34,9 @@ class TuiSpec extends AnyWordSpec {
       tui.processInputReadLine("dropTest")
       controller.hand.playerOneHand.size should be(13)
     }
+    "pick up the graveYard Card and the player Hands shoudl be 14" in {
+      tui.processInputReadLine("graveYard")
+      controller.hand.playerOneHand.size should be(14)
+    }
   }
 }

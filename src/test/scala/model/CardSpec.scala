@@ -20,4 +20,15 @@ class CardSpec extends AnyWordSpec {
       }
     }
   }
+  "A Card" when {
+    "set to Club nine" should {
+      val card = Card(2, 7)
+      "return Club as its Suit" in {
+        card.getSuit() should be("Club")
+      }
+      "return nine as its rank" in {
+        card.getValue() should be(9)
+      }
+    }
+  }
 }
