@@ -69,6 +69,13 @@ class Controller() extends Observable {
     notifyObservers
   }
 
+  def sortPlayersCards(): Unit = {
+    notifyObservers
+    println("Press 1 to sort by rank or something else to sort by Suit !")
+    val idx = readLine()
+    hand.sortMyCards(idx.toInt)
+  }
+
   def victory(): Boolean = {
     notifyObservers
     if (hand.playerOneHand.isEmpty == true)

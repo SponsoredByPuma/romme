@@ -19,6 +19,7 @@ class Tui(controller: Controller) extends de.htwg.se.romme.util.Observer {
       case "dropM" => controller.dropMultipleCards() // Test
       case "show"    => controller.showCards()
       case "showTable" => controller.showTable()
+      case "sort" => controller.sortPlayersCards() // sortiere die Karten auf der Hand
       case "dropTest" => controller.dropASpecificCardTEST() // only for testing can be deleted
       case "victory" => 
         val victory = controller.victory()

@@ -1,9 +1,9 @@
 package de.htwg.se.romme.model
 
-class Card(suit: Integer, rank: Integer) {
+class Card(var suit: Integer, var rank: Integer) {
 
   val suitList: List[String] =
-    List("Heart", "Diamond", "Club", "Spades", "Joker")
+    List("Heart", "Diamond", "Club", "Spades", "Joker", "") // ""
   val rankList: List[String] = List(
     "two",
     "three",
@@ -22,11 +22,6 @@ class Card(suit: Integer, rank: Integer) {
   )
 
   def getCardName(): (String, String) = {
-
-    if (suit.equals(null)) {
-      return (null, null)
-    }
-
     val suitAsString = suitList(suit)
     val rankAsString = rankList(rank)
     return (suitAsString, rankAsString)
