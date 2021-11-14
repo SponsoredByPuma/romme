@@ -27,9 +27,11 @@ class Tui(controller: Controller) extends de.htwg.se.romme.util.Observer {
           println("Victory ! You have won the Game !")
         else
           println("You havent won the Game yet !")
-        end if  
+        end if
+      case _ =>   
     }
   }
 
   override def update: Unit = println() // showCards()
+  override def updated: Boolean = true
 }

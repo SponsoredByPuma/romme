@@ -3,6 +3,7 @@ package util
 
 trait Observer:
     def update: Unit
+    def updated: Boolean
 
 
 class Observable {

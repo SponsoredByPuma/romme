@@ -25,17 +25,18 @@ class ControllerSpec extends AnyWordSpec {
       controller.add(observer)
       "notify its Observer after creation" in {
         controller.gameStart()
-        //observer.updated should be(true)
+        observer.updated should be(true)
         controller.deck.deckList.size should be(97)
       }
       "notify its Observer after picking up the graveYard Card" in {
+        controller.dropASpecificCardTEST()
         controller.pickUpGraveYard()
-        //observer.updated should be(true)
-        controller.hand.playerOneHand.size should be(14)
+        observer.updated should be(true)
+        controller.hand.playerOneHand.size should be(13)
       }
       "notify its Observer after picking up a normal Card" in {
         controller.pickUpACard()
-        //observer.updated should be(true)
+        observer.updated should be(true)
         controller.hand.playerOneHand.size should be(15)
       }
       /* // not possible since it needs an input
