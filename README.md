@@ -1,5 +1,7 @@
 ## sbt project compiled with Scala 3
 
+[![Build Status](https://app.travis-ci.com/SponsoredByPuma/romme.svg?branch=dev)](https://app.travis-ci.com/SponsoredByPuma/romme)
+
 ### Usage
 
 This is a normal sbt project. You can compile code with `sbt compile`, run it with `sbt run`, and `sbt console` will start a Scala 3 REPL.
