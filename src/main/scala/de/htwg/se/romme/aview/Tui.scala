@@ -32,7 +32,6 @@ class Tui(controller: Controller) extends de.htwg.se.romme.util.Observer {
     }
   }
 
-  
   override def update: Unit = println() // showCards()
   override def updated: Boolean = true
 }
