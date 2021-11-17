@@ -216,7 +216,7 @@
         "platform": {
             "name": "jvm",
             "config": {
-                "home": "C:\\jdk-15",
+                "home": "C:\\Users\\Till\\.jabba\\jdk\\adopt@1.11.0-11",
                 "options": [
                     "-Duser.dir=C:\\Users\\Till\\Desktop\\SoftwareEngineering\\Romme\\romme\\project"
                 ]

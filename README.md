@@ -2,6 +2,8 @@
 
 [![Build Status](https://app.travis-ci.com/SponsoredByPuma/romme.svg?branch=dev)](https://app.travis-ci.com/SponsoredByPuma/romme)
 
+[![Coverage Status](https://coveralls.io/repos/github/SponsoredByPuma/romme/badge.svg?branch=dev)](https://coveralls.io/github/SponsoredByPuma/romme?branch=dev)
+
 ### Usage
 
 This is a normal sbt project. You can compile code with `sbt compile`, run it with `sbt run`, and `sbt console` will start a Scala 3 REPL.
