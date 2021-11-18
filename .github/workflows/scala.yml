@@ -20,10 +20,6 @@ jobs:
         distribution: 'adopt'
     - name: compile
       run: sbt compile
-    - name: Publish to coveralls.io
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ GITHUB_TOKEN }}
   run_tests:
     runs-on: ubuntu-latest
     steps:
