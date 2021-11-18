@@ -1,6 +1,6 @@
 ## sbt project compiled with Scala 3
 
-[![Build Status](https://app.travis-ci.com/SponsoredByPuma/romme.svg?branch=master)](https://app.travis-ci.com/SponsoredByPuma/romme)
+[![Scala CI](https://github.com/SponsoredByPuma/romme/actions/workflows/scala.yml/badge.svg)](https://github.com/SponsoredByPuma/romme/actions/workflows/scala.yml)
 
 [![Coverage Status](https://coveralls.io/repos/github/SponsoredByPuma/romme/badge.svg?branch=master)](https://coveralls.io/github/SponsoredByPuma/romme?branch=master)
 
