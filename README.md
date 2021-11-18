@@ -2,7 +2,7 @@
 
 [![Scala CI](https://github.com/SponsoredByPuma/romme/actions/workflows/scala.yml/badge.svg)](https://github.com/SponsoredByPuma/romme/actions/workflows/scala.yml)
 
-[![Coverage Status](https://coveralls.io/repos/github/SponsoredByPuma/romme/badge.svg?branch=master)](https://coveralls.io/github/SponsoredByPuma/romme?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/SponsoredByPuma/romme/badge.svg)](https://coveralls.io/github/SponsoredByPuma/romme)
 
 ### Usage
 
