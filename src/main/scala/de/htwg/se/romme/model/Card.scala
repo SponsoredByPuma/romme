@@ -1,6 +1,7 @@
 package de.htwg.se.romme.model
 
 class Card(var suit: Integer, var rank: Integer) {
+  //e
 
   val suitList: List[String] =
     List("Heart", "Diamond", "Club", "Spades", "Joker", "") // ""

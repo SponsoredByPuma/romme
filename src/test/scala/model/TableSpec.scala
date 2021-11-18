@@ -25,7 +25,7 @@ class TableSpec extends AnyWordSpec {
         for (x <- 0 to 4)
           testList.addOne(x)
         hand.dropCardsOnTable(testList)
-        table.droppedCardsList.isEmpty should be(false)
+        table.droppedCardsList.isEmpty should be(false) //
       }
       "be able to grab the graveYard Card" in {
         hand.dropASingleCard(0)
