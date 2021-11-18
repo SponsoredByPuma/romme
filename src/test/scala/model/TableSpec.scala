@@ -22,10 +22,10 @@ class TableSpec extends AnyWordSpec {
       }
       "have the dropped Cards on the table" in {
         var testList: ListBuffer[Integer] = new ListBuffer()
-        for (x <- 0 to 5)
+        for (x <- 0 to 4)
           testList.addOne(x)
         hand.dropCardsOnTable(testList)
-        table.droppedCardsList.size should be(1)
+        table.droppedCardsList(0).size should be(5)
       }
       "be able to grab the graveYard Card" in {
         hand.dropASingleCard(0)
