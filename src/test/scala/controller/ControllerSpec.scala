@@ -28,17 +28,21 @@ class ControllerSpec extends AnyWordSpec {
         observer.updated should be(true)
         controller.deck.deckList.size should be(97)
       }
+      /*
       "notify its Observer after picking up the graveYard Card" in {
         controller.dropASpecificCardTEST()
         controller.pickUpGraveYard()
         observer.updated should be(true)
         controller.hand.playerOneHand.size should be(13)
       }
+       */
+      /*
       "notify its Observer after picking up a normal Card" in {
         controller.pickUpACard()
         observer.updated should be(true)
         controller.hand.playerOneHand.size should be(15)
       }
+       */
       /* // not possible since it needs an input
       "notify its Observer after dropping multiple Cards" in {
         controller.dropMultipleCards()
@@ -50,11 +54,13 @@ class ControllerSpec extends AnyWordSpec {
         controller.victory() should be(false)
         //observer.updated should be(true)
       }
+      /*
       "notify its Observer after droppping a Card" in {
         controller.dropASpecificCardTEST()
         controller.hand.playerOneHand.size should be(14)
         //observer.updated should be(true)
-      }
+
+      }*/
       /*
       "notify its Observer after showing the cards" in {
         controller.showCards()
