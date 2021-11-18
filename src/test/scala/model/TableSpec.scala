@@ -22,7 +22,7 @@ class TableSpec extends AnyWordSpec {
       }
       "have the dropped Cards on the table" in {
         var testList: ListBuffer[Integer] = new ListBuffer()
-        for (x <- 0 to 4)
+        for (x <- 0 to 5)
           testList.addOne(x)
         hand.dropCardsOnTable(testList)
         table.droppedCardsList.isEmpty should be(false) //
