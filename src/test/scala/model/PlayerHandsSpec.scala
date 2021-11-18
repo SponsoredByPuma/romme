@@ -21,12 +21,12 @@ class PlayerHandsSpec extends AnyWordSpec {
         hands.dropASingleCard(0)
         hands.playerOneHand.size should be(12)
       }
-      "be able to drop 5 Cards from his hand and add them to the table" in {
+      "be able to drop 6 Cards from his hand and add them to the table" in {
         var testList: ListBuffer[Integer] = new ListBuffer()
         for (x <- 0 to 5)
           testList.addOne(x)
         hands.dropCardsOnTable(testList)
-        table.droppedCardsList.size should be(1)
+        table.droppedCardsList(0).size should be(6)
       }
     }
   }

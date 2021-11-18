@@ -39,7 +39,7 @@ class Controller() extends Observable {
     notifyObservers
   }
   def dropASpecificCardTEST(): Unit = { // Only for testing
-    hand.playerOneHand.remove(0)
+    hand.dropASingleCard(0)
     println()
     notifyObservers
   }
