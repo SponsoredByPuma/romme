@@ -1,48 +1,17 @@
-# Mac
-.DS_Store
-
-# Eclipse
-bin/
-.settings/
-.classpath
-
-# IntelliJ
-.idea/
-.target/
-
-# Maven
-log/
-target/
-null/
-
-# Gradle
-.gradle/
-build/
-pom.xml
+# bloop and metals
+.bloop
+.bsp
+.metals
 
 # sbt
-.cache
-.history
-.lib/
-dist/*
-lib_managed/
-src.managed/
-project/boot/
-project/plugins/project/
-procet/target/
 project/project/
-logs/
-project/.sbtserver
-.sbtserver/
-.bsp/
+project/target/
+target/
 
-# Scala-IDE specific
-.scala_dependencies
-.worksheet
-.sc
+# coursier
+null/
 
-# Sonar
-.sonar/
-
-# Application
-*.log
+# other
+/.vscode
+/.idea
+/.ammonite
