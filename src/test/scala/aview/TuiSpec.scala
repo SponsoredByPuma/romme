@@ -31,7 +31,7 @@ class TuiSpec extends AnyWordSpec {
       controller.victory() should be(false)
     }
     "drop a card from the players Hand on input 'drop' " in {
-      tui.processInputReadLine("dropTest")
+      tui.processInputReadLine("drop")
       controller.hand.playerOneHand.size should be(13)
     }
     "pick up the graveYard Card and the player Hands should be 14" in {

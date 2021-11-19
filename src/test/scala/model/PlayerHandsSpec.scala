@@ -22,9 +22,9 @@ class PlayerHandsSpec extends AnyWordSpec {
         hands.playerOneHand.size should be(12)
       }
       "be sorted by rank" in {
-        hands.sortMyCards(1)
+        hands.sortMyCards()
         var check =
-          hands.playerOneHand(0).getValue() <= hands.playerOneHand(1).getValue()
+          hands.playerOneHand(0).getValue <= hands.playerOneHand(1).getValue
         check should be(true)
       }
       /*

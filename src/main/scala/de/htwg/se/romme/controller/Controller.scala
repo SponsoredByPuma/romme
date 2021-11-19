@@ -31,28 +31,13 @@ class Controller() extends Observable {
     notifyObservers
   }
 
-  def dropASpecificCard(): Unit = {
-    println("Which card would you like to drop ?")
-    var index = readLine()
-    hand.dropASingleCard(index.toInt)
-    println()
-    notifyObservers
-  }
-  def dropASpecificCardTEST(): Unit = { // Only for testing
-    hand.dropASingleCard(0)
+  def dropASpecificCard(index: Integer): Unit = {
+    hand.dropASingleCard(index)
     println()
     notifyObservers
   }
 
-  def dropMultipleCards() : Unit = {
-    var scanner = " "
-    var list : ListBuffer[Integer] = new ListBuffer()
-    var counter = 0
-    while (counter < 5)
-      println("Which card would you like to drop ? It must be something between 0 and " + (hand.playerOneHand.size - 1))
-      scanner = readLine()
-      list.addOne(scanner.toInt)
-      counter = counter + 1 
+  def dropMultipleCards(list: ListBuffer[Integer]) : Unit = {
     if(hand.dropCardsOnTable(list) == true)
       list.sorted // sotiere die Liste
       for(counter <- 0 to list.size - 1) { // gehe die Liste durch
@@ -71,9 +56,7 @@ class Controller() extends Observable {
 
   def sortPlayersCards(): Unit = {
     notifyObservers
-    println("Press 1 to sort by rank or something else to sort by Suit !")
-    val idx = readLine()
-    hand.sortMyCards(idx.toInt)
+    //hand.sortMyCards()
   }
 
   def victory(): Boolean = {

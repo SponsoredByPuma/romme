@@ -9,7 +9,7 @@ class Table() {
   var droppedCardsList: ListBuffer[ListBuffer[Card]] = new ListBuffer()
 
   var graveYard =
-    Card(5, 13) // the last dropped card Problem: es gibt kein null
+    Card(5, 0) // the last dropped card Problem: es gibt kein null
 
   def replaceGraveYard(card: Card): Unit = {
     graveYard = card
@@ -20,19 +20,19 @@ class Table() {
   }
 
   def showPlacedCardsOnTable(): Unit = {
-    println("GraveYard: " + this.graveYard.getCardName())
+    println("GraveYard: " + this.graveYard.getCardName)
     // for the size of the dropped Cards
     for (tmp <- 0 to droppedCardsList.size - 1) {
       println()
       // for each Card in the List
       for (tmp2 <- 0 to droppedCardsList(tmp).size - 1) {
-        print(droppedCardsList(tmp)(tmp2).getCardName())
+        print(droppedCardsList(tmp)(tmp2).getCardName)
       }
     }
   }
 
   def grabGraveYard(): Card = {
-    if(graveYard.getCardName().equals("",""))
+    if(graveYard.getCardName.equals("",""))
       throw new Exception("You cannot grab the GraveYard")
     end if
     val returnCard = graveYard // safe the graveYard Card

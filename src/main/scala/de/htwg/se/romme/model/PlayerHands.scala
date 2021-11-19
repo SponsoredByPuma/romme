@@ -21,13 +21,36 @@ class PlayerHands(table: Table) {
     playerOneHand.remove(index)
   }
 
-  def sortMyCards(index: Integer): Unit = {
-    if(index == 1) // sort by rank
-      playerOneHand = playerOneHand.sortWith(_.rank < _.rank)
+  def sortMyCards(): Unit = {
+    var heart : ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
+    var club : ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
+    var diamond : ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
+    var spades : ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
+    var joker : ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
 
-    else
-      playerOneHand = playerOneHand.sortWith(_.suit < _.suit)
-    end if
+    for (cardIterator <- playerOneHand)
+      cardIterator.getSuit match {
+        case "Heart" => heart.addOne(cardIterator)
+        case "Club" => club.addOne(cardIterator)
+        case "Diamond" => diamond.addOne(cardIterator)
+        case "Spades" => spades.addOne(cardIterator)
+        case "Joker" => joker.addOne(cardIterator)
+      }
+    // sort all the list by its ranks
+    /*
+    heart = heart.sortWith(_.rank < rank)
+    club = club.sortWith(_.rank < _.rank)
+    diamond = diamond.sortWith(_.rank < _.rank)
+    spades = spades.sortWith(_.rank < _.rank)s
+    joker = joker.sortWith(_.rank < _.rank)
+    */
+
+
+    playerOneHand = playerOneHand.addAll(heart)
+    playerOneHand = playerOneHand.addAll(diamond)
+    playerOneHand = playerOneHand.addAll(spades)
+    playerOneHand = playerOneHand.addAll(club)
+    playerOneHand = playerOneHand.addAll(joker)
   }
 
   def dropCardsOnTable(index : ListBuffer[Integer]): Boolean = {
@@ -36,8 +59,8 @@ class PlayerHands(table: Table) {
       var sum = 0
       for(counter <- 0 to index.size - 1)
         droppingCards.addOne(playerOneHand(index(counter))) // adds the element of your hand at the index
-        sum += playerOneHand(index(counter)).getValue() // counts the Value of your Cards
-      if (sum < 40) // if its less than 40 you are not allowed to drop your Cards
+        sum += playerOneHand(index(counter)).getValue // counts the Value of your Cards
+      if (sum < 4) // if its less than 40 you are not allowed to drop your Cards
         return false // returns false so you know that it didnt work out
       end if
       table.placeCardsOnTable(droppingCards)
@@ -56,7 +79,7 @@ class PlayerHands(table: Table) {
   def showYourCards(): Unit = {
     for (tmp <- 0 to playerOneHand.size - 1)
       print(
-        playerOneHand(tmp).getCardName()
+        playerOneHand(tmp).getCardName
       )
   }
 }

@@ -8,6 +8,7 @@ import model.{Card, Deck, Player, PlayerHands, Table}
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 import scala.language.reflectiveCalls
+import scala.collection.mutable.ListBuffer
 
 class ControllerSpec extends AnyWordSpec {
 
@@ -29,8 +30,13 @@ class ControllerSpec extends AnyWordSpec {
         controller.deck.deckList.size should be(97)
       }
 
+      "notify its Observer after dropping a single Card" in {
+        controller.dropASpecificCard(0)
+        observer.updated should be(true)
+        controller.hand.playerOneHand.size should be(12)
+      }
+
       "notify its Observer after picking up the graveYard Card" in {
-        controller.dropASpecificCardTEST()
         controller.pickUpGraveYard()
         observer.updated should be(true)
         controller.hand.playerOneHand.size should be(13)
@@ -40,21 +46,18 @@ class ControllerSpec extends AnyWordSpec {
         observer.updated should be(true)
         controller.hand.playerOneHand.size should be(14)
       }
-      /* // not possible since it needs an input
+
       "notify its Observer after dropping multiple Cards" in {
-        controller.dropMultipleCards()
-        //observer.updated should be(true)
-        controller.hand.playerOneHand.size should be(10)
-      }
-       */
-      "notify its Observer after checking victory" in {
-        controller.victory() should be(false)
+        var list: ListBuffer[Integer] = new ListBuffer()
+        for (x <- 0 to 5)
+          list.addOne(x)
+        controller.dropMultipleCards(list)
         observer.updated should be(true)
+        controller.hand.playerOneHand.size should be(8)
       }
 
-      "notify its Observer after droppping a Card" in {
-        controller.dropASpecificCardTEST()
-        controller.hand.playerOneHand.size should be(13)
+      "notify its Observer after checking victory" in {
+        controller.victory() should be(false)
         observer.updated should be(true)
       }
 
@@ -66,7 +69,10 @@ class ControllerSpec extends AnyWordSpec {
         controller.showTable()
         observer.updated should be(true)
       }
-
+      "notify its Observer after sorting the Cards" in {
+        controller.sortPlayersCards()
+        observer.updated should be(true)
+      }
     }
   }
 
