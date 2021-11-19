@@ -18,7 +18,7 @@ class TableSpec extends AnyWordSpec {
         hand.showYourCards()
         var tmp = hand.playerOneHand(0)
         hand.dropASingleCard(0)
-        table.graveYard.getCardName() should be(tmp.getCardName())
+        table.graveYard.getCardName should be(tmp.getCardName)
       }
       "have the dropped Cards on the table" in {
         var testList: ListBuffer[Integer] = new ListBuffer()
@@ -29,9 +29,9 @@ class TableSpec extends AnyWordSpec {
       }
       "be able to grab the graveYard Card" in {
         hand.dropASingleCard(0)
-        var tmp = table.graveYard.getCardName()
+        var tmp = table.graveYard.getCardName
         var tmp2 = table.grabGraveYard()
-        tmp2.getCardName() should be(tmp)
+        tmp2.getCardName should be(tmp)
       }
     }
   }
