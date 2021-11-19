@@ -53,11 +53,12 @@ class Controller() extends Observable {
     end if
     notifyObservers
   }
-
+/*
   def sortPlayersCards(): Unit = {
     notifyObservers
     //hand.sortMyCards()
   }
+  */
 
   def victory(): Boolean = {
     notifyObservers

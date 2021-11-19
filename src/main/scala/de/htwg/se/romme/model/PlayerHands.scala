@@ -20,7 +20,7 @@ class PlayerHands(table: Table) {
     table.replaceGraveYard(playerOneHand(index))
     playerOneHand.remove(index)
   }
-
+  /*
   def sortMyCards(): Unit = {
     var heart : ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
     var club : ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
@@ -52,6 +52,7 @@ class PlayerHands(table: Table) {
     playerOneHand = playerOneHand.addAll(club)
     playerOneHand = playerOneHand.addAll(joker)
   }
+  */
 
   def dropCardsOnTable(index : ListBuffer[Integer]): Boolean = {
     var droppingCards: ListBuffer[Card] = new ListBuffer()

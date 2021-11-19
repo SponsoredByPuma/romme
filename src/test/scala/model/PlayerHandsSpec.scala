@@ -21,21 +21,23 @@ class PlayerHandsSpec extends AnyWordSpec {
         hands.dropASingleCard(0)
         hands.playerOneHand.size should be(12)
       }
+      /*
       "be sorted by rank" in {
         hands.sortMyCards()
         var check =
           hands.playerOneHand(0).getValue <= hands.playerOneHand(1).getValue
         check should be(true)
       }
-      /*
+       */
+
       "be able to drop 5 Cards from his hand and add them to the table" in {
         var testList: ListBuffer[Integer] = new ListBuffer()
         for (x <- 0 to 4)
           testList.addOne(x)
-        hands.dropCardsOnTable(testList)
+        hands.dropCardsOnTable(testList) should be(true)
         table.droppedCardsList(0).size should be(5)
       }
-       */
+
     }
   }
 }
