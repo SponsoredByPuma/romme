@@ -21,6 +21,12 @@ class PlayerHandsSpec extends AnyWordSpec {
         hands.dropASingleCard(0)
         hands.playerOneHand.size should be(12)
       }
+      "be sorted by rank" in {
+        hands.sortMyCards(1)
+        var check =
+          hands.playerOneHand(0).getValue() <= hands.playerOneHand(1).getValue()
+        check should be(true)
+      }
       /*
       "be able to drop 5 Cards from his hand and add them to the table" in {
         var testList: ListBuffer[Integer] = new ListBuffer()
