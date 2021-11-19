@@ -39,5 +39,13 @@ class TuiSpec extends AnyWordSpec {
       tui.processInputReadLine("graveYard")
       controller.hand.playerOneHand.size should be(14)
     }
+    "show the cards from the players on input 'show' " in {
+      tui.processInputReadLine("show")
+      controller.showCards() should be(true)
+    }
+    "show the cards from the table on input 'showTable' " in {
+      tui.processInputReadLine("showTable")
+      controller.showTable() should be(true)
+    }
   }
 }

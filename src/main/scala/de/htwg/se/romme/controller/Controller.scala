@@ -68,14 +68,16 @@ class Controller() extends Observable {
     return false
   }
 
-  def showCards(): Unit = {
+  def showCards(): Boolean = {
     hand.showYourCards()
     notifyObservers
+    return true
   }
 
-  def showTable(): Unit = {
+  def showTable(): Boolean = {
     table.showPlacedCardsOnTable()
     notifyObservers
+    return true
   }
 
 }
