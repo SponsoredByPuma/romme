@@ -37,6 +37,13 @@ class PlayerHandsSpec extends AnyWordSpec {
         hands.dropCardsOnTable(testList) should be(true)
         table.droppedCardsList(0).size should be(5)
       }
+      "be able to drop 3 Cards from his hand and add them to the table" in {
+        var testList: ListBuffer[Integer] = new ListBuffer()
+        for (x <- 0 to 2)
+          testList.addOne(x)
+        hands.dropCardsOnTable(testList) should be(true)
+        table.droppedCardsList(1).size should be(3)
+      }
 
     }
   }
