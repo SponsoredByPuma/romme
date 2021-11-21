@@ -47,5 +47,10 @@ class TuiSpec extends AnyWordSpec {
       tui.processInputReadLine("showTable")
       controller.showTable() should be(true)
     }
+    "show Victory on input 'victory' when the player has no more Cards" in {
+      controller.hand.playerOneHand.empty
+      tui.processInputReadLine("victory")
+      controller.victory() should be(false)
+    }
   }
 }
