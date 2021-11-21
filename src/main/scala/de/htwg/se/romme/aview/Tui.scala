@@ -33,10 +33,12 @@ class Tui(controller: Controller) extends de.htwg.se.romme.util.Observer {
           scanner = readLine
           list.addOne(scanner.toInt)
           amount = amount - 1
-        controller.dropMultipleCards(list)
+        println("Would you like to drop them by Suit(0) or by Order(1) ?")
+        var dec = readLine.toInt
+        controller.dropMultipleCards(list,dec)
       case "show"    => controller.showCards()
       case "showTable" => controller.showTable()
-     // case "sort" => controller.sortPlayersCards() // sortiere die Karten auf der Hand
+      case "sort" => controller.sortPlayersCards()
       case "victory" => 
         val victory = controller.victory()
         if (victory == true) 

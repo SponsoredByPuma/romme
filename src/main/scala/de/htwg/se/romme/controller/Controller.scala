@@ -37,8 +37,8 @@ class Controller() extends Observable {
     notifyObservers
   }
 
-  def dropMultipleCards(list: ListBuffer[Integer]) : Unit = {
-    if(hand.dropCardsOnTable(list) == true)
+  def dropMultipleCards(list: ListBuffer[Integer], dec: Integer) : Unit = {
+    if(hand.dropCardsOnTable(list, dec) == true)
       list.sorted // sotiere die Liste
       for(counter <- 0 to list.size - 1) { // gehe die Liste durch
         // falls die Zahl 0 < 12 ist müssen die restlichen Cards um 1 verringert werden, da bei remove eins weggenommen wird
@@ -53,12 +53,12 @@ class Controller() extends Observable {
     end if
     notifyObservers
   }
-/*
+
   def sortPlayersCards(): Unit = {
     notifyObservers
-    //hand.sortMyCards()
+    hand.sortMyCards()
   }
-  */
+  
 
   def victory(): Boolean = {
     notifyObservers

@@ -3,7 +3,7 @@ package de.htwg.se.romme
 package controller
 
 import de.htwg.se.romme.util.Observer
-import model.{Card, Deck, Player, PlayerHands, Table}
+import model.{Card, Deck, Player, PlayerHands, Table, Drops}
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
@@ -47,15 +47,6 @@ class ControllerSpec extends AnyWordSpec {
         controller.hand.playerOneHand.size should be(14)
       }
 
-      "notify its Observer after dropping multiple Cards" in {
-        var list: ListBuffer[Integer] = new ListBuffer()
-        for (x <- 0 to 5)
-          list.addOne(x)
-        controller.dropMultipleCards(list)
-        observer.updated should be(true)
-        controller.hand.playerOneHand.size should be(8)
-      }
-
       "notify its Observer after checking victory" in {
         controller.victory() should be(false)
         observer.updated should be(true)
@@ -69,13 +60,41 @@ class ControllerSpec extends AnyWordSpec {
         controller.showTable()
         observer.updated should be(true)
       }
-      /*
       "notify its Observer after sorting the Cards" in {
         controller.sortPlayersCards()
         observer.updated should be(true)
       }
-       */
     }
   }
+  "A Controller" when {
+    "observed by an Observer" should {
+      val table = new Table()
+      val deck = new Deck()
+      val hand = new PlayerHands(table)
+      val controller = new Controller()
+      val observer = new Observer {
+        var updated: Boolean = false
+        def isUpdated: Boolean = updated
+        override def update: Unit = updated = true
+      }
+      controller.add(observer)
 
+      controller.hand.playerOneHand.addOne(Card(0, 12))
+      controller.hand.playerOneHand.addOne(Card(0, 11))
+      controller.hand.playerOneHand.addOne(Card(0, 10))
+      controller.hand.playerOneHand.addOne(Card(0, 9))
+      controller.hand.playerOneHand.addOne(Card(0, 8))
+      controller.hand.playerOneHand.addOne(Card(0, 7))
+      println("---------------------------------------------------------")
+
+      "notify its Observer after dropping multiple Cards in Order" in {
+        var list: ListBuffer[Integer] = new ListBuffer()
+        for (x <- 0 to 5)
+          list.addOne(x)
+        controller.dropMultipleCards(list, 1)
+        observer.updated should be(true)
+        controller.hand.playerOneHand.size should be(0)
+      }
+    }
+  }
 }

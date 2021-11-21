@@ -5,6 +5,7 @@ package model
 import scala.collection.mutable.ListBuffer
 import de.htwg.se.romme.model.Deck
 import de.htwg.se.romme.model.Table
+import de.htwg.se.romme.model.Drops
 
 class PlayerHands(table: Table) {
   var playerOneHand: ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
@@ -15,36 +16,35 @@ class PlayerHands(table: Table) {
       playerOneHand.addOne(d.drawFromDeck())
     }
   }
-  
+
   def dropASingleCard(index: Integer): Unit = {
     table.replaceGraveYard(playerOneHand(index))
     playerOneHand.remove(index)
   }
-  /*
+
   def sortMyCards(): Unit = {
-    var heart : ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
-    var club : ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
-    var diamond : ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
-    var spades : ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
-    var joker : ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
+    var heart: ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
+    var club: ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
+    var diamond: ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
+    var spades: ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
+    var joker: ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
 
     for (cardIterator <- playerOneHand)
       cardIterator.getSuit match {
-        case "Heart" => heart.addOne(cardIterator)
-        case "Club" => club.addOne(cardIterator)
+        case "Heart"   => heart.addOne(cardIterator)
+        case "Club"    => club.addOne(cardIterator)
         case "Diamond" => diamond.addOne(cardIterator)
-        case "Spades" => spades.addOne(cardIterator)
-        case "Joker" => joker.addOne(cardIterator)
+        case "Spades"  => spades.addOne(cardIterator)
+        case "Joker"   => joker.addOne(cardIterator)
       }
     // sort all the list by its ranks
-    /*
-    heart = heart.sortWith(_.rank < rank)
-    club = club.sortWith(_.rank < _.rank)
-    diamond = diamond.sortWith(_.rank < _.rank)
-    spades = spades.sortWith(_.rank < _.rank)s
-    joker = joker.sortWith(_.rank < _.rank)
-    */
 
+    heart = heart.sortBy(_.placeInList)
+    club = club.sortBy(_.placeInList)
+    diamond = diamond.sortBy(_.placeInList)
+    spades = spades.sortBy(_.placeInList)
+
+    playerOneHand = playerOneHand.empty // empty the playerHand
 
     playerOneHand = playerOneHand.addAll(heart)
     playerOneHand = playerOneHand.addAll(diamond)
@@ -52,29 +52,32 @@ class PlayerHands(table: Table) {
     playerOneHand = playerOneHand.addAll(club)
     playerOneHand = playerOneHand.addAll(joker)
   }
-  */
 
-  def dropCardsOnTable(index : ListBuffer[Integer]): Boolean = {
+  def dropCardsOnTable(index: ListBuffer[Integer], dec: Integer): Boolean = {
+    val drop = Drops
     var droppingCards: ListBuffer[Card] = new ListBuffer()
-    if (outside == false)
-      var sum = 0
-      for(counter <- 0 to index.size - 1)
-        droppingCards.addOne(playerOneHand(index(counter))) // adds the element of your hand at the index
-        sum += playerOneHand(index(counter)).getValue // counts the Value of your Cards
-      if (sum < 4) // if its less than 40 you are not allowed to drop your Cards
-        return false // returns false so you know that it didnt work out
+
+    for(counter <- 0 to (index.size - 1))
+      droppingCards.addOne(playerOneHand(index(counter)))// adds the element of your hand at the index
+    if(outside == false)
+      if (drop.execute(droppingCards,dec) < 40)
+        println("LOOOOOOOOOOOOSER")
+        return false
       end if
       table.placeCardsOnTable(droppingCards)
       outside = true
       return true
     else
-      println("You are outside !") // just for testing pourpose
-      for (counter <- 0 to index.size - 1)
-        droppingCards.addOne(playerOneHand(index(counter)))
+      println("You are outside !")
+      if(drop.execute(droppingCards, dec) == 0)
+        println("RIP something went wrong")
+        return false
+      end if
+      println("You did it")
       table.placeCardsOnTable(droppingCards)
       return true
     end if
-    return false
+    return true
   }
 
   def showYourCards(): Unit = {
