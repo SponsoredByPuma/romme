@@ -36,6 +36,21 @@ class DropsSpec extends AnyWordSpec {
         drops.execute(list, 1) should be(40)
       }
     }
+    "there are gaps in the list " should {
+      val drops = Drops
+      var list: ListBuffer[Card] = ListBuffer()
+      list.addOne(Card(0, 12))
+      list.addOne(Card(0, 11))
+      list.addOne(Card(0, 10))
+      list.addOne(Card(0, 9))
+      list.addOne(Card(0, 6))
+      "execute strategySame Suit and return 0 as sum" in {
+        drops.execute(list, 0) should be(0)
+      }
+      "execute strategyOrder and return 0 as sum" in {
+        drops.execute(list, 1) should be(0)
+      }
+    }
     /* // readLine in drops :(
     "created with Jokers" should {
       val drops = Drops
