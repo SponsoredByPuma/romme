@@ -61,11 +61,13 @@ class Controller() extends Observable {
   
 
   def victory(): Boolean = {
-    notifyObservers
     if (hand.playerOneHand.isEmpty == true)
+      notifyObservers
       return true
+    else
+      notifyObservers
+      return false
     end if
-    return false
   }
 
   def showCards(): Boolean = {

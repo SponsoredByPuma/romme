@@ -64,6 +64,13 @@ class ControllerSpec extends AnyWordSpec {
         controller.sortPlayersCards()
         observer.updated should be(true)
       }
+      "notify its Observer after checking vitory" in {
+        var tmp = controller.hand.playerOneHand.size - 1
+        for (x <- 0 to tmp)
+          controller.hand.playerOneHand.remove(0)
+        controller.victory() should be(true)
+        observer.updated should be(true)
+      }
     }
   }
   "A Controller" when {
