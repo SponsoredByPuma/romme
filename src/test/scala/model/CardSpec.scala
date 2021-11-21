@@ -31,4 +31,21 @@ class CardSpec extends AnyWordSpec {
       }
     }
   }
+  "A Joker" when {
+    "created" should {
+      val card = Joker()
+      "be set to Heart, Eight" in {
+        card.setSuit("Heart")
+        card.setValue("eight")
+        card.placeInList should be(6)
+      }
+    }
+  }
+  "An empty Card" when {
+    "created" should {
+      var card = EmptyCard()
+      card.getValue should be(0)
+      card.getCardName should be("", "")
+    }
+  }
 }
