@@ -55,5 +55,6 @@ class TuiSpec extends AnyWordSpec {
       tui.processInputReadLine("victory")
       controller.victory() should be(true)
     }
+
   }
 }
