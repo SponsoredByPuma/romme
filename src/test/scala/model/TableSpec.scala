@@ -39,11 +39,10 @@ class TableSpec extends AnyWordSpec {
       hand.playerOneHand.addOne(Card(0, 10))
       hand.playerOneHand.addOne(Card(0, 9))
       hand.playerOneHand.addOne(Card(0, 8))
-      hand.playerOneHand.addOne(Card(0, 7))
 
       "have the dropped Cards on the table" in {
         var testList: ListBuffer[Integer] = new ListBuffer()
-        for (x <- 0 to 5)
+        for (x <- 0 to 4)
           testList.addOne(x)
         hand.dropCardsOnTable(testList, 1)
         table.droppedCardsList.isEmpty should be(false)
