@@ -38,6 +38,7 @@ class CardSpec extends AnyWordSpec {
         card.setSuit("Heart")
         card.setValue("eight")
         card.placeInList should be(6)
+        card.getValue should be(8)
       }
     }
   }
