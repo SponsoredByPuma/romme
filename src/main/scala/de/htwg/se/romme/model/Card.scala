@@ -4,7 +4,6 @@ trait Card {
   def getSuit: String
   def getValue: Integer
   def getCardName: (String, String)
-  def getValueAsString: String
   def placeInList: Integer
   val rankList: List[String] = List(
     "two",
@@ -42,9 +41,6 @@ private class Heart(rank: Integer) extends Card {
       case 12 => return 10
     }
   }
-  override def getValueAsString: String = {
-    return rankList(rank)
-  }
   override def getCardName: (String, String) = {
     return ("Heart", rankList(rank))
   }
@@ -72,9 +68,6 @@ private class Diamond(rank: Integer) extends Card {
       case 12 => return 10
     }
   }
-  override def getValueAsString: String = {
-    return rankList(rank)
-  }
   override def getCardName: (String, String) = {
     return ("Diamond", rankList(rank))
   }
@@ -101,9 +94,6 @@ private class Spades(rank: Integer) extends Card {
       case 12 => return 10
     }
   }
-  override def getValueAsString: String = {
-    return rankList(rank)
-  }
   override def getCardName: (String, String) = {
     return ("Spades", rankList(rank))
   }
@@ -129,9 +119,6 @@ private class Club(rank: Integer) extends Card {
       case 11 => return 10
       case 12 => return 10
     }
-  }
-  override def getValueAsString: String = {
-    return rankList(rank)
   }
   override def getCardName: (String, String) = {
     return ("Club", rankList(rank))
@@ -173,9 +160,6 @@ private class Joker() extends Card {
   def setSuit(s: String): Unit = {
     this.suit = s
   }
-  override def getValueAsString: String = {
-    return rankList(rank)
-  }
   override def placeInList: Integer = {
     return rank
   }
@@ -185,9 +169,6 @@ private class EmptyCard() extends Card {
   override def getValue: Integer = return 0
   override def getCardName: (String, String) = {
     return ("", "")
-  }
-  override def getValueAsString: String = {
-    return ""
   }
   override def placeInList: Integer = {
     return null
