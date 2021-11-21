@@ -20,18 +20,33 @@ class TableSpec extends AnyWordSpec {
         hand.dropASingleCard(0)
         table.graveYard.getCardName should be(tmp.getCardName)
       }
-      "have the dropped Cards on the table" in {
-        var testList: ListBuffer[Integer] = new ListBuffer()
-        for (x <- 0 to 5)
-          testList.addOne(x)
-        hand.dropCardsOnTable(testList)
-        table.droppedCardsList.isEmpty should be(false)
-      }
       "be able to grab the graveYard Card" in {
         hand.dropASingleCard(0)
         var tmp = table.graveYard.getCardName
         var tmp2 = table.grabGraveYard()
         tmp2.getCardName should be(tmp)
+      }
+    }
+  }
+  "A Table" when {
+    "a Card is dropped" should {
+      var table = new Table()
+      var deck = new Deck()
+      var hand = new PlayerHands(table)
+      deck.createNewDeck()
+      hand.playerOneHand.addOne(Card(0, 12))
+      hand.playerOneHand.addOne(Card(0, 11))
+      hand.playerOneHand.addOne(Card(0, 10))
+      hand.playerOneHand.addOne(Card(0, 9))
+      hand.playerOneHand.addOne(Card(0, 8))
+      hand.playerOneHand.addOne(Card(0, 7))
+
+      "have the dropped Cards on the table" in {
+        var testList: ListBuffer[Integer] = new ListBuffer()
+        for (x <- 0 to 5)
+          testList.addOne(x)
+        hand.dropCardsOnTable(testList, 1)
+        table.droppedCardsList.isEmpty should be(false)
       }
     }
   }
