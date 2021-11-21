@@ -47,10 +47,13 @@ class TuiSpec extends AnyWordSpec {
       tui.processInputReadLine("showTable")
       controller.showTable() should be(true)
     }
+  }
+  "Another Romme TUI" should {
+    val controller = new Controller()
+    val tui = new Tui(controller)
     "show Victory on input 'victory' when the player has no more Cards" in {
-      controller.hand.playerOneHand.empty
       tui.processInputReadLine("victory")
-      controller.victory() should be(false)
+      controller.victory() should be(true)
     }
   }
 }
