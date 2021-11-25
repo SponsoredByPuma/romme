@@ -38,6 +38,12 @@ class Tui(controller: Controller) extends de.htwg.se.romme.util.Observer {
         var dec = readLine.toInt
         controller.dropMultipleCards(list,dec)
       case "show"    => controller.showCards()
+      case "joker" => 
+        println("Which Card would you like to drop ?")
+        var cardInput = readLine().toInt
+        println("Which Set would you like to change ?")
+        var setInput = readLine().toInt
+        controller.takeJoker(setInput,cardInput)
       case "showTable" => controller.showTable()
       case "sort" => controller.sortPlayersCards()
       case "victory" => 
