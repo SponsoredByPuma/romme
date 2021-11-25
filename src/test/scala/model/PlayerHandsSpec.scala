@@ -37,7 +37,7 @@ class PlayerHandsSpec extends AnyWordSpec {
     "created " should {
       val deck = Deck()
       val table = new Table()
-      val hand = PlayerHands(table)
+      val hand = PlayerHands(table) // ich hasse random sachen
 
       "be able to drop 5 Cards from his hand in Order and add them to the table" in {
         hand.playerOneHand.addOne(Card(0, 12))
