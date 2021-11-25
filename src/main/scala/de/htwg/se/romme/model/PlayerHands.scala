@@ -6,10 +6,13 @@ import scala.collection.mutable.ListBuffer
 import de.htwg.se.romme.model.Deck
 import de.htwg.se.romme.model.Table
 import de.htwg.se.romme.model.Drops
+import de.htwg.se.romme.model.State
 
 class PlayerHands(table: Table) {
   var playerOneHand: ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
-  var outside: Boolean = false
+ // var outside: Boolean = false
+  var outside = StateContext()
+  outside.setState(StateOutsideFalse())
 
   def draw13Cards(d: Deck): Unit = {
     for (counter <- 0 to 12) {
@@ -61,7 +64,7 @@ class PlayerHands(table: Table) {
     for(counter <- 0 to (index.size - 1))
       droppingCards.addOne(playerOneHand(index(counter)))// adds the element of your hand at the index
 
-    if(outside == false)
+    if(outside.getStateB() == false)
       droppingCards = drop.execute(droppingCards,dec)
       if (dec == 0)
         var count = 0
@@ -78,10 +81,9 @@ class PlayerHands(table: Table) {
         return false
       end if
       table.placeCardsOnTable(droppingCards)
-      outside = true
+      outside.setState(StateOutSideTrue())
       return true
     else
-      println("You are outside !")
       droppingCards = drop.execute(droppingCards, dec)
       if(droppingCards.isEmpty)
         println("YOUR SUM IS ZERO BRO")
@@ -93,7 +95,7 @@ class PlayerHands(table: Table) {
     end if
     return true
   }
-
+  
   def showYourCards(): Unit = {
     for (tmp <- 0 to playerOneHand.size - 1)
       print(

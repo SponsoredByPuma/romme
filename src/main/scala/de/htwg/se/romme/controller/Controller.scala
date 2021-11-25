@@ -1,24 +1,36 @@
 package de.htwg.se.romme
 package controller
 
-import model.{Card, Deck, Player, PlayerHands,Table}
+import model.{Card, Deck, Player, PlayerHands,Table,State}
 import _root_.de.htwg.se.romme.util.Observable
 import scala.io.StdIn.readLine
 import util.Observable
 import scala.collection.mutable.ListBuffer
+import de.htwg.se.romme.model.StateContext
 
 class Controller() extends Observable {
   val deck = new Deck() // Deck-Instanz erstellt
   val table = new Table()
   val hand = new PlayerHands(table)
+  /*
+  val hand2 = new PlayerHands(table)
+  deck.createNewDeck()
+  val player1 = new Player("Test",hand,deck,table)
+  val player2 = new Player("Test2",hand2,deck,table)
+  */
+  
   
 
   def gameStart(): Unit = {
-    deck.createNewDeck() // neues Deck erstellen
+    
+    deck.createNewDeck() // neues Deck erstellen das könnte eventuell dann weg
     hand.draw13Cards(deck)
-    var tmp = 0
-    println()
     notifyObservers
+    /*
+    player1.startTheGame()
+    player2.startTheGame()
+    notifyObservers
+    */
   }
 
   def pickUpGraveYard(): Unit = {

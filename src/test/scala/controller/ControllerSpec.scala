@@ -104,4 +104,33 @@ class ControllerSpec extends AnyWordSpec {
       }
     }
   }
+  "A Controller" when {
+    "created and observed by an Observer" should {
+      val table = new Table()
+      val deck = new Deck()
+      val hand = new PlayerHands(table)
+      val controller = new Controller()
+      val observer = new Observer {
+        var updated: Boolean = false
+        def isUpdated: Boolean = updated
+        override def update: Unit = updated = true
+      }
+      controller.add(observer)
+      hand.playerOneHand.addOne(Card(0, 0)) // herz 2
+      hand.playerOneHand.addOne(Card(0, 0))
+      var l: ListBuffer[Card] = ListBuffer()
+      l.addOne(Card(0, 0))
+      l.addOne(Card(1, 0))
+      l.addOne(Card(2, 0))
+      l.addOne(Card(3, 0))
+      table.droppedCardsList.insert(0, l)
+      table.droppedCardsList.insert(1, l)
+      print(table.droppedCardsList(0)(0).getCardName)
+
+      "notify its Observer" in {
+        controller.takeJoker(0, 0)
+        observer.updated should be(true)
+      }
+    }
+  }
 }

@@ -9,7 +9,7 @@ class Table() {
   var droppedCardsList: ListBuffer[ListBuffer[Card]] = new ListBuffer()
 
   var graveYard =
-    Card(5, 0) // the last dropped card Problem: es gibt kein null
+    Card(5, 0) // the last dropped card
 
   def replaceGraveYard(card: Card): Unit = {
     graveYard = card

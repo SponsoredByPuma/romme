@@ -76,9 +76,6 @@ object Drops {
         print("Bei Jokers")
         return cards.empty
     end if
-
-    //for (card <- cards)
-      //print(card.getCardName)
     return cards
   }
 
