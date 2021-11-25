@@ -56,12 +56,25 @@ class PlayerHands(table: Table) {
   def dropCardsOnTable(index: ListBuffer[Integer], dec: Integer): Boolean = {
     val drop = Drops
     var droppingCards: ListBuffer[Card] = new ListBuffer()
+    var sum = 0
 
     for(counter <- 0 to (index.size - 1))
       droppingCards.addOne(playerOneHand(index(counter)))// adds the element of your hand at the index
+
     if(outside == false)
-      if (drop.execute(droppingCards,dec) < 40)
-        println("LOOOOOOOOOOOOSER")
+      droppingCards = drop.execute(droppingCards,dec)
+      if (dec == 0)
+        var count = 0
+        while(droppingCards(count).getValue.equals(2))
+          count = count + 1
+        sum = droppingCards.size * droppingCards(count).getValue
+      else
+        for (card <- droppingCards)
+          sum = sum + card.getValue
+      end if
+      print(sum)
+      if (sum < 40)
+        println("SCORE IS BELOW 40 F")
         return false
       end if
       table.placeCardsOnTable(droppingCards)
@@ -69,8 +82,9 @@ class PlayerHands(table: Table) {
       return true
     else
       println("You are outside !")
-      if(drop.execute(droppingCards, dec) == 0)
-        println("RIP something went wrong")
+      droppingCards = drop.execute(droppingCards, dec)
+      if(droppingCards.isEmpty)
+        println("YOUR SUM IS ZERO BRO")
         return false
       end if
       println("You did it")

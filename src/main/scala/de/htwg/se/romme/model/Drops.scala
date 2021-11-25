@@ -18,66 +18,73 @@ object Drops {
 
   }
 
-  def execute(cards: ListBuffer[Card], numberOfStrategy: Integer): Integer =
+  def execute(cards: ListBuffer[Card], numberOfStrategy: Integer): ListBuffer[Card] =
     strategy(numberOfStrategy, cards)
 
-  def strategy(numberOfStrategy: Integer, cards: ListBuffer[Card]): Integer = {
-    var sum = 0
+  def strategy(numberOfStrategy: Integer, cards: ListBuffer[Card]): ListBuffer[Card] = {
+    var list : ListBuffer[Card] = ListBuffer()
     numberOfStrategy match {
-      case 0 => sum = strategySameSuit(cards)
-      case 1 => sum = strategyOrder(cards)
+      case 0 => list = strategySameSuit(cards)
+      case 1 => list = strategyOrder(cards)
     }
-    return sum
+    return list
   }
 
-  def strategySameSuit(cards: ListBuffer[Card]): Integer = {
-    var sum = 0
-    var tmpRank = 20
+  def strategySameSuit(cards: ListBuffer[Card]): ListBuffer[Card] = {
+    var tmpRank = 0
     var counter = 0
 
-    if(cards.size > 4) // it can only be 4 cards at max
-      return 0
+    if(cards.size > 4 || cards.size < 3) // it can only be 4 cards at max and min 3 cards
+      return cards.empty
     end if
-
-    while (tmpRank == 20)
-      if (cards(counter).getSuit.equals("Joker")) // if it is a Joker take the next card
-        counter = counter + 1
-      else
-        tmpRank = cards(counter).getValue
+  
+    while (cards(counter).getSuit.equals("Joker"))
+      counter = counter + 1
+    tmpRank = cards(counter).getValue
     
     var tmpList: ListBuffer[Integer] = ListBuffer()
     for (x <- 0 to (cards.size - 1))
       if (cards(x).getSuit.equals("Joker"))
         tmpList.addOne(x)
       end if
-    for(int <- tmpList)
-      print("Which Suit should your Joker have ?")
+
+    for (x <- 0 to (tmpList.size - 1)) 
+      println("Which Suit should your Joker have ?")
       var input = readLine()
-      cards.remove(int)
+      println(x) // TEEEEEEEEEEEEEEST
       var c:Joker = Joker()
       c.setSuit(input)
-      cards.addOne(c)
+      cards.insert(tmpList(x),c)
+      cards.remove(tmpList(x) + 1)
 
     var storeSuits: ListBuffer[String] = ListBuffer()
     for (card <- cards) // store all Suits in a list
       storeSuits.addOne(card.getSuit)  
-    if (storeSuits.distinct.size != storeSuits.size) // are the duplicates in the list ? 
-      return 0
+    if (storeSuits.distinct.size != storeSuits.size) // are the duplicates in the list ?
+      println("Bei storeSuits") 
+      return cards.empty
     end if
     var storeRanks: ListBuffer[Integer] = ListBuffer()
     for (card <- cards)
       storeRanks.addOne(card.getValue)
-    if(storeRanks.distinct.size > (1 + tmpList.size)) // if there is more than one rank in the list
-      return 0
+    if (tmpList.isEmpty)
+      if(storeRanks.distinct.size > 1) // if there is more than one rank in the list
+        print("Bei keinen Jokers")
+        return cards.empty
+    else
+      if(storeRanks.distinct.size > 2) // if there is more than one rank in the list
+        print("Bei Jokers")
+        return cards.empty
     end if
-    sum = tmpRank * cards.size
-    return sum
+
+    //for (card <- cards)
+      //print(card.getCardName)
+    return cards
   }
 
-  def strategyOrder(cards: ListBuffer[Card]): Integer = {
+  def strategyOrder(cards: ListBuffer[Card]): ListBuffer[Card] = {
     var tmpSuit = "Joker"
     var counter = 0
-    var sum = 0
     var tmpList: ListBuffer[Integer] = ListBuffer()
     while(tmpSuit.equals("Joker")) // if the list starts with a joker you need to get the real Suit
         tmpSuit = cards(counter).getSuit
@@ -88,42 +95,83 @@ object Drops {
           tmpList.addOne(x)
         end if 
       else
-        return 0 // the cards have different Suits so its wrong
-      end if
+        return cards.empty // the cards have different Suits so its wrong
+      end if 
 
-    for(int <- tmpList)
-      print("Which Rank should your Joker have ?")
+    for (x <- 0 to(tmpList.size - 1)) 
+      println("Which Rank should your Joker have ?")
       var input = readLine()
-      cards.remove(int)
       var c:Joker = Joker()
       c.setValue(input)
-      cards.addOne(c)
+      cards.insert(tmpList(x),c)
+      cards.remove(tmpList(x) + 1)
 
     var list: ListBuffer[Card] = ListBuffer()
     list = cards.sortBy(_.placeInList)
-    if(lookForGaps(list) == false)
+    list = lookForGaps(list)
+    if(list.isEmpty)
       print("somethings fucked i can feel it")
-      return 0
+      return cards.empty
     end if
-
-    for (dome <- list) // finally get the sum of the cards
-      sum = sum + dome.getValue
-    print(sum)
-    return sum // gebe die Summe zurück 
+    return list
   }
 
-  def lookForGaps(list: ListBuffer[Card]): Boolean = {
+  def lookForGaps(list: ListBuffer[Card]): ListBuffer[Card] = {
 
-    var next = list(0).placeInList
-     
-    for (x <- 0 until (list.size - 1)) // until, since the last card has no next 
-      next = next + 1 // increase next for 1
-      if (list(x).placeInList == 12) // falls es ein Ace ist, ist die nächste Karte wieder eine zwei
-        next = 0
-      end if
-      if(list(x + 1).placeInList != next)
-        return false
-      end if
-    return true
+    var lowestCard = lookForLowestCard(list)
+
+    if(lowestCard == 0 && checkForAce(list)) // if there is an ace and a two in the order the ace and two need to be flexible
+      var splitter = 0
+      while(splitter == list(splitter).placeInList) // solange die Reihenfolge noch passt erhöhe den counter
+        splitter = splitter + 1
+      var secondList: ListBuffer[Card] = ListBuffer()
+      for (x <- splitter to list.size - 1) // adde alle Element nach der Lücke hinzu
+        secondList.addOne(list(splitter))
+        splitter = splitter + 1
+      var newList: ListBuffer[Card] = ListBuffer()
+      newList.addAll(secondList) // füge erst die Bube,Dame, König, Ass hinzu
+
+      var thirdList: ListBuffer[Card] = ListBuffer() 
+      thirdList = list.filter(_.placeInList < splitter)
+      newList.addAll(thirdList) // danach die 2,3,4,5...
+
+      var next = newList(0).placeInList
+
+      for(x <- 0 until newList.size - 1)
+        next = next + 1
+        if(newList(x).placeInList == 12)
+          next = 0
+        end if
+        if (next != newList(x + 1).placeInList)
+          return newList.empty // return false
+        end if
+      return newList // return true
+    else
+      var next = list(0).placeInList
+      for (x <- 0 until (list.size - 1)) // until, since the last card has no next 
+        next = next + 1 // increase next for 1
+        if(list(x + 1).placeInList != next)
+          return list.empty // return false
+        end if
+      return list // return true
+    end if
   }
+
+  def lookForLowestCard(list: ListBuffer[Card]): Integer = {
+    var lowestCard = list(0).placeInList
+    for (x <- 0 to list.size - 1)
+      if (list(x).placeInList < lowestCard)
+        lowestCard = list(x).placeInList
+      end if
+    return lowestCard
+  }
+
+  def checkForAce(list: ListBuffer[Card]): Boolean = {
+    for(x <- 0 to list.size - 1)
+      if (list(x).placeInList == 12)
+        return true
+      end if
+    return false
+  }
+
 }

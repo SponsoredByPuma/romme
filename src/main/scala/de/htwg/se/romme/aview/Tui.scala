@@ -10,6 +10,7 @@ import scala.collection.mutable.ListBuffer
 
 class Tui(controller: Controller) extends de.htwg.se.romme.util.Observer {
   controller.add(this)
+  
 
   def processInputReadLine(input: String): Unit = {
     input match {
