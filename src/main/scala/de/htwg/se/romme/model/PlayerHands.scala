@@ -14,10 +14,11 @@ class PlayerHands(table: Table) {
   var outside = StateContext()
   outside.setState(StateOutsideFalse())
 
-  def draw13Cards(d: Deck): Unit = {
+  def draw13Cards(d: Deck): ListBuffer[Card] = {
     for (counter <- 0 to 12) {
       playerOneHand.addOne(d.drawFromDeck())
     }
+    playerOneHand
   }
 
   def dropASingleCard(index: Integer): Unit = {

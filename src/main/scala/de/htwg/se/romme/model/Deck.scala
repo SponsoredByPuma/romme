@@ -8,7 +8,7 @@ class Deck() {
 
   var deckList: ListBuffer[de.htwg.se.romme.model.Card] = ListBuffer()
 
-  def createNewDeck(): Unit = {
+  def createNewDeck(): ListBuffer[Card] = {
 
     var suitCounter = 0
     var rankCounter = 0
@@ -28,6 +28,7 @@ class Deck() {
       val jokerCard = Card(4, 0)
       deckList.addOne(jokerCard)
     }
+    deckList
   }
 
   def drawFromDeck(): de.htwg.se.romme.model.Card = {

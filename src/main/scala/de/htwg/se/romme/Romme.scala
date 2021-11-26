@@ -1,12 +1,25 @@
 package de.htwg.se.romme
 
-import de.htwg.se.romme.model.{Card, Deck, Player, PlayerHands}
+import de.htwg.se.romme.model.{
+  Card,
+  Deck,
+  Player,
+  PlayerHands,
+  Drops,
+  Game,
+  State,
+  Table
+}
 import de.htwg.se.romme.controller.Controller
 import de.htwg.se.romme.aview.Tui
 import scala.io.StdIn.readLine
 
 object Romme {
-  val controller = new Controller()
+  val deck = new Deck() // Deck-Instanz erstellt
+  val table = new Table()
+  val hand = new PlayerHands(table) // var hand = new PlayerHands(table)
+  val game = Game(table, hand, deck)
+  val controller = new Controller(game)
   val tui = new Tui(controller)
   controller.notifyObservers
 

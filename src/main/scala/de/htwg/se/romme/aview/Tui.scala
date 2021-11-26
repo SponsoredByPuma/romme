@@ -24,13 +24,13 @@ class Tui(controller: Controller) extends de.htwg.se.romme.util.Observer {
         controller.dropASpecificCard(index)
       case "dropM" => 
         var amount = 0
-        while(amount < 3 || amount >= controller.hand.playerOneHand.size) 
+        while(amount < 3 || amount >= controller.game.hand.playerOneHand.size) 
           print("How many Cards would you like to drop ?")
           amount = readLine.toInt
         var list : ListBuffer[Integer] = new ListBuffer()
         var scanner = ""
         while(amount > 0)
-          println("Which Card would you like to drop ? It must be something between 0 and " + (controller.hand.playerOneHand.size - 1))
+          println("Which Card would you like to drop ? It must be something between 0 and " + (controller.game.hand.playerOneHand.size - 1))
           scanner = readLine
           list.addOne(scanner.toInt)
           amount = amount - 1

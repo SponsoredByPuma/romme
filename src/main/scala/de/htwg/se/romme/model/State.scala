@@ -10,8 +10,7 @@ class StateOutSideTrue() extends State {
 
     override def outside(state_Context: StateContext): Boolean = {
         println("You are outside !")
-        val b = true
-        return b
+        true
     }
 
 }
@@ -19,28 +18,16 @@ class StateOutSideTrue() extends State {
 class StateOutsideFalse() extends State {
     override def outside(state_Context: StateContext): Boolean = {
         println("You are not outside yet !")
-        val s = false
-        return s
+        false
     }
 }
 
 
-class StateContext() {
+class StateContext() :
     var mystate: State = StateOutsideFalse()
-    def setState(newState: State): Unit = {
-        mystate = newState
-    }
-
-    def getState() : State = {
-        return mystate
-    }
-
-    def getStateB() : Boolean = {
-        return mystate.outside(this)
-    }
-
-    def outside(): Boolean = {
-        val b = mystate.outside(this)
-        return b
-    }
-}
+    def setState(newState: State): Unit  = mystate = newState
+    def getState() : State = mystate
+    def getStateB() : Boolean =  mystate.outside(this)
+    def outside(): Boolean = mystate.outside(this)
+        
+    

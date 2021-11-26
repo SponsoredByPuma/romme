@@ -3,7 +3,7 @@ package de.htwg.se.romme
 package controller
 
 import de.htwg.se.romme.util.Observer
-import model.{Card, Deck, Player, PlayerHands, Table, Drops}
+import model.{Card, Deck, Player, PlayerHands, Table, Drops, Game}
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
@@ -17,7 +17,8 @@ class ControllerSpec extends AnyWordSpec {
       val table = new Table()
       val deck = new Deck()
       val hand = new PlayerHands(table)
-      val controller = new Controller()
+      val game = new Game(table, hand, deck)
+      val controller = new Controller(game)
       val observer = new Observer {
         var updated: Boolean = false
         def isUpdated: Boolean = updated
@@ -27,24 +28,24 @@ class ControllerSpec extends AnyWordSpec {
       "notify its Observer after creation" in {
         controller.gameStart()
         observer.updated should be(true)
-        controller.deck.deckList.size should be(97)
+        controller.game.deck.deckList.size should be(97)
       }
 
       "notify its Observer after dropping a single Card" in {
         controller.dropASpecificCard(0)
         observer.updated should be(true)
-        controller.hand.playerOneHand.size should be(12)
+        controller.game.hand.playerOneHand.size should be(12)
       }
 
       "notify its Observer after picking up the graveYard Card" in {
         controller.pickUpGraveYard()
         observer.updated should be(true)
-        controller.hand.playerOneHand.size should be(13)
+        controller.game.hand.playerOneHand.size should be(13)
       }
       "notify its Observer after picking up a normal Card" in {
         controller.pickUpACard()
         observer.updated should be(true)
-        controller.hand.playerOneHand.size should be(14)
+        controller.game.hand.playerOneHand.size should be(14)
       }
 
       "notify its Observer after checking victory" in {
@@ -53,7 +54,7 @@ class ControllerSpec extends AnyWordSpec {
       }
 
       "notify its Observer after showing the cards" in {
-        controller.showCards()
+        controller.showCards() should be(true)
         observer.updated should be(true)
       }
       "notify its Observer after showing the Table" in {
@@ -65,9 +66,9 @@ class ControllerSpec extends AnyWordSpec {
         observer.updated should be(true)
       }
       "notify its Observer after checking vitory" in {
-        var tmp = controller.hand.playerOneHand.size - 1
+        var tmp = controller.game.hand.playerOneHand.size - 1
         for (x <- 0 to tmp)
-          controller.hand.playerOneHand.remove(0)
+          controller.game.hand.playerOneHand.remove(0)
         controller.victory() should be(true)
         observer.updated should be(true)
       }
@@ -78,7 +79,8 @@ class ControllerSpec extends AnyWordSpec {
       val table = new Table()
       val deck = new Deck()
       val hand = new PlayerHands(table)
-      val controller = new Controller()
+      val game = new Game(table, hand, deck)
+      val controller = new Controller(game)
       val observer = new Observer {
         var updated: Boolean = false
         def isUpdated: Boolean = updated
@@ -86,12 +88,12 @@ class ControllerSpec extends AnyWordSpec {
       }
       controller.add(observer)
 
-      controller.hand.playerOneHand.addOne(Card(0, 12))
-      controller.hand.playerOneHand.addOne(Card(0, 11))
-      controller.hand.playerOneHand.addOne(Card(0, 10))
-      controller.hand.playerOneHand.addOne(Card(0, 9))
-      controller.hand.playerOneHand.addOne(Card(0, 8))
-      controller.hand.playerOneHand.addOne(Card(0, 7))
+      controller.game.hand.playerOneHand.addOne(Card(0, 12))
+      controller.game.hand.playerOneHand.addOne(Card(0, 11))
+      controller.game.hand.playerOneHand.addOne(Card(0, 10))
+      controller.game.hand.playerOneHand.addOne(Card(0, 9))
+      controller.game.hand.playerOneHand.addOne(Card(0, 8))
+      controller.game.hand.playerOneHand.addOne(Card(0, 7))
       println("---------------------------------------------------------")
 
       "notify its Observer after dropping multiple Cards in Order" in {
@@ -100,7 +102,7 @@ class ControllerSpec extends AnyWordSpec {
           list.addOne(x)
         controller.dropMultipleCards(list, 1)
         observer.updated should be(true)
-        controller.hand.playerOneHand.size should be(0)
+        controller.game.hand.playerOneHand.size should be(0)
       }
     }
   }
