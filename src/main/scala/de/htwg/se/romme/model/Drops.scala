@@ -119,7 +119,7 @@ object Drops {
 
     if(lowestCard == 0 && checkForAce(list)) // if there is an ace and a two in the order the ace and two need to be flexible
       var splitter = 0
-      while(splitter == list(splitter).placeInList) // solange die Reihenfolge noch passt erhöhe den counter
+      while(splitter == list(splitter).placeInList.get) // solange die Reihenfolge noch passt erhöhe den counter
         splitter = splitter + 1
       var secondList: ListBuffer[Card] = ListBuffer()
       for (x <- splitter to list.size - 1) // adde alle Element nach der Lücke hinzu
@@ -129,25 +129,25 @@ object Drops {
       newList.addAll(secondList) // füge erst die Bube,Dame, König, Ass hinzu
 
       var thirdList: ListBuffer[Card] = ListBuffer() 
-      thirdList = list.filter(_.placeInList < splitter)
+      thirdList = list.filter(_.placeInList.get < splitter)
       newList.addAll(thirdList) // danach die 2,3,4,5...
 
-      var next = newList(0).placeInList
+      var next = newList(0).placeInList.get
 
       for(x <- 0 until newList.size - 1)
         next = next + 1
-        if(newList(x).placeInList == 12)
+        if(newList(x).placeInList.get == 12)
           next = 0
         end if
-        if (next != newList(x + 1).placeInList)
+        if (next != newList(x + 1).placeInList.get)
           return newList.empty // return false
         end if
       return newList // return true
     else
-      var next = list(0).placeInList
+      var next = list(0).placeInList.get
       for (x <- 0 until (list.size - 1)) // until, since the last card has no next 
         next = next + 1 // increase next for 1
-        if(list(x + 1).placeInList != next)
+        if(list(x + 1).placeInList.get != next)
           return list.empty // return false
         end if
       return list // return true
@@ -155,17 +155,17 @@ object Drops {
   }
 
   def lookForLowestCard(list: ListBuffer[Card]): Integer = {
-    var lowestCard = list(0).placeInList
+    var lowestCard = list(0).placeInList.get
     for (x <- 0 to list.size - 1)
-      if (list(x).placeInList < lowestCard)
-        lowestCard = list(x).placeInList
+      if (list(x).placeInList.get < lowestCard)
+        lowestCard = list(x).placeInList.get
       end if
     return lowestCard
   }
 
   def checkForAce(list: ListBuffer[Card]): Boolean = {
     for(x <- 0 to list.size - 1)
-      if (list(x).placeInList == 12)
+      if (list(x).placeInList.get == 12)
         return true
       end if
     return false

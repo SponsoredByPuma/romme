@@ -15,7 +15,7 @@ case class Game(table: Table, hand: PlayerHands, deck: Deck):
 
     def pickUpGraveYard() : Game = {
         val d = table.grabGraveYard()
-        hand.playerOneHand.addOne(d)
+        hand.playerOneHand.addOne(d.get)
         return copy(table,hand,deck)
     }
 

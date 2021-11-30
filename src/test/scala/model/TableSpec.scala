@@ -24,7 +24,7 @@ class TableSpec extends AnyWordSpec {
         hand.dropASingleCard(0)
         var tmp = table.graveYard.getCardName
         var tmp2 = table.grabGraveYard()
-        tmp2.getCardName should be(tmp)
+        tmp2.get.getCardName should be(tmp)
       }
     }
   }

@@ -4,7 +4,7 @@ trait Card {
   def getSuit: String
   def getValue: Integer
   def getCardName: (String, String)
-  def placeInList: Integer
+  def placeInList: Option[Integer]
   val rankList: List[String] = List(
     "two",
     "three",
@@ -45,8 +45,8 @@ private class Heart(rank: Integer) extends Card {
     return ("Heart", rankList(rank))
   }
 
-  override def placeInList: Integer = {
-    return rank
+  override def placeInList: Option[Integer] = {
+    return Some(rank)
   }
 }
 private class Diamond(rank: Integer) extends Card {
@@ -71,8 +71,8 @@ private class Diamond(rank: Integer) extends Card {
   override def getCardName: (String, String) = {
     return ("Diamond", rankList(rank))
   }
-  override def placeInList: Integer = {
-    return rank
+  override def placeInList: Option[Integer] = {
+    return Some(rank)
   }
 }
 private class Spades(rank: Integer) extends Card {
@@ -97,8 +97,8 @@ private class Spades(rank: Integer) extends Card {
   override def getCardName: (String, String) = {
     return ("Spades", rankList(rank))
   }
-  override def placeInList: Integer = {
-    return rank
+  override def placeInList: Option[Integer] = {
+    return Some(rank)
   }
 }
 private class Club(rank: Integer) extends Card {
@@ -123,8 +123,8 @@ private class Club(rank: Integer) extends Card {
   override def getCardName: (String, String) = {
     return ("Club", rankList(rank))
   }
-  override def placeInList: Integer = {
-    return rank
+  override def placeInList: Option[Integer] = {
+    return Some(rank)
   }
 }
 private class Joker() extends Card {
@@ -160,18 +160,18 @@ private class Joker() extends Card {
   def setSuit(s: String): Unit = {
     this.suit = s
   }
-  override def placeInList: Integer = {
-    return rank
+  override def placeInList: Option[Integer] = {
+    return Some(rank)
   }
 }
 private class EmptyCard() extends Card {
-  override def getSuit: String = return ""
+  override def getSuit: String = ""
   override def getValue: Integer = return 0
   override def getCardName: (String, String) = {
     return ("", "")
   }
-  override def placeInList: Integer = {
-    return null
+  override def placeInList: Option[Integer] = {
+    return None
   }
 }
 

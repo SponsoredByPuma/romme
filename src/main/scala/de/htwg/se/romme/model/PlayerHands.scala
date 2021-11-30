@@ -43,10 +43,10 @@ class PlayerHands(table: Table) {
       }
     // sort all the list by its ranks
 
-    heart = heart.sortBy(_.placeInList)
-    club = club.sortBy(_.placeInList)
-    diamond = diamond.sortBy(_.placeInList)
-    spades = spades.sortBy(_.placeInList)
+    heart = heart.sortBy(_.placeInList.get)
+    club = club.sortBy(_.placeInList.get)
+    diamond = diamond.sortBy(_.placeInList.get)
+    spades = spades.sortBy(_.placeInList.get)
 
     playerOneHand = playerOneHand.empty // empty the playerHand
 

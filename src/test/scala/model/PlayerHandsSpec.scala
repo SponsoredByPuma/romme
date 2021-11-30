@@ -25,9 +25,10 @@ class PlayerHandsSpec extends AnyWordSpec {
       "be sorted by rank" in {
         hands.sortMyCards()
         var check =
-          hands.playerOneHand(0).placeInList <= hands
+          hands.playerOneHand(0).placeInList.get <= hands
             .playerOneHand(1)
             .placeInList
+            .get
         check should be(true)
       }
     }
@@ -52,7 +53,6 @@ class PlayerHandsSpec extends AnyWordSpec {
         table.droppedCardsList(0).size should be(5)
       }
       "be able to drop 3 Cards from his hand and add them to the table" in {
-        println("DU HUREERERERERERER")
         hand.playerOneHand.addOne(Card(0, 12))
         hand.playerOneHand.addOne(Card(1, 12))
         hand.playerOneHand.addOne(Card(2, 12))

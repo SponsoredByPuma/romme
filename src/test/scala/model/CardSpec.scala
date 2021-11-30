@@ -37,7 +37,7 @@ class CardSpec extends AnyWordSpec {
       "be set to Heart, Eight" in {
         card.setSuit("Heart")
         card.setValue("eight")
-        card.placeInList should be(6)
+        card.placeInList.get should be(6)
         card.getValue should be(8)
       }
     }

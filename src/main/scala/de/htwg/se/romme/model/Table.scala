@@ -2,6 +2,9 @@ package de.htwg.se.romme
 package model
 
 import scala.collection.mutable.ListBuffer
+import scala.util.Try
+import scala.util.Failure
+import scala.util.Success
 //import de.htwg.se.romme.model.Card
 
 class Table() {
@@ -31,13 +34,13 @@ class Table() {
     }
   }
 
-  def grabGraveYard(): Card = {
+  def grabGraveYard(): Option[Card] = {
     if(graveYard.getCardName.equals("",""))
-      throw new Exception("You cannot grab the GraveYard")
+      None
     end if
     val returnCard = graveYard // safe the graveYard Card
     graveYard = Card(5, 13) // delete the graveYard
-    return returnCard // return the Card
+    return Some(returnCard) // return the Card
   }
 
 }
