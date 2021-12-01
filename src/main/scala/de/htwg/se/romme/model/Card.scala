@@ -2,7 +2,7 @@ package de.htwg.se.romme.model
 
 trait Card {
   def getSuit: String
-  def getValue: Integer
+  def getValue: Integer 
   def getCardName: (String, String)
   def placeInList: Option[Integer]
   val rankList: List[String] = List(

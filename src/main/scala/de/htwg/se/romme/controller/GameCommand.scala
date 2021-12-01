@@ -7,14 +7,9 @@ import de.htwg.se.romme.model.Deck
 import de.htwg.se.romme.model.PlayerHands
 import de.htwg.se.romme.model.Player
 
-class GameCommand(
-    table: Table,
-    hand: PlayerHands,
-    deck: Deck,
-    controller: Controller
-) extends Command {
+class GameCommand(gaming: Game, controller: Controller) extends Command {
   override def doStep: Unit = controller.game =
-    controller.game.set(table, hand, deck)
+    controller.game.set(gaming.table, gaming.hand, gaming.deck)
 
   override def undoStep: Unit = {
     val t = Table()
@@ -22,6 +17,11 @@ class GameCommand(
   }
 
   override def redoStep: Unit = controller.game =
-    controller.game.set(table, hand, deck)
+    controller.game.set(gaming.table, gaming.hand, gaming.deck)
 
 }
+
+//table: Table,
+//hand: PlayerHands,
+//deck: Deck,
+//controller: Controller

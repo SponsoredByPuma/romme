@@ -14,74 +14,34 @@ class Controller(var game: Game) extends Observable {
   val table = new Table()
   val hand = new PlayerHands(table) // var hand = new PlayerHands(table)
   private val undoManager = new UndoManager
-  /*
-  val hand2 = new PlayerHands(table)
-  deck.createNewDeck()
-  val player1 = new Player("Test",hand,deck,table)
-  val player2 = new Player("Test2",hand2,deck,table)
-   */
 
   def gameStart(): Unit = {
     game = game.gameStart()
+    undoManager.doStep(new GameCommand(game, this))
     notifyObservers
   }
 
   def pickUpGraveYard(): Unit = {
     game = game.pickUpGraveYard()
+    undoManager.doStep(new GameCommand(game, this))
     notifyObservers
   }
 
   def pickUpACard(): Unit = {
     game = game.pickUpACard()
+    undoManager.doStep(new GameCommand(game, this))
     notifyObservers
   }
 
   def dropASpecificCard(index: Integer): Unit = {
     game = game.dropASpecificCard(index)
+    undoManager.doStep(new GameCommand(game, this))
     notifyObservers
   }
 
   def takeJoker(idxlist: Integer, idxCard: Integer): Unit = {
-    /*
-    var tmpTableList: ListBuffer[Card] = ListBuffer()
-    tmpTableList.addAll(table.droppedCardsList(idxlist))
-    var tmpSuit: ListBuffer[String] = ListBuffer()
-    var tmpRank: ListBuffer[Integer] = ListBuffer()
-    var storeJokerPlace: ListBuffer[Integer] = ListBuffer()
-    var storeNormalCards: ListBuffer[Integer] = ListBuffer()
-    for (x <- 0 to tmpTableList.size - 1)
-      if (tmpTableList(x).getCardName.equals("Joker",""))
-        storeJokerPlace.addOne(x)
-      end if
-      storeNormalCards.addOne(x)
-      tmpSuit.addOne(tmpTableList(x).getSuit)
-      tmpRank.addOne(tmpTableList(x).getValue)
-
-    if (tmpSuit.distinct.size > 1 + storeJokerPlace.size) // Strategy 0 Suit
-      for(x <- 0 to storeJokerPlace.size - 1)
-        if (hand.playerOneHand(idxCard).getSuit.equals(tmpTableList(storeJokerPlace(x)).getSuit) && hand.playerOneHand(idxCard).getValue == tmpTableList(storeNormalCards(0)).getValue) // schaue ob deine Card auch der gewünschte Suit hat
-          tmpTableList.insert(storeJokerPlace(x), hand.playerOneHand(idxCard)) // füge deine Karte ein
-          tmpTableList.remove(storeJokerPlace(x) + 1) // remove den Joker
-          hand.playerOneHand.remove(idxCard) // remove deine Karte von der Hand
-          hand.playerOneHand.addOne(Card(4,0)) // gebe dir einen Joker auf die hand
-          table.droppedCardsList.insert(idxlist,tmpTableList)// füge die neue Liste auf dem Tisch ein
-          table.droppedCardsList.remove(idxlist + 1) // lösche die Alte Liste
-        end if
-
-    else // Strategy 1 Order
-      for (x <- 0 to storeJokerPlace.size - 1)
-        if(hand.playerOneHand(idxCard).getValue == tmpTableList(storeJokerPlace(x)).getValue && hand.playerOneHand(idxCard).getSuit.equals(tmpTableList(storeNormalCards(0)).getSuit)) // schaue ob deine Card auch der gewünschte Value hat
-          tmpTableList.insert(storeJokerPlace(x), hand.playerOneHand(idxCard)) // füge deine Karte ein
-          tmpTableList.remove(storeJokerPlace(x) + 1) // remove den Joker
-          hand.playerOneHand.remove(idxCard) // remove deine Karte von der Hand
-          hand.playerOneHand.addOne(Card(4,0)) // gebe dir einen Joker auf die hand
-          table.droppedCardsList.insert(idxlist,tmpTableList) // füge die neue Liste auf dem Tisch ein
-          table.droppedCardsList.remove(idxlist + 1) // lösche die Alte Liste
-        end if
-
-    end if
-     */
     game = game.takeJoker(idxlist, idxCard)
+    undoManager.doStep(new GameCommand(game, this))
     notifyObservers
   }
 
@@ -102,11 +62,13 @@ class Controller(var game: Game) extends Observable {
     end if
      */
     game = game.dropMultipleCards(list, dec)
+    undoManager.doStep(new GameCommand(game, this))
     notifyObservers
   }
 
   def sortPlayersCards(): Unit = {
     game = game.sortPlayersCards()
+    undoManager.doStep(new GameCommand(game, this))
     notifyObservers
   }
 

@@ -19,7 +19,7 @@ class GameCommandSpec() extends AnyWordSpec with Matchers {
       val game = new Game(table, hand, deck)
       val controller = new Controller(game)
       hand.playerOneHand.addOne(Card(0, 0))
-      val gC = new GameCommand(table, hand, deck, controller)
+      val gC = new GameCommand(game, controller)
       "use doStep" in {
         gC.doStep
         controller.game.hand.playerOneHand.size should be(1)

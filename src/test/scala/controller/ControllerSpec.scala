@@ -30,6 +30,16 @@ class ControllerSpec extends AnyWordSpec {
         observer.updated should be(true)
         controller.game.deck.deckList.size should be(97)
       }
+      "notify its Observer after undo" in {
+        controller.undo
+        observer.updated should be(true)
+        controller.game.deck.deckList.size should be(0)
+      }
+      "notify its Observer after redo" in {
+        controller.redo
+        observer.updated should be(true)
+        controller.game.deck.deckList.size should be(97)
+      }
 
       "notify its Observer after dropping a single Card" in {
         controller.dropASpecificCard(0)

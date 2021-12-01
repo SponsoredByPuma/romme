@@ -17,7 +17,9 @@ class Tui(controller: Controller) extends de.htwg.se.romme.util.Observer {
       case "quit"    =>
       case "new"     => controller.gameStart()
       case "pick"    => controller.pickUpACard()
-      case "graveYard" => controller.pickUpGraveYard() // picking up the graveYard Card
+      case "graveYard" => controller.pickUpGraveYard()
+      case "undo" => controller.undo
+      case "redo" => controller.redo
       case "drop"    => 
         println("Which card would you like to drop ?")
         var index = readLine().toInt
