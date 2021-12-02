@@ -64,16 +64,17 @@ class TuiSpec extends AnyWordSpec {
       controller.victory() should be(true)
     }
     "be able to undo a step" in {
-      controller.deck.createNewDeck()
+      controller.gameStart()
+      controller.pickUpACard()
       tui.processInputReadLine("undo")
-      game.deck.deckList.size should be(0)
+      game.deck.deckList.size should be(97)
     }
     "be able to redo a step" in {
-      tui.processInputReadLine("new")
+      tui.processInputReadLine("pick")
       controller.undo
-      controller.game.deck.deckList.size should be(0)
-      tui.processInputReadLine("redo")
       controller.game.deck.deckList.size should be(97)
+      tui.processInputReadLine("redo")
+      controller.game.deck.deckList.size should be(96)
     }
 
   }

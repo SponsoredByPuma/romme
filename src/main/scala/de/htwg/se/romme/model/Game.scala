@@ -76,12 +76,13 @@ case class Game(table: Table, hand: PlayerHands, deck: Deck):
     def dropMultipleCards(list: ListBuffer[Integer], dec: Integer) : Game = {
       if(hand.dropCardsOnTable(list, dec) == true)
         list.sorted // sortiere die Liste
-        for (counter <- 0 to list.size - 1)
+        for (counter <- 0 to list.size - 1) // gehe die Liste durch
+        // falls die Zahl 0 < 12 ist müssen die restlichen Cards um 1 verringert werden, da bei remove eins weggenommen wird
             if (list(counter) < hand.playerOneHand.size - 1)
-                for(counter <- counter + 1 to list.size - 1)
-                    list(counter) = list(counter) - 1
+                for(counter <- counter + 1 to list.size - 1) // go through the next inputs
+                    list(counter) = list(counter) - 1 // decrement the next input for one
             end if
-            hand.playerOneHand.remove(list(counter))
+            hand.playerOneHand.remove(list(counter)) // remove the Card
       end if
       return copy(table,hand,deck)
     }

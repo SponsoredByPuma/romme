@@ -13,7 +13,7 @@ class Table() {
 
   var graveYard =
     Card(5, 0) // the last dropped card
-
+  
   def replaceGraveYard(card: Card): Unit = {
     graveYard = card
   }

@@ -30,16 +30,6 @@ class ControllerSpec extends AnyWordSpec {
         observer.updated should be(true)
         controller.game.deck.deckList.size should be(97)
       }
-      "notify its Observer after undo" in {
-        controller.undo
-        observer.updated should be(true)
-        controller.game.deck.deckList.size should be(0)
-      }
-      "notify its Observer after redo" in {
-        controller.redo
-        observer.updated should be(true)
-        controller.game.deck.deckList.size should be(97)
-      }
 
       "notify its Observer after dropping a single Card" in {
         controller.dropASpecificCard(0)
@@ -52,10 +42,22 @@ class ControllerSpec extends AnyWordSpec {
         observer.updated should be(true)
         controller.game.hand.playerOneHand.size should be(13)
       }
+
       "notify its Observer after picking up a normal Card" in {
         controller.pickUpACard()
         observer.updated should be(true)
         controller.game.hand.playerOneHand.size should be(14)
+      }
+
+      "notify its Observer after undo" in {
+        controller.undo
+        observer.updated should be(true)
+        controller.game.deck.deckList.size should be(97) // 0
+      }
+      "notify its Observer after redo" in {
+        controller.redo
+        observer.updated should be(true)
+        controller.game.deck.deckList.size should be(96) // 97
       }
 
       "notify its Observer after checking victory" in {
