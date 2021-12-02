@@ -15,6 +15,7 @@ class GameCommandSpec() extends AnyWordSpec with Matchers {
     "created " should {
       val table = new Table()
       val deck = new Deck()
+      //deck.createNewDeck()
       val hand = new PlayerHands(table)
       val game = new Game(table, hand, deck)
       val controller = new Controller(game)
