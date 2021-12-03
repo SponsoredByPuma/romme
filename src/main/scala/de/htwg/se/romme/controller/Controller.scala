@@ -80,4 +80,9 @@ class Controller(var game: Game) extends Observable {
     notifyObservers
   }
 
+  def addCard(idxCard: Integer, idxlist: Integer): Unit = {
+    notifyObservers
+    game = game.addCard(idxCard, idxlist)
+  }
+
 }

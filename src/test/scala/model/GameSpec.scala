@@ -59,6 +59,7 @@ class GameSpec() extends AnyWordSpec {
       hand.playerOneHand.addOne(Card(0, 10))
       hand.playerOneHand.addOne(Card(0, 9))
       hand.playerOneHand.addOne(Card(0, 8))
+      hand.playerOneHand.addOne(Card(0, 7)) // Card zum anlegen
       val game = new Game(table, hand, deck)
       var list: ListBuffer[Integer] = ListBuffer()
       list.addOne(0)
@@ -68,10 +69,103 @@ class GameSpec() extends AnyWordSpec {
       list.addOne(4)
 
       "be able to drop multiple cards on the table" in {
-        game.dropMultipleCards(list, 1)
-        game.hand.playerOneHand.size should be(0)
+        game.dropMultipleCards(list, 1) //--------------------------0
+        game.hand.playerOneHand.size should be(1)
         game.table.droppedCardsList(0).size should be(5)
       }
+      "be able to add a Card to a list on the table" in {
+        game.addCard(0, 0)
+        game.hand.playerOneHand.size should be(0)
+        game.table.droppedCardsList(0).size should be(6)
+      }
+      "be able to add a Card to a Suit Ordered List on the table" in {
+        game.hand.playerOneHand.addOne(Card(0, 12))
+        game.hand.playerOneHand.addOne(Card(1, 12))
+        game.hand.playerOneHand.addOne(Card(2, 12))
+        game.hand.playerOneHand.addOne(Card(3, 12))
+        var list2: ListBuffer[Integer] = ListBuffer()
+        list2.addOne(0)
+        list2.addOne(1)
+        list2.addOne(2)
+        game.dropMultipleCards(list2, 0) // --------------------------1
+        game.hand.playerOneHand.size should be(1)
+        game.table.droppedCardsList(1).size should be(3)
+        game.addCard(0, 1)
+        game.hand.playerOneHand.size should be(0)
+        game.table.droppedCardsList(1).size should be(4)
+      }
+      "not be able to add a Card to a full set of Cards on the table" in {
+        game.hand.playerOneHand.addOne(Card(0, 12))
+        game.hand.playerOneHand.addOne(Card(1, 12))
+        game.hand.playerOneHand.addOne(Card(2, 12))
+        game.hand.playerOneHand.addOne(Card(3, 12))
+        game.hand.playerOneHand.addOne(Card(3, 12))
+        var list2: ListBuffer[Integer] = ListBuffer()
+        list2.addOne(0)
+        list2.addOne(1)
+        list2.addOne(2)
+        list2.addOne(3)
+        game.dropMultipleCards(
+          list2,
+          0
+        ) // ------------------------------------2
+        game.hand.playerOneHand.size should be(1)
+        game.table.droppedCardsList(2).size should be(4)
+        game.addCard(0, 2)
+        game.hand.playerOneHand.size should be(1)
+        game.table.droppedCardsList(2).size should be(4)
+      }
+    }
+  }
+
+  "A Game" when {
+    "created for testing" should {
+
+      val table = new Table()
+      val deck = new Deck()
+      val hand = new PlayerHands(table)
+      val game = new Game(table, hand, deck)
+      game.hand.playerOneHand.addOne(Card(0, 12))
+      game.hand.playerOneHand.addOne(Card(0, 11))
+      game.hand.playerOneHand.addOne(Card(0, 10))
+      game.hand.playerOneHand.addOne(Card(0, 9))
+      game.hand.playerOneHand.addOne(Card(0, 8))
+      game.hand.playerOneHand.addOne(Card(0, 0))
+      game.hand.playerOneHand.addOne(Card(0, 2))
+      //game.hand.playerOneHand.addOne(Card(0, 4)) // Card zum anlegen
+      var list3: ListBuffer[Integer] = ListBuffer()
+      list3.addOne(0)
+      list3.addOne(1)
+      list3.addOne(2)
+      list3.addOne(3)
+      list3.addOne(4)
+      list3.addOne(5)
+
+      "not be able to add a wrong card to a set on the table" in {
+        game.dropMultipleCards(list3, 1) // --------------------3
+        game.hand.playerOneHand.size should be(1)
+        game.table.droppedCardsList(0).size should be(6)
+        game.addCard(0, 0)
+        game.hand.playerOneHand.size should be(1)
+        game.table.droppedCardsList(0).size should be(6)
+      }
+
+      "not be able to add a wrong card to a set on the table(Suit)" in {
+        game.hand.playerOneHand.addOne(Card(1, 2))
+        game.hand.playerOneHand.addOne(Card(2, 2))
+        game.hand.playerOneHand.addOne(Card(3, 3))
+        var list4: ListBuffer[Integer] = ListBuffer()
+        list4.addOne(0)
+        list4.addOne(1)
+        list4.addOne(2)
+        game.dropMultipleCards(list4, 0) // --------------------3
+        game.hand.playerOneHand.size should be(1)
+        game.table.droppedCardsList(1).size should be(3)
+        game.addCard(0, 1)
+        game.hand.playerOneHand.size should be(1)
+        game.table.droppedCardsList(1).size should be(3)
+      }
+
     }
   }
 

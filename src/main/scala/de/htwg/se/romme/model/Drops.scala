@@ -40,7 +40,7 @@ object Drops {
   
     while (cards(counter).getSuit.equals("Joker"))
       counter = counter + 1
-    tmpRank = cards(counter).getValue
+    tmpRank = cards(counter).placeInList.get
     
     var tmpList: ListBuffer[Integer] = ListBuffer()
     for (x <- 0 to (cards.size - 1))
@@ -51,7 +51,6 @@ object Drops {
     for (x <- 0 to (tmpList.size - 1)) 
       println("Which Suit should your Joker have ?")
       var input = readLine()
-      println(x) // TEEEEEEEEEEEEEEST
       var c:Joker = Joker()
       c.setSuit(input)
       cards.insert(tmpList(x),c)
@@ -66,7 +65,7 @@ object Drops {
     end if
     var storeRanks: ListBuffer[Integer] = ListBuffer()
     for (card <- cards)
-      storeRanks.addOne(card.getValue)
+      storeRanks.addOne(card.placeInList.get)
     if (tmpList.isEmpty)
       if(storeRanks.distinct.size > 1) // if there is more than one rank in the list
         print("Bei keinen Jokers")

@@ -30,6 +30,116 @@ case class Game(table: Table, hand: PlayerHands, deck: Deck):
         copy(table,hand,deck)
     }
 
+    def addCard(idxCard: Integer, idxlist: Integer): Game = {
+        var tmpTableList: ListBuffer[Card] = ListBuffer()
+        tmpTableList.addAll(table.droppedCardsList(idxlist))
+        
+
+        if ((tmpTableList(0).placeInList.get != tmpTableList(1).placeInList.get && !(tmpTableList(0).getSuit.equals("Joker")) && !(tmpTableList(1).getSuit.equals("Joker"))) || tmpTableList(0).getSuit.equals("Joker") || tmpTableList(1).getSuit.equals("Joker")) // nach order sortiert
+            var card: Card = hand.playerOneHand(idxCard)
+            tmpTableList.addOne(card)
+            var list: ListBuffer[Card] = ListBuffer()
+            list = tmpTableList.sortBy(_.placeInList)
+            list = lookForGaps(list)
+            if(list.isEmpty)
+                print("error list has gaps !")
+                return this
+            end if
+            hand.playerOneHand.remove(idxCard)
+            table.droppedCardsList.insert(idxlist,list)
+            table.droppedCardsList.remove(idxlist + 1)
+            return copy(table,hand,deck)
+        else // nach Suit gelegt
+            if(tmpTableList.size == 4) // bei 4 karten kann man nichts mehr anlegen
+                print("error its already full")
+                return this
+            end if
+            var storeRanks: ListBuffer[Integer] = ListBuffer()
+            tmpTableList.addOne(hand.playerOneHand(idxCard))
+            var boo: Boolean = false
+            for(c <- tmpTableList)
+                storeRanks.addOne(c.placeInList.get)
+                if (c.getCardName.equals("Joker",""))
+                    boo = true
+                end if
+            
+            if(boo) // es gibt Joker
+                if(storeRanks.distinct.size > 2)
+                    print("Fehler bei storeRanks mit Joker")
+                    return this
+                end if
+            else
+                if(storeRanks.distinct.size > 1)
+                    print("Fehler bei storeRanks ohne Joker")
+                    return this
+                end if
+            end if
+            
+            hand.playerOneHand.remove(idxCard)
+            table.droppedCardsList.insert(idxlist,tmpTableList)
+            table.droppedCardsList.remove(idxlist + 1)
+            return copy(table,hand,deck)
+        end if
+    }
+
+    def lookForGaps(list: ListBuffer[Card]): ListBuffer[Card] = {
+
+    var lowestCard = lookForLowestCard(list)
+
+    if(lowestCard == 0 && checkForAce(list)) // if there is an ace and a two in the order the ace and two need to be flexible
+      var splitter = 0
+      while(splitter == list(splitter).placeInList.get) // solange die Reihenfolge noch passt erhöhe den counter
+        splitter = splitter + 1
+      var secondList: ListBuffer[Card] = ListBuffer()
+      for (x <- splitter to list.size - 1) // adde alle Element nach der Lücke hinzu
+        secondList.addOne(list(splitter))
+        splitter = splitter + 1
+      var newList: ListBuffer[Card] = ListBuffer()
+      newList.addAll(secondList) // füge erst die Bube,Dame, König, Ass hinzu
+
+      var thirdList: ListBuffer[Card] = ListBuffer() 
+      thirdList = list.filter(_.placeInList.get < splitter)
+      newList.addAll(thirdList) // danach die 2,3,4,5...
+
+      var next = newList(0).placeInList.get
+
+      for(x <- 0 until newList.size - 1)
+        next = next + 1
+        if(newList(x).placeInList.get == 12)
+          next = 0
+        end if
+        if (next != newList(x + 1).placeInList.get)
+          return newList.empty // return false
+        end if
+      newList // return true
+    else
+      var next = list(0).placeInList.get
+      for (x <- 0 until (list.size - 1)) // until, since the last card has no next 
+        next = next + 1 // increase next for 1
+        if(list(x + 1).placeInList.get != next)
+          return list.empty // return false
+        end if
+      list // return true
+    end if
+  }
+
+    def lookForLowestCard(list: ListBuffer[Card]): Integer = {
+      var lowestCard = list(0).placeInList.get
+      for (x <- 0 to list.size - 1)
+        if (list(x).placeInList.get < lowestCard)
+          lowestCard = list(x).placeInList.get
+        end if
+      lowestCard
+    }
+
+    def checkForAce(list: ListBuffer[Card]): Boolean = {
+      for(x <- 0 to list.size - 1)
+        if (list(x).placeInList.get == 12)
+          return true
+        end if
+      false
+    }
+
     def takeJoker(idxlist: Integer, idxCard: Integer) : Game = {
         var tmpTableList: ListBuffer[Card] = ListBuffer()
         tmpTableList.addAll(table.droppedCardsList(idxlist))

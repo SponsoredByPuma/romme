@@ -54,7 +54,7 @@ private class Club(rank: Integer) extends Card {
 }
 
 private class Joker() extends Card {
-  var rank = 0
+  var rank = 15
   var suit = "Joker"
   override def getSuit: String = suit
   override def getValue: Integer = valueForCard.apply(rank)
