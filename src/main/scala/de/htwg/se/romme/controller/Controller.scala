@@ -10,9 +10,7 @@ import scala.collection.mutable.ListBuffer
 import de.htwg.se.romme.model.StateContext
 
 class Controller(var game: Game) extends Observable {
-  val deck = new Deck() // Deck-Instanz erstellt
-  val table = new Table()
-  val hand = new PlayerHands(table) // var hand = new PlayerHands(table)
+
   private val undoManager = new UndoManager
 
   def gameStart(): Unit = {
@@ -20,53 +18,66 @@ class Controller(var game: Game) extends Observable {
     notifyObservers
   }
 
-  def pickUpGraveYard(): Unit = {
-    game = game.pickUpGraveYard()
+  def pickUpGraveYard(player1Turn: Boolean): Unit = {
+    game = game.pickUpGraveYard(player1Turn)
     notifyObservers
   }
 
-  def pickUpACard(): Unit = {
-    game = game.pickUpACard()
+  def pickUpACard(player1Turn: Boolean): Unit = {
+    game = game.pickUpACard(player1Turn)
     undoManager.doStep(new GameCommand(game, this))
     notifyObservers
   }
 
-  def dropASpecificCard(index: Integer): Unit = {
-    game = game.dropASpecificCard(index)
+  def dropASpecificCard(index: Integer, player1Turn: Boolean): Unit = {
+    game = game.dropASpecificCard(index, player1Turn)
     notifyObservers
   }
 
-  def takeJoker(idxlist: Integer, idxCard: Integer): Unit = {
-    game = game.takeJoker(idxlist, idxCard)
+  def takeJoker(
+      idxlist: Integer,
+      idxCard: Integer,
+      player1Turn: Boolean
+  ): Unit = {
+    game = game.takeJoker(idxlist, idxCard, player1Turn)
     notifyObservers
   }
 
-  def dropMultipleCards(list: ListBuffer[Integer], dec: Integer): Unit = {
-    game = game.dropMultipleCards(list, dec)
+  def dropMultipleCards(
+      list: ListBuffer[Integer],
+      dec: Integer,
+      player1Turn: Boolean
+  ): Unit = {
+    game = game.dropMultipleCards(list, dec, player1Turn)
     notifyObservers
   }
 
-  def sortPlayersCards(): Unit = {
-    game = game.sortPlayersCards()
+  def sortPlayersCards(player1Turn: Boolean): Unit = {
+    game = game.sortPlayersCards(player1Turn)
     notifyObservers
   }
 
-  def victory(): Boolean = {
+  def victory(player1Turn: Boolean): Boolean = {
     notifyObservers
-    game.victory()
+    game.victory(player1Turn)
   }
 
-  def showCards(): String = {
+  def showCards(player1Turn: Boolean): String = {
     notifyObservers
-    print(game.showCards())
-    game.showCards()
+    if(player1Turn)
+      println("PLAYER 1: ")
+    else
+      println("PLAYER 2: ")
+    end if
+    print(game.showCards(player1Turn))
+    game.showCards(player1Turn)
 
   }
 
-  def showTable(): String = {
+  def showTable(player1Turn: Boolean): String = {
     notifyObservers
-    print(game.showTable())
-    game.showTable()
+    print(game.showTable)
+    game.showTable
   }
 
   def undo: Unit = {
@@ -80,9 +91,13 @@ class Controller(var game: Game) extends Observable {
     notifyObservers
   }
 
-  def addCard(idxCard: Integer, idxlist: Integer): Unit = {
+  def addCard(
+      idxCard: Integer,
+      idxlist: Integer,
+      player1Turn: Boolean
+  ): Unit = {
     notifyObservers
-    game = game.addCard(idxCard, idxlist)
+    game = game.addCard(idxCard, idxlist, player1Turn)
   }
 
 }

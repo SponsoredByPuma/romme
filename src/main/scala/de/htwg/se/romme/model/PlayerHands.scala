@@ -21,7 +21,7 @@ class PlayerHands(table: Table) {
     playerOneHand
   }
 
-  def dropASingleCard(index: Integer): Unit = {
+  def dropASingleCard(index: Integer): Unit = { // eventuell return ListBuffer[Card]
     table.replaceGraveYard(playerOneHand(index))
     playerOneHand.remove(index)
   }

@@ -13,44 +13,48 @@ class TuiSpec extends AnyWordSpec {
     val table = new Table()
     val deck = new Deck()
     val hand = new PlayerHands(table)
-    val game = new Game(table, hand, deck)
+    val hand2 = new PlayerHands(table)
+    val player = new Player("Player 1", hand, table)
+    val player2 = new Player("Player 2", hand2, table)
+    val game = new Game(table, player, player2, deck)
     val controller = new Controller(game)
     val tui = new Tui(controller)
     "create a new Game on input 'new' and the deck size should be 97" in {
       tui.processInputReadLine("new")
-      controller.game.deck.deckList.size should be(97)
+      controller.game.deck.deckList.size should be(84)
     }
     "create a new Game on input 'new' and the player Hands should be 13 " in {
-      controller.game.hand.playerOneHand.size should be(13)
+      controller.game.player.hands.playerOneHand.size should be(13)
+      controller.game.player2.hands.playerOneHand.size should be(13)
     }
     "pick up a new Card on input 'pick' and the deck size should be 96 " in {
       tui.processInputReadLine("pick")
-      controller.game.deck.deckList.size should be(96)
+      controller.game.deck.deckList.size should be(83)
     }
     "pick up a new Card on input 'pick' and the player Hands should be 96 " in {
-      controller.game.hand.playerOneHand.size should be(14)
+      controller.game.player.hands.playerOneHand.size should be(14)
     }
     "shouldn't show Victory on input 'victory' aslong as there are still cards in the player Hands " in {
       tui.processInputReadLine("victory")
-      controller.victory() should be(false)
+      controller.victory(true) should be(false)
     }
     "drop a card from the players Hand on input 'drop' " in {
       //tui.processInputReadLine("drop")
-      controller.dropASpecificCard(0)
-      controller.game.hand.playerOneHand.size should be(13)
+      controller.dropASpecificCard(0, true)
+      controller.game.player.hands.playerOneHand.size should be(13)
     }
     "pick up the graveYard Card and the player Hands should be 14" in {
       tui.processInputReadLine("graveYard")
-      controller.hand.playerOneHand.size should be(0)
+      controller.game.player.hands.playerOneHand.size should be(14)
     }
     "show the cards from the players on input 'show' " in {
       tui.processInputReadLine("show")
-      var s = controller.showCards()
+      var s = controller.showCards(true)
       s.isEmpty should be(false)
     }
     "show the cards from the table on input 'showTable' " in {
       tui.processInputReadLine("showTable")
-      var t = controller.showTable()
+      var t = controller.showTable(true)
       t.isEmpty should be(false)
     }
   }
@@ -58,25 +62,28 @@ class TuiSpec extends AnyWordSpec {
     val table = new Table()
     val deck = new Deck()
     val hand = new PlayerHands(table)
-    val game = new Game(table, hand, deck)
+    val hand2 = new PlayerHands(table)
+    val player = new Player("Player 1", hand, table)
+    val player2 = new Player("Player 2", hand2, table)
+    val game = new Game(table, player, player2, deck)
     val controller = new Controller(game)
     val tui = new Tui(controller)
     "show Victory on input 'victory' when the player has no more Cards" in {
       tui.processInputReadLine("victory")
-      controller.victory() should be(true)
+      controller.victory(true) should be(true)
     }
     "be able to undo a step" in {
       controller.gameStart()
-      controller.pickUpACard()
+      controller.pickUpACard(true)
       tui.processInputReadLine("undo")
-      game.deck.deckList.size should be(97)
+      game.deck.deckList.size should be(84)
     }
     "be able to redo a step" in {
       tui.processInputReadLine("pick")
       controller.undo
-      controller.game.deck.deckList.size should be(97)
+      controller.game.deck.deckList.size should be(84)
       tui.processInputReadLine("redo")
-      controller.game.deck.deckList.size should be(96)
+      controller.game.deck.deckList.size should be(83)
     }
 
   }

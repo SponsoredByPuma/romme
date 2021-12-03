@@ -15,23 +15,25 @@ class GameCommandSpec() extends AnyWordSpec with Matchers {
     "created " should {
       val table = new Table()
       val deck = new Deck()
-      //deck.createNewDeck()
       val hand = new PlayerHands(table)
-      val game = new Game(table, hand, deck)
+      val hand2 = new PlayerHands(table)
+      val player = new Player("Player 1", hand, table)
+      val player2 = new Player("Player 2", hand2, table)
+      val game = new Game(table, player, player2, deck)
       val controller = new Controller(game)
       hand.playerOneHand.addOne(Card(0, 0))
       val gC = new GameCommand(game, controller)
       "use doStep" in {
         gC.doStep
-        controller.game.hand.playerOneHand.size should be(1)
+        controller.game.player.hands.playerOneHand.size should be(1)
       }
       "use undoStep" in {
         gC.undoStep
-        controller.game.hand.playerOneHand.size should be(0)
+        controller.game.player.hands.playerOneHand.size should be(0)
       }
       "use redoStep" in {
         gC.redoStep
-        controller.game.hand.playerOneHand.size should be(1)
+        controller.game.player.hands.playerOneHand.size should be(1)
       }
     }
   }
