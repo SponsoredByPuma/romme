@@ -10,24 +10,24 @@ case class Game(table: Table, hand: PlayerHands, deck: Deck):
     def gameStart(): Game = {
         deck.createNewDeck()
         hand.draw13Cards(deck)
-        return copy(table,hand, deck)
+        copy(table,hand, deck)
     }
 
     def pickUpGraveYard() : Game = {
         val d = table.grabGraveYard()
         hand.playerOneHand.addOne(d.get)
-        return copy(table,hand,deck)
+        copy(table,hand,deck)
     }
 
     def pickUpACard(): Game = {
         val d = deck.drawFromDeck()
         hand.playerOneHand.addOne(d)
-        return copy(table,hand,deck)
+        copy(table,hand,deck)
     }
 
     def dropASpecificCard(index: Integer) : Game = {
         hand.dropASingleCard(index)
-        return copy(table,hand,deck)
+        copy(table,hand,deck)
     }
 
     def takeJoker(idxlist: Integer, idxCard: Integer) : Game = {
@@ -70,7 +70,7 @@ case class Game(table: Table, hand: PlayerHands, deck: Deck):
                     return copy(table,hand,deck)
                 end if
         end if
-        return copy(table,hand,deck)
+        copy(table,hand,deck)
     }
 
     def dropMultipleCards(list: ListBuffer[Integer], dec: Integer) : Game = {
@@ -84,28 +84,23 @@ case class Game(table: Table, hand: PlayerHands, deck: Deck):
             end if
             hand.playerOneHand.remove(list(counter)) // remove the Card
       end if
-      return copy(table,hand,deck)
+      copy(table,hand,deck)
     }
 
     def sortPlayersCards() : Game = {
         hand.sortMyCards()
-        return copy(table,hand,deck)
+        copy(table,hand,deck)
     }
 
     def victory(): Boolean = {
         if (hand.playerOneHand.isEmpty == true)
-            return true 
+            true 
         else
-            return false
+            false
         end if
     }
 
-    def showCards(): Boolean = {
-        hand.showYourCards()
-        true
-    }
+    def showCards(): String = hand.showYourCards()
 
-    def showTable(): Boolean = {
-        table.showPlacedCardsOnTable()
-        true
-    }
+    def showTable(): String = table.showPlacedCardsOnTable()
+    

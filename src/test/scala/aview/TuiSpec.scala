@@ -45,11 +45,13 @@ class TuiSpec extends AnyWordSpec {
     }
     "show the cards from the players on input 'show' " in {
       tui.processInputReadLine("show")
-      controller.showCards() should be(true)
+      var s = controller.showCards()
+      s.isEmpty should be(false)
     }
     "show the cards from the table on input 'showTable' " in {
       tui.processInputReadLine("showTable")
-      controller.showTable() should be(true)
+      var t = controller.showTable()
+      t.isEmpty should be(false)
     }
   }
   "Another Romme TUI" should {

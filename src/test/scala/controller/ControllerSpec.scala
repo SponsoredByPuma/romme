@@ -66,11 +66,13 @@ class ControllerSpec extends AnyWordSpec {
       }
 
       "notify its Observer after showing the cards" in {
-        controller.showCards() should be(true)
+        var s = controller.showCards()
+        s.isEmpty should be(false)
         observer.updated should be(true)
       }
       "notify its Observer after showing the Table" in {
-        controller.showTable()
+        var s = controller.showTable()
+        s.isEmpty should be(false)
         observer.updated should be(true)
       }
       "notify its Observer after sorting the Cards" in {

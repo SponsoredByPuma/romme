@@ -36,8 +36,3 @@ class GameCommand(gaming: Game, controller: Controller) extends Command {
     controller.game = controller.game.set(t, h, d)
   }
 }
-
-//table: Table,
-//hand: PlayerHands,
-//deck: Deck,
-//controller: Controller

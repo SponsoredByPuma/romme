@@ -39,7 +39,7 @@ class Deck() {
     val tmpsafe = deckList(tmp)
     deckList.remove(tmp) // remove the card from the game
     println(deckList.size) // for testing pourpose can be removed later on
-    return tmpsafe // return the card
+    tmpsafe // return the card
   }
 
 }

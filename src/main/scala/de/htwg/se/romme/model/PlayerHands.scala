@@ -83,7 +83,7 @@ class PlayerHands(table: Table) {
       end if
       table.placeCardsOnTable(droppingCards)
       outside.setState(StateOutSideTrue())
-      return true
+      true
     else
       droppingCards = drop.execute(droppingCards, dec)
       if(droppingCards.isEmpty)
@@ -92,15 +92,15 @@ class PlayerHands(table: Table) {
       end if
       println("You did it")
       table.placeCardsOnTable(droppingCards)
-      return true
+      true
     end if
-    return true
+    true
   }
   
-  def showYourCards(): Unit = {
+  def showYourCards(): String = {
+    var s = ""
     for (tmp <- 0 to playerOneHand.size - 1)
-      print(
-        playerOneHand(tmp).getCardName
-      )
+        s = s + playerOneHand(tmp).getCardName
+      s
   }
 }

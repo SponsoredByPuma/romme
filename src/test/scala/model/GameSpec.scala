@@ -39,10 +39,12 @@ class GameSpec() extends AnyWordSpec {
         tmp should not be (game.hand.playerOneHand)
       }
       "show the players card on the hand" in {
-        game.showCards() should be(true)
+        var t = game.showCards()
+        t.isEmpty should be(false)
       }
       "show the table " in {
-        game.showTable() should be(true)
+        var s = game.showTable()
+        s.isEmpty should be(false)
       }
     }
   }

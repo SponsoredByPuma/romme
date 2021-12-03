@@ -27,7 +27,7 @@ object Drops {
       case 0 => list = strategySameSuit(cards)
       case 1 => list = strategyOrder(cards)
     }
-    return list
+    list
   }
 
   def strategySameSuit(cards: ListBuffer[Card]): ListBuffer[Card] = {
@@ -35,7 +35,7 @@ object Drops {
     var counter = 0
 
     if(cards.size > 4 || cards.size < 3) // it can only be 4 cards at max and min 3 cards
-      return cards.empty
+      cards.empty
     end if
   
     while (cards(counter).getSuit.equals("Joker"))
@@ -76,7 +76,7 @@ object Drops {
         print("Bei Jokers")
         return cards.empty
     end if
-    return cards
+    cards
   }
 
   def strategyOrder(cards: ListBuffer[Card]): ListBuffer[Card] = {
@@ -110,7 +110,7 @@ object Drops {
       print("somethings fucked i can feel it")
       return cards.empty
     end if
-    return list
+    list
   }
 
   def lookForGaps(list: ListBuffer[Card]): ListBuffer[Card] = {
@@ -142,7 +142,7 @@ object Drops {
         if (next != newList(x + 1).placeInList.get)
           return newList.empty // return false
         end if
-      return newList // return true
+      newList // return true
     else
       var next = list(0).placeInList.get
       for (x <- 0 until (list.size - 1)) // until, since the last card has no next 
@@ -150,7 +150,7 @@ object Drops {
         if(list(x + 1).placeInList.get != next)
           return list.empty // return false
         end if
-      return list // return true
+      list // return true
     end if
   }
 
@@ -160,7 +160,7 @@ object Drops {
       if (list(x).placeInList.get < lowestCard)
         lowestCard = list(x).placeInList.get
       end if
-    return lowestCard
+    lowestCard
   }
 
   def checkForAce(list: ListBuffer[Card]): Boolean = {
@@ -168,7 +168,7 @@ object Drops {
       if (list(x).placeInList.get == 12)
         return true
       end if
-    return false
+    false
   }
 
 }

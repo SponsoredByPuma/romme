@@ -3,35 +3,29 @@ package model
 
 import scala.collection.mutable.ListBuffer
 import scala.util.Try
-import scala.util.Failure
-import scala.util.Success
-//import de.htwg.se.romme.model.Card
 
 class Table() {
 
   var droppedCardsList: ListBuffer[ListBuffer[Card]] = new ListBuffer()
 
-  var graveYard =
-    Card(5, 0) // the last dropped card
+  var graveYard = Card(5, 0)
   
-  def replaceGraveYard(card: Card): Unit = {
-    graveYard = card
-  }
+  def replaceGraveYard(card: Card): Unit = graveYard = card
 
-  def placeCardsOnTable(cards: ListBuffer[Card]): Unit = {
-    droppedCardsList.append(cards)
-  }
+  def placeCardsOnTable(cards: ListBuffer[Card]): Unit = droppedCardsList.append(cards)
 
-  def showPlacedCardsOnTable(): Unit = {
-    println("GraveYard: " + this.graveYard.getCardName)
+  def showPlacedCardsOnTable(): String = { // hier returne ich den String und printe nicht
+    var s: String = ""
+    s = "GraveYard: " + this.graveYard.getCardName + "\n"
     // for the size of the dropped Cards
     for (tmp <- 0 to droppedCardsList.size - 1) {
-      println()
       // for each Card in the List
+      s = s + "\n"
       for (tmp2 <- 0 to droppedCardsList(tmp).size - 1) {
-        print(droppedCardsList(tmp)(tmp2).getCardName)
+        s = s + droppedCardsList(tmp)(tmp2).getCardName
       }
     }
+    s
   }
 
   def grabGraveYard(): Option[Card] = {
@@ -40,7 +34,6 @@ class Table() {
     end if
     val returnCard = graveYard // safe the graveYard Card
     graveYard = Card(5, 13) // delete the graveYard
-    return Some(returnCard) // return the Card
+    Some(returnCard) // return the Card
   }
-
 }

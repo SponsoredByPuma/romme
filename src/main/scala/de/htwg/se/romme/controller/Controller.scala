@@ -56,16 +56,17 @@ class Controller(var game: Game) extends Observable {
     game.victory()
   }
 
-  def showCards(): Boolean = {
+  def showCards(): String = {
     notifyObservers
+    print(game.showCards())
     game.showCards()
 
   }
 
-  def showTable(): Boolean = {
+  def showTable(): String = {
     notifyObservers
+    print(game.showTable())
     game.showTable()
-
   }
 
   def undo: Unit = {
