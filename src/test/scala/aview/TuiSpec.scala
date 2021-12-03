@@ -57,6 +57,10 @@ class TuiSpec extends AnyWordSpec {
       var t = controller.showTable(true)
       t.isEmpty should be(false)
     }
+    "let another Player play" in {
+      tui.processInputReadLine("switch")
+      tui.player1Turn should be(false)
+    }
   }
   "Another Romme TUI" should {
     val table = new Table()
