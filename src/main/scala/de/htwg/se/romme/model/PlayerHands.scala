@@ -74,6 +74,7 @@ class PlayerHands(table: Table) {
         sum = droppingCards.size * droppingCards(count).getValue
       else
         for (card <- droppingCards)
+          println(card.getCardName)
           sum = sum + card.getValue
       end if
       print(sum)
@@ -100,7 +101,7 @@ class PlayerHands(table: Table) {
   def showYourCards(): String = {
     var s = ""
     for (tmp <- 0 to playerOneHand.size - 1)
-        s = s + playerOneHand(tmp).getCardName
+        s = s + tmp + ":" + playerOneHand(tmp).getCardName
       s
   }
 }
