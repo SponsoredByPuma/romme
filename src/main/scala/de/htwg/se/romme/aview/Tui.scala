@@ -7,34 +7,38 @@ import model.{Card, Deck, Player, PlayerHands, Table}
 import util.Observable
 import scala.io.StdIn.readLine
 import scala.collection.mutable.ListBuffer
+import scala.swing.Reactor
+import de.htwg.se.romme.controller.showPlayerCards
+import de.htwg.se.romme.controller.showPlayerTable
+import scala.compiletime.ops.string
 
-class Tui(controller: Controller) extends de.htwg.se.romme.util.Observer {
-  controller.add(this)
-  var player1Turn: Boolean = true //
+class Tui(controller: Controller) extends Reactor {
+  //controller.add(this)
+  listenTo(controller)
   
 
   def processInputReadLine(input: String): Unit = {
     input match {
-      case "quit"    =>
-      case "switch" => player1Turn = !player1Turn
-      case "new"     => controller.gameStart()
-      case "pick"    => controller.pickUpACard(player1Turn)
-      case "graveYard" => controller.pickUpGraveYard(player1Turn)
+      case "quit"    => System.exit(0)
+      case "switch" => controller.switch
+      case "new"     => controller.gameStart
+      case "pick"    => controller.pickUpACard
+      case "graveYard" => controller.pickUpGraveYard
       case "add" => 
         println("Which card would you like to add ?")
         var cardIndex = readLine().toInt
-        println("Which Set would you like to change expand ?")
+        println("Which Set would you like to expand ?")
         var listIndex = readLine().toInt
-        controller.addCard(cardIndex,listIndex,player1Turn)
+        controller.addCard(cardIndex,listIndex)
       case "undo" => controller.undo
       case "redo" => controller.redo
       case "drop"    => 
         println("Which card would you like to drop ?")
         var index = readLine().toInt
-        controller.dropASpecificCard(index,player1Turn)
+        controller.dropASpecificCard(index)
       case "dropM" => 
         var amount = 0
-        if(player1Turn)
+        if(controller.player1Turn)
           while(amount < 3 || amount >= controller.game.player.hands.playerOneHand.size) 
             print("How many Cards would you like to drop ?")
             amount = readLine.toInt
@@ -52,18 +56,38 @@ class Tui(controller: Controller) extends de.htwg.se.romme.util.Observer {
           amount = amount - 1
         println("Would you like to drop them by Suit(0) or by Order(1) ?")
         var dec = readLine.toInt
-        controller.dropMultipleCards(list,dec,player1Turn)
-      case "show"    => controller.showCards(player1Turn)
+        var tt: ListBuffer[Integer] = new ListBuffer()
+        tt = controller.checkForJoker(list)
+        if(tt.isEmpty)
+          controller.dropMultipleCards(list,dec,false)
+        else
+          var stringList: ListBuffer[String] = ListBuffer()
+          if(dec == 0) // nach Suit
+            for (x <- 0 to tt.size - 1)
+              println("Which Suit should your Joker have ?")
+              var input = readLine()
+              stringList.addOne(input)
+            controller.replaceCardSuit(tt,stringList)
+            controller.dropMultipleCards(list,dec,true)
+          else
+            for (x <- 0 to tt.size - 1)
+              println("Which Rank should your Joker have ?")
+              var input = readLine()
+              stringList.addOne(input)
+            controller.replaceCardOrder(tt,stringList)
+            controller.dropMultipleCards(list,dec,true)
+          end if
+      case "show"    => print(controller.showCards)
       case "joker" => 
         println("Which Card would you like to drop ?")
         var cardInput = readLine().toInt
         println("Which Set would you like to change ?")
         var setInput = readLine().toInt
-        controller.takeJoker(setInput,cardInput,player1Turn)
-      case "showTable" => controller.showTable(player1Turn)
-      case "sort" => controller.sortPlayersCards(player1Turn)
+        controller.takeJoker(setInput,cardInput)
+      case "showTable" => print(controller.showTable)
+      case "sort" => controller.sortPlayersCards
       case "victory" => 
-        val victory = controller.victory(player1Turn)
+        val victory = controller.victory
         if (victory == true) 
           println("Victory ! You have won the Game !")
         else
@@ -72,6 +96,19 @@ class Tui(controller: Controller) extends de.htwg.se.romme.util.Observer {
       case _ =>  
     }
   }
-  override def update: Unit = println() // showCards()
-  override def updated: Boolean = true
+ // override def update: Unit = println() // showCards()
+  //override def updated: Boolean = true
+
+  reactions += {
+    case event: showPlayerCards => printCards
+    case event: showPlayerTable => printTable
+  }
+
+  def printCards: Unit = {
+    println(controller.showCards)
+  }
+
+  def printTable: Unit = {
+    println(controller.showTable)
+  }
 }

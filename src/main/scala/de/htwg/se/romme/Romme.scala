@@ -11,6 +11,7 @@ import de.htwg.se.romme.model.{
   Table
 }
 import de.htwg.se.romme.controller.Controller
+import de.htwg.se.romme.aview.gui.SwingGui
 import de.htwg.se.romme.aview.Tui
 import scala.io.StdIn.readLine
 
@@ -24,7 +25,8 @@ object Romme {
   val game = Game(table, player, player2, deck)
   val controller = new Controller(game)
   val tui = new Tui(controller)
-  controller.notifyObservers
+  val gui = new SwingGui(controller)
+  //controller.notifyObservers
 
   def main(args: Array[String]): Unit = {
 

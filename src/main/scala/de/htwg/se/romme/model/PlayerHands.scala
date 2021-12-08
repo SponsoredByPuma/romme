@@ -57,7 +57,7 @@ class PlayerHands(table: Table) {
     playerOneHand = playerOneHand.addAll(joker)
   }
 
-  def dropCardsOnTable(index: ListBuffer[Integer], dec: Integer): Boolean = {
+  def dropCardsOnTable(index: ListBuffer[Integer], dec: Integer,hasJoker:Boolean): Boolean = {
     val drop = Drops
     var droppingCards: ListBuffer[Card] = new ListBuffer()
     var sum = 0
@@ -66,7 +66,7 @@ class PlayerHands(table: Table) {
       droppingCards.addOne(playerOneHand(index(counter)))// adds the element of your hand at the index
 
     if(outside.getStateB() == false)
-      droppingCards = drop.execute(droppingCards,dec)
+      droppingCards = drop.execute(droppingCards,dec,hasJoker)
       if (dec == 0)
         var count = 0
         while(droppingCards(count).getValue.equals(2))
@@ -86,7 +86,7 @@ class PlayerHands(table: Table) {
       outside.setState(StateOutSideTrue())
       true
     else
-      droppingCards = drop.execute(droppingCards, dec)
+      droppingCards = drop.execute(droppingCards, dec,hasJoker)
       if(droppingCards.isEmpty)
         println("YOUR SUM IS ZERO BRO")
         return false

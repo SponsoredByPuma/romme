@@ -36,11 +36,11 @@ class TuiSpec extends AnyWordSpec {
     }
     "shouldn't show Victory on input 'victory' aslong as there are still cards in the player Hands " in {
       tui.processInputReadLine("victory")
-      controller.victory(true) should be(false)
+      controller.victory should be(false)
     }
     "drop a card from the players Hand on input 'drop' " in {
       //tui.processInputReadLine("drop")
-      controller.dropASpecificCard(0, true)
+      controller.dropASpecificCard(0)
       controller.game.player.hands.playerOneHand.size should be(13)
     }
     "pick up the graveYard Card and the player Hands should be 14" in {
@@ -49,17 +49,17 @@ class TuiSpec extends AnyWordSpec {
     }
     "show the cards from the players on input 'show' " in {
       tui.processInputReadLine("show")
-      var s = controller.showCards(true)
+      var s = controller.showCards
       s.isEmpty should be(false)
     }
     "show the cards from the table on input 'showTable' " in {
       tui.processInputReadLine("showTable")
-      var t = controller.showTable(true)
+      var t = controller.showTable
       t.isEmpty should be(false)
     }
     "let another Player play" in {
       tui.processInputReadLine("switch")
-      tui.player1Turn should be(false)
+      controller.player1Turn should be(false)
     }
   }
   "Another Romme TUI" should {
@@ -74,11 +74,11 @@ class TuiSpec extends AnyWordSpec {
     val tui = new Tui(controller)
     "show Victory on input 'victory' when the player has no more Cards" in {
       tui.processInputReadLine("victory")
-      controller.victory(true) should be(true)
+      controller.victory should be(true)
     }
     "be able to undo a step" in {
-      controller.gameStart()
-      controller.pickUpACard(true)
+      controller.gameStart
+      controller.pickUpACard
       tui.processInputReadLine("undo")
       game.deck.deckList.size should be(84)
     }

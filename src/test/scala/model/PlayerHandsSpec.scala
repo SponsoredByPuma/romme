@@ -49,7 +49,7 @@ class PlayerHandsSpec extends AnyWordSpec {
         var testList: ListBuffer[Integer] = new ListBuffer()
         for (x <- 0 to 4)
           testList.addOne(x)
-        hand.dropCardsOnTable(testList, 1) should be(true)
+        hand.dropCardsOnTable(testList, 1, false) should be(true)
         table.droppedCardsList(0).size should be(5)
       }
       "be able to drop 3 Cards from his hand and add them to the table" in {
@@ -60,7 +60,7 @@ class PlayerHandsSpec extends AnyWordSpec {
         var testList: ListBuffer[Integer] = new ListBuffer()
         for (x <- 5 to 8)
           testList.addOne(x)
-        hand.dropCardsOnTable(testList, 0) should be(true)
+        hand.dropCardsOnTable(testList, 0, false) should be(true)
         table.droppedCardsList(1).size should be(4)
       }
     }
@@ -79,7 +79,7 @@ class PlayerHandsSpec extends AnyWordSpec {
         var testList: ListBuffer[Integer] = new ListBuffer()
         for (x <- 0 to 3)
           testList.addOne(x)
-        hand.dropCardsOnTable(testList, 1) should be(false)
+        hand.dropCardsOnTable(testList, 1, false) should be(false)
         table.droppedCardsList.size should be(0)
       }
       "be able to drop 3 Cards from his hand and add them to the table" in {
@@ -90,7 +90,7 @@ class PlayerHandsSpec extends AnyWordSpec {
         var testList: ListBuffer[Integer] = new ListBuffer()
         for (x <- 5 to 7)
           testList.addOne(x)
-        hand.dropCardsOnTable(testList, 1) should be(false)
+        hand.dropCardsOnTable(testList, 1, false) should be(false)
         table.droppedCardsList.size should be(0)
       }
     }

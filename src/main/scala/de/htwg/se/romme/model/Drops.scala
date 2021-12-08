@@ -14,25 +14,27 @@ object Drops {
 
     def strategyOrder(): Integer
 
-    def execute(cards: ListBuffer[Card], numberOfStrategy: Integer): Integer
+    def execute(cards: ListBuffer[Card], numberOfStrategy: Integer,hasJoker:Boolean): Integer
 
   }
 
-  def execute(cards: ListBuffer[Card], numberOfStrategy: Integer): ListBuffer[Card] =
-    strategy(numberOfStrategy, cards)
+  def execute(cards: ListBuffer[Card], numberOfStrategy: Integer,hasJoker:Boolean): ListBuffer[Card] =
+    strategy(numberOfStrategy, cards,hasJoker)
 
-  def strategy(numberOfStrategy: Integer, cards: ListBuffer[Card]): ListBuffer[Card] = {
+  def strategy(numberOfStrategy: Integer, cards: ListBuffer[Card],hasJoker: Boolean): ListBuffer[Card] = {
     var list : ListBuffer[Card] = ListBuffer()
+    println(hasJoker)
     numberOfStrategy match {
-      case 0 => list = strategySameSuit(cards)
-      case 1 => list = strategyOrder(cards)
+      case 0 => list = strategySameSuit(cards,hasJoker)
+      case 1 => list = strategyOrder(cards, hasJoker)
     }
     list
   }
 
-  def strategySameSuit(cards: ListBuffer[Card]): ListBuffer[Card] = {
+  def strategySameSuit(cards: ListBuffer[Card], hasJoker: Boolean): ListBuffer[Card] = {
     var tmpRank = 0
     var counter = 0
+    println(hasJoker)
 
     if(cards.size > 4 || cards.size < 3) // it can only be 4 cards at max and min 3 cards
       cards.empty
@@ -41,20 +43,6 @@ object Drops {
     while (cards(counter).getSuit.equals("Joker"))
       counter = counter + 1
     tmpRank = cards(counter).placeInList.get
-    
-    var tmpList: ListBuffer[Integer] = ListBuffer()
-    for (x <- 0 to (cards.size - 1))
-      if (cards(x).getSuit.equals("Joker"))
-        tmpList.addOne(x)
-      end if
-
-    for (x <- 0 to (tmpList.size - 1)) 
-      println("Which Suit should your Joker have ?")
-      var input = readLine()
-      var c:Joker = Joker()
-      c.setSuit(input)
-      cards.insert(tmpList(x),c)
-      cards.remove(tmpList(x) + 1)
 
     var storeSuits: ListBuffer[String] = ListBuffer()
     for (card <- cards) // store all Suits in a list
@@ -66,7 +54,7 @@ object Drops {
     var storeRanks: ListBuffer[Integer] = ListBuffer()
     for (card <- cards)
       storeRanks.addOne(card.placeInList.get)
-    if (tmpList.isEmpty)
+    if (hasJoker == false)
       if(storeRanks.distinct.size > 1) // if there is more than one rank in the list
         print("Bei keinen Jokers")
         return cards.empty
@@ -78,7 +66,7 @@ object Drops {
     cards
   }
 
-  def strategyOrder(cards: ListBuffer[Card]): ListBuffer[Card] = {
+  def strategyOrder(cards: ListBuffer[Card],hasJoker:Boolean): ListBuffer[Card] = {
     var tmpSuit = "Joker"
     var counter = 0
     var tmpList: ListBuffer[Integer] = ListBuffer()
@@ -93,14 +81,6 @@ object Drops {
       else
         return cards.empty // the cards have different Suits so its wrong
       end if 
-
-    for (x <- 0 to(tmpList.size - 1)) 
-      println("Which Rank should your Joker have ?")
-      var input = readLine()
-      var c:Joker = Joker()
-      c.setValue(input)
-      cards.insert(tmpList(x),c)
-      cards.remove(tmpList(x) + 1)
 
     var list: ListBuffer[Card] = ListBuffer()
     list = cards.sortBy(_.placeInList)

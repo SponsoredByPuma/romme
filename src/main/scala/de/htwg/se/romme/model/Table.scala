@@ -21,6 +21,7 @@ class Table() {
     for (tmp <- 0 to droppedCardsList.size - 1) {
       // for each Card in the List
       s = s + "\n"
+      s = s + (tmp + 1)
       for (tmp2 <- 0 to droppedCardsList(tmp).size - 1) {
         s = s + droppedCardsList(tmp)(tmp2).getCardName
       }

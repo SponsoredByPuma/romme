@@ -32,6 +32,40 @@ case class Game(table: Table,var player: Player, var player2: Player, deck: Deck
       copy(table,player, player2, deck)
     }
 
+    def replaceCardOrder(stelle: ListBuffer[Integer], values: ListBuffer[String], player1Turn: Boolean): Game = {
+      if(player1Turn)
+        for (x <- 0 to stelle.size - 1)
+          var c:Joker = Joker()
+          c.setValue(values(x))
+          player.hands.playerOneHand.insert(stelle(x),c)
+          player.hands.playerOneHand.remove(stelle(x) + 1)
+      else
+        for (x <- 0 to stelle.size - 1)
+          var c:Joker = Joker()
+          c.setValue(values(x))
+          player2.hands.playerOneHand.insert(stelle(x),c)
+          player2.hands.playerOneHand.remove(stelle(x) + 1)
+      end if
+      copy(table,player,player2,deck)
+    }
+
+    def replaceCardSuit(stelle:ListBuffer[Integer],values:ListBuffer[String], player1Turn: Boolean): Game = {
+      if(player1Turn)
+        for (x <- 0 to stelle.size - 1)
+          var c:Joker = new Joker()
+          c.setSuit(values(x))
+          player.hands.playerOneHand.insert(stelle(x),c)
+          player.hands.playerOneHand.remove(stelle(x) + 1)
+      else
+        for (x <- 0 to stelle.size - 1)
+          var c:Joker = new Joker()
+          c.setSuit(values(x))
+          player2.hands.playerOneHand.insert(stelle(x),c)
+          player2.hands.playerOneHand.remove(stelle(x) + 1)
+      end if
+      copy(table,player,player2,deck)
+    }
+
     def dropASpecificCard(index: Integer, player1Turn: Boolean) : Game = {
       if(player1Turn)
         player = player.dropASpecificCard(index)
@@ -59,11 +93,11 @@ case class Game(table: Table,var player: Player, var player2: Player, deck: Deck
         copy(table,player, player2, deck)
     }
 
-    def dropMultipleCards(list: ListBuffer[Integer], dec: Integer, player1Turn: Boolean) : Game = {
+    def dropMultipleCards(list: ListBuffer[Integer], dec: Integer, player1Turn: Boolean,hasJoker:Boolean) : Game = {
       if(player1Turn)
-        player = player.dropMultipleCards(list,dec)
+        player = player.dropMultipleCards(list,dec,hasJoker)
       else
-        player2 = player2.dropMultipleCards(list,dec)
+        player2 = player2.dropMultipleCards(list,dec,hasJoker)
       end if
       copy(table,player, player2, deck)
     }

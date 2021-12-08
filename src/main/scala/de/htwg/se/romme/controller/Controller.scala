@@ -9,95 +9,164 @@ import util.Observable
 import scala.collection.mutable.ListBuffer
 import de.htwg.se.romme.model.StateContext
 
-class Controller(var game: Game) extends Observable {
+import scala.swing.Publisher
+import de.htwg.se.romme.model.Club
+
+class Controller(var game: Game) extends Publisher {
 
   private val undoManager = new UndoManager
 
-  def gameStart(): Unit = {
+  var player1Turn: Boolean = true
+
+  def gameStart: Unit = {
     game = game.gameStart()
-    notifyObservers
+    //notifyObservers
+    publish(new showPlayerTable)
   }
 
-  def pickUpGraveYard(player1Turn: Boolean): Unit = {
+  def checkForJoker(list: ListBuffer[Integer]): ListBuffer[Integer] = {
+    var tmpList: ListBuffer[Integer] = ListBuffer()
+    var tmpCards: ListBuffer[Card] = ListBuffer()
+    var returnValues: ListBuffer[Integer] = ListBuffer()
+    if(player1Turn)
+      for (x <- 0 to (list.size - 1))
+        tmpCards.addOne(game.player.hands.playerOneHand(list(x))) // die Stellen der Karten, die ich ablegen möchte
+      
+      for (x <- 0 to tmpCards.size - 1) 
+        if(tmpCards(x).placeInList.get == 15)
+          returnValues.addOne(list(x))
+      returnValues
+    else
+      for (x <- 0 to (list.size - 1))
+      tmpCards.addOne(game.player2.hands.playerOneHand(list(x)))
+    
+      for (x <- 0 to tmpCards.size - 1)
+        if(tmpCards(x).placeInList.get == 15)
+          returnValues.addOne(list(x))
+      returnValues
+    end if
+  }
+
+  def replaceCardOrder(stelle: ListBuffer[Integer], values: ListBuffer[String]) : Unit = {
+      game = game.replaceCardOrder(stelle,values,player1Turn)
+  }
+
+  def replaceCardSuit(stelle: ListBuffer[Integer], values: ListBuffer[String]) : Unit = {
+    game = game.replaceCardSuit(stelle,values,player1Turn)
+  }
+
+  def switch: Unit = {
+    player1Turn = !player1Turn
+    publish(new showPlayerCards)
+  }
+
+  def playersTurn: Boolean = {
+    this.player1Turn
+  }
+
+  def pickUpGraveYard: Unit = {
     game = game.pickUpGraveYard(player1Turn)
-    notifyObservers
+   //notifyObservers
+    publish(new showPlayerCards)
+    publish(new showPlayerTable)
   }
 
-  def pickUpACard(player1Turn: Boolean): Unit = {
+  def pickUpACard: Unit = {
     game = game.pickUpACard(player1Turn)
     undoManager.doStep(new GameCommand(game, this))
-    notifyObservers
+    //notifyObservers
+    publish(new showPlayerCards)
   }
 
-  def dropASpecificCard(index: Integer, player1Turn: Boolean): Unit = {
+  def dropASpecificCard(index: Integer): Unit = {
     game = game.dropASpecificCard(index, player1Turn)
-    notifyObservers
+    //notifyObservers
+    publish(new showPlayerCards)
+    publish(new showPlayerTable)
   }
 
   def takeJoker(
       idxlist: Integer,
-      idxCard: Integer,
-      player1Turn: Boolean
-  ): Unit = {
+      idxCard: Integer): Unit = {
     game = game.takeJoker(idxlist, idxCard, player1Turn)
-    notifyObservers
+    //notifyObservers
+    publish(new showPlayerCards)
+    publish(new showPlayerTable)
   }
 
   def dropMultipleCards(
       list: ListBuffer[Integer],
       dec: Integer,
-      player1Turn: Boolean
+      hasJoker:Boolean
   ): Unit = {
-    game = game.dropMultipleCards(list, dec, player1Turn)
-    notifyObservers
+    game = game.dropMultipleCards(list, dec, player1Turn,hasJoker)
+    //notifyObservers
+    publish(new showPlayerCards)
+    publish(new showPlayerTable)
   }
 
-  def sortPlayersCards(player1Turn: Boolean): Unit = {
+  def sortPlayersCards: Unit = {
     game = game.sortPlayersCards(player1Turn)
-    notifyObservers
+    //notifyObservers
+    publish(new showPlayerCards)
   }
 
-  def victory(player1Turn: Boolean): Boolean = {
-    notifyObservers
+  def victory: Boolean = {
+    //notifyObservers
     game.victory(player1Turn)
   }
 
-  def showCards(player1Turn: Boolean): String = {
-    notifyObservers
+  def showCards: String = {
+    var s = ""
+    //notifyObservers
     if(player1Turn)
-      println("PLAYER 1: ")
+      s = "PLAYER 1: "
     else
-      println("PLAYER 2: ")
+      s = "PLAYER 2: "
     end if
-    print(game.showCards(player1Turn))
-    game.showCards(player1Turn)
-
+    s = s + game.showCards(player1Turn)
+    s
   }
 
-  def showTable(player1Turn: Boolean): String = {
-    notifyObservers
-    print(game.showTable)
+  def getCards: ListBuffer[Card] = {
+    if(player1Turn)
+      game.player.hands.playerOneHand
+    else
+      game.player2.hands.playerOneHand
+    end if
+  }
+
+  def getCardsTable: ListBuffer[ListBuffer[Card]] = {
+    game.table.droppedCardsList
+  }
+
+  def getGraveyardCard: Card = game.table.graveYard
+
+  def showTable: String = {
+    //notifyObservers
+    //print(game.showTable)
     game.showTable
   }
 
   def undo: Unit = {
     undoManager.undoStep
     print(game.deck.deckList.size)
-    notifyObservers
+    //notifyObservers
   }
   def redo: Unit = {
     undoManager.redoStep
     print(game.deck.deckList.size)
-    notifyObservers
+    //notifyObservers
   }
 
   def addCard(
       idxCard: Integer,
-      idxlist: Integer,
-      player1Turn: Boolean
+      idxlist: Integer
   ): Unit = {
-    notifyObservers
+    //notifyObservers
     game = game.addCard(idxCard, idxlist, player1Turn)
+    publish(new showPlayerCards)
+    publish(new showPlayerTable)
   }
 
 }

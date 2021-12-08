@@ -17,13 +17,13 @@ class DropsSpec extends AnyWordSpec {
       list.addOne(Card(3, 12))
       var sum = 0
       "execute strategySame Suit and return 40 as sum" in {
-        list = drops.execute(list, 0)
+        list = drops.execute(list, 0, false)
         for (l <- list)
           sum = list.size * l.getValue
         sum should be(40)
       }
       "execute strategyOrder and return 0 as sum" in {
-        list = drops.execute(list, 1)
+        list = drops.execute(list, 1, false)
         list.size should be(0)
       }
 
@@ -34,14 +34,9 @@ class DropsSpec extends AnyWordSpec {
         list.addOne(Card(0, 11))
         list.addOne(Card(0, 10))
         list.addOne(Card(0, 9))
-        /*
-        "execute strategySame Suit and return 0 as sum" in {
-          drops.execute(list, 0) should be(0)
-        }
-         */
         "execute strategyOrder and return 40 as sum" in {
           var sum = 0
-          list = drops.execute(list, 1)
+          list = drops.execute(list, 1, false)
           for (l <- list)
             sum = sum + l.getValue
           sum should be(40)
@@ -57,7 +52,7 @@ class DropsSpec extends AnyWordSpec {
       list.addOne(Card(0, 9))
       list.addOne(Card(0, 6))
       "execute strategySame Suit and return a  list of the size of 0 " in {
-        list = drops.execute(list, 0)
+        list = drops.execute(list, 0, false)
         list.size should be(0)
       }
 
@@ -68,7 +63,7 @@ class DropsSpec extends AnyWordSpec {
         list2.addOne(Card(0, 10))
         list2.addOne(Card(0, 9))
         list2.addOne(Card(0, 6))
-        list2 = drops.execute(list2, 1)
+        list2 = drops.execute(list2, 1, false)
         list2.size should be(0)
       }
     }
@@ -85,7 +80,7 @@ class DropsSpec extends AnyWordSpec {
       "execute strategyOrder and return a correct list of cards which its sum is 44" in {
 
         var list2: ListBuffer[Card] = ListBuffer()
-        list2 = drops.execute(list, 1)
+        list2 = drops.execute(list, 1, false)
         list2.size should be(7)
         var sum = 0
         for (card <- list2)
@@ -93,19 +88,21 @@ class DropsSpec extends AnyWordSpec {
         sum should be(44)
       }
     }
-    /* // readLine in drops :(
+    // readLine in drops :(
     "created with Jokers" should {
       val drops = Drops
       var list: ListBuffer[Card] = ListBuffer()
       list.addOne(Card(0, 12))
       list.addOne(Card(0, 11))
       list.addOne(Card(0, 10))
-      list.addOne(Card(4, 9))
+      var c = Joker()
+      c.setValue("jack")
+      list.addOne(c)
       "execute strategySame Suit and return 0 as sum" in {
-        drops.execute(list, 0) should be(0)
+        drops.execute(list, 0, true).size should be(0)
       }
       "execute strategyOrder and return 40 as sum" in {
-        drops.execute(list, 1) should be(40)
+        drops.execute(list, 1, true).size should be(4)
       }
     }
     "created with Jokers" should {
@@ -114,14 +111,16 @@ class DropsSpec extends AnyWordSpec {
       list.addOne(Card(1, 12))
       list.addOne(Card(2, 12))
       list.addOne(Card(3, 12))
-      list.addOne(Card(4, 9))
+      var c = Joker()
+      c.setSuit("Heart")
+      list.addOne(c)
       "execute strategySame Suit and return 40 as sum" in {
-        drops.execute(list, 0) should be(40)
+        drops.execute(list, 0, true).size should be(4)
       }
       "execute strategyOrder and return 0 as sum" in {
-        drops.execute(list, 1) should be(0)
+        drops.execute(list, 1, true).size should be(0)
       }
     }
-     */
+
   }
 }

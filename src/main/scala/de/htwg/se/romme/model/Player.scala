@@ -139,14 +139,20 @@ case class Player(name: String, hands: PlayerHands, table: Table) {
     var storeJokerPlace: ListBuffer[Integer] = ListBuffer()
     var storeNormalCards: ListBuffer[Integer] = ListBuffer()
     for (x <- 0 to tmpTableList.size - 1)
-        if (tmpTableList(x).getCardName.equals("Joker",""))
+        if (tmpTableList(x).getSuit.equals("Joker"))
             storeJokerPlace.addOne(x)
+            tmpRank.addOne(tmpTableList(x).getValue)
         end if
+        if(tmpTableList(x).placeInList.get == 15)
+          storeJokerPlace.addOne(x)
+          tmpSuit.addOne(tmpTableList(x).getSuit)
         storeNormalCards.addOne(x)
-        tmpSuit.addOne(tmpTableList(x).getSuit)
-        tmpRank.addOne(tmpTableList(x).getValue)
+
+    println(storeJokerPlace.size)
+    println(tmpSuit.size)
+    println(tmpRank.size)
     
-    if (tmpSuit.distinct.size > 1 + storeJokerPlace.size) // Strategy 0 Suit
+    if (tmpSuit.distinct.size == tmpSuit.size && !tmpSuit.isEmpty) // Strategy 0 Suit
         for(x <- 0 to storeJokerPlace.size - 1)
             if (hands.playerOneHand(idxCard).getSuit.equals(tmpTableList(storeJokerPlace(x)).getSuit) && hands.playerOneHand(idxCard).getValue == tmpTableList(storeNormalCards(0)).getValue) // schaue ob deine Card auch der gewünschte Suit hat
                 tmpTableList.insert(storeJokerPlace(x), hands.playerOneHand(idxCard)) // füge deine Karte ein
@@ -159,8 +165,11 @@ case class Player(name: String, hands: PlayerHands, table: Table) {
                 return copy(name,hands,table)
             end if
     else // Strategy 1 Order
+      println("nach else ")
         for (x <- 0 to storeJokerPlace.size - 1)
-            if(hands.playerOneHand(idxCard).getValue == tmpTableList(storeJokerPlace(x)).getValue && hands.playerOneHand(idxCard).getSuit.equals(tmpTableList(storeNormalCards(0)).getSuit)) // schaue ob deine Card auch der gewünschte Value hat
+            println("player.place in list: " + hands.playerOneHand(idxCard).placeInList.get + " table: " + tmpTableList(storeJokerPlace(x)).placeInList.get)
+            if(hands.playerOneHand(idxCard).placeInList.get == tmpTableList(storeJokerPlace(x)).placeInList.get && hands.playerOneHand(idxCard).getSuit.equals(tmpTableList(storeNormalCards(0)).getSuit)) // schaue ob deine Card auch der gewünschte Value hat
+                println("nach der if")
                 tmpTableList.insert(storeJokerPlace(x), hands.playerOneHand(idxCard)) // füge deine Karte ein
                 tmpTableList.remove(storeJokerPlace(x) + 1) // remove den Joker
                 hands.playerOneHand.remove(idxCard) // remove deine Karte von der Hand
@@ -174,8 +183,8 @@ case class Player(name: String, hands: PlayerHands, table: Table) {
     copy(name,hands,table)
   }
 
-  def dropMultipleCards(list: ListBuffer[Integer], dec: Integer) : Player = {
-    if(hands.dropCardsOnTable(list, dec) == true)
+  def dropMultipleCards(list: ListBuffer[Integer], dec: Integer,hasJoker:Boolean) : Player = {
+    if(hands.dropCardsOnTable(list, dec,hasJoker) == true)
       list.sorted // sortiere die Liste
       for (counter <- 0 to list.size - 1) // gehe die Liste durch
       // falls die Zahl 0 < 12 ist müssen die restlichen Cards um 1 verringert werden, da bei remove eins weggenommen wird

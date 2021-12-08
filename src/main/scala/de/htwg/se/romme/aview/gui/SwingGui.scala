@@ -1,0 +1,276 @@
+package de.htwg.se.romme.aview.gui
+
+import de.htwg.se.romme.controller._
+
+import de.htwg.se.romme.model.Card
+
+import scala.swing._
+import scala.swing.event._
+import scala.swing.Swing.LineBorder
+import scala.io.Source._
+import javax.swing.border.Border
+import java.awt.Color
+import javax.swing.JButton
+import scala.collection.mutable.ListBuffer
+import javax.swing.text.Position
+import javax.swing.JTextArea
+import javax.swing.JScrollPane
+import javax.swing.JOptionPane
+import javax.swing.SwingConstants
+import javax.swing.SwingContainer
+import javax.imageio.ImageIO
+import java.io.File
+
+case class SwingGui(controller: Controller) extends Frame {
+  listenTo(controller)
+
+  title = "HTWG-Romme"
+  menuBar = new MenuBar {
+    contents += new Menu("File") {
+      mnemonic = Key.F
+      contents += new MenuItem(Action("New") {
+        controller.gameStart
+        redraw
+      })
+      contents += new MenuItem(Action("Quit") { System.exit(0) })
+    }
+  }
+
+  def infoAboutGame: BoxPanel = new BoxPanel(Orientation.Vertical):
+    if(controller.game.deck.deckList.size == 0)
+      contents += new Label("Start the game through the menu File/New")
+    else
+      if(controller.playersTurn)
+        contents += new Label("It's Player One's Turn.")
+      else
+        contents += new Label("It's Player Two's Turn.")
+      end if
+    end if
+    
+  def theTable: BoxPanel = new BoxPanel(Orientation.Vertical): 
+    background = Color.BLACK
+    var tmpCardsInsideList: ListBuffer[Card] = ListBuffer()
+
+    for (cnt <- 0 to controller.getCardsTable.size - 1)
+      for(cnt2 <- 0 to controller.getCardsTable(cnt).size - 1)
+        tmpCardsInsideList.addOne(controller.getCardsTable(cnt)(cnt2))
+
+    var pics: ListBuffer[Image] = ListBuffer()
+    for(card <- tmpCardsInsideList)
+      var one = ""
+      var two = ""
+      card.getCardName._1 match {
+        case "Heart" => two = "H"
+        case "Diamond" => two = "D"
+        case "Club" => two = "C"
+        case "Spades" => two = "S"
+        case "Joker" => two = "J"
+      }
+      card.getCardName._2 match {
+        case "two" => one = "2"
+        case "three" => one = "3"
+        case "four" => one = "4"
+        case "five" => one = "5"
+        case "six" => one = "6"
+        case "seven" => one = "7"
+        case "eight" => one = "8"
+        case "nine" => one = "9"
+        case "ten" => one = "10"
+        case "jack" => one = "J"
+        case "queen" => one = "Q"
+        case "king" => one = "K"
+        case "ace" => one = "A"
+        case "" => one = "J"
+      }
+      var f = new File("C:\\Users\\Till\\Desktop\\SoftwareEngineering\\Romme\\romme\\src\\PNG\\" + one + two +".png")
+      pics.addOne(ImageIO.read(f).getScaledInstance(52,80,java.awt.Image.SCALE_SMOOTH))
+    
+    var one = ""
+    var two = ""
+    controller.getGraveyardCard.getCardName._1 match {
+        case "Heart" => two = "H"
+        case "Diamond" => two = "D"
+        case "Club" => two = "C"
+        case "Spades" => two = "S"
+        case "Joker" => two = "J"
+        case "" => two = ""
+    }
+    controller.getGraveyardCard.getCardName._2 match {
+        case "two" => one = "2"
+        case "three" => one = "3"
+        case "four" => one = "4"
+        case "five" => one = "5"
+        case "six" => one = "6"
+        case "seven" => one = "7"
+        case "eight" => one = "8"
+        case "nine" => one = "9"
+        case "ten" => one = "10"
+        case "jack" => one = "J"
+        case "queen" => one = "Q"
+        case "king" => one = "K"
+        case "ace" => one = "A"
+        case "" => one = "J"
+    }
+    var f = new File("C:\\Users\\Till\\Desktop\\SoftwareEngineering\\Romme\\romme\\src\\PNG\\" + one + two +".png")
+    var friedhof = ImageIO.read(f).getScaledInstance(52,80,java.awt.Image.SCALE_SMOOTH)
+    override def paintComponent(g: java.awt.Graphics2D) =  {
+      super.paintComponent(g)
+      var x = 30
+      for(pic <- pics)
+        g.drawImage(pic,x,10,null)
+        x = x + 60
+      g.drawImage(friedhof,700,10,null)
+    }
+      
+
+  
+  def playerAction: GridPanel = new GridPanel(8,1):
+    val pickButton = new Button("pick")
+    contents += pickButton
+    val dropButton = new Button("Drop")
+    contents += dropButton
+    val graveYardButton = new Button("Graveyard")
+    contents += graveYardButton
+    val dropMButton = new Button("dropM")
+    contents += dropMButton
+    val jokerButton = new Button("Joker")
+    contents += jokerButton
+    val addButton = new Button("add")
+    contents += addButton
+    val sortButton = new Button("Sort")
+    contents += sortButton
+    val switchButton = new Button("switch") 
+    contents += switchButton
+    listenTo(pickButton)
+    listenTo(dropButton)
+    listenTo(graveYardButton)
+    listenTo(dropMButton)
+    listenTo(jokerButton)
+    listenTo(addButton)
+    listenTo(sortButton)
+    listenTo(switchButton)
+    reactions += {
+      case ButtonClicked(`switchButton`) => controller.switch
+      case ButtonClicked(`sortButton`) => controller.sortPlayersCards
+      case ButtonClicked(`pickButton`) => controller.pickUpACard
+      case ButtonClicked(`graveYardButton`) => controller.pickUpGraveYard
+      case ButtonClicked(`dropButton`) => 
+        var tmp = JOptionPane.showInputDialog(null,"","Which Card would you like to drop ?",JOptionPane.DEFAULT_OPTION)
+        controller.dropASpecificCard(tmp.toInt)
+      case ButtonClicked(`dropMButton`) =>
+        var amount = 0
+        if(controller.player1Turn)
+          while(amount < 3 || amount >= controller.game.player.hands.playerOneHand.size) 
+          amount = JOptionPane.showInputDialog(null,"","How many Cards would you like to drop ?", JOptionPane.DEFAULT_OPTION).toInt
+        else
+          while(amount < 3 || amount >= controller.game.player2.hands.playerOneHand.size) 
+          amount = JOptionPane.showInputDialog(null,"","How many Cards would you like to drop ?", JOptionPane.DEFAULT_OPTION).toInt
+        end if
+        val tmpList: ListBuffer[Integer] = new ListBuffer()
+        while(amount > 0)
+          tmpList.addOne(JOptionPane.showInputDialog(null,"","Which Card would you like to drop ?", JOptionPane.DEFAULT_OPTION).toInt)
+          amount = amount - 1
+        var dec = JOptionPane.showInputDialog(null,"","Would you like to drop them by Suit(0) or by Order(1) ?", JOptionPane.DEFAULT_OPTION).toInt
+        var tt: ListBuffer[Integer] = new ListBuffer()
+        tt = controller.checkForJoker(tmpList)
+        if(tt.isEmpty)
+          controller.dropMultipleCards(tmpList,dec,false)
+        else
+          var stringList: ListBuffer[String] = ListBuffer()
+          if(dec == 0) // nach Suit
+            for (x <- 0 to tt.size - 1)
+              stringList.addOne(JOptionPane.showInputDialog(null,"","Which Suit should your Joker have ?", JOptionPane.DEFAULT_OPTION))
+              controller.replaceCardSuit(tt,stringList)
+              controller.dropMultipleCards(tmpList,dec,true)
+          else
+            for (x <- 0 to tt.size - 1)
+              stringList.addOne(JOptionPane.showInputDialog(null,"","Which Suit should your Joker have ?", JOptionPane.DEFAULT_OPTION))
+              controller.replaceCardOrder(tt,stringList)
+              controller.dropMultipleCards(tmpList,dec,true)
+          end if
+        end if
+      case ButtonClicked(`jokerButton`) =>
+        var cardInput = JOptionPane.showInputDialog(null,"","Which Card would you like to drop ?",JOptionPane.DEFAULT_OPTION).toInt
+        var setInput = JOptionPane.showInputDialog(null,"","Which Set would you like to change ?",JOptionPane.DEFAULT_OPTION).toInt
+        controller.takeJoker(setInput,cardInput)
+      case ButtonClicked(`addButton`) =>
+        var cardInput = JOptionPane.showInputDialog(null,"","Which Card would you like to add ?",JOptionPane.DEFAULT_OPTION).toInt
+        var setInput = JOptionPane.showInputDialog(null,"","Which Set would you like to expand ?",JOptionPane.DEFAULT_OPTION).toInt
+        controller.addCard(cardInput,setInput)
+    }
+  
+  def showCards: GridPanel = new GridPanel(1,1):
+    background = Color.DARK_GRAY
+    var tmpCards = controller.getCards
+    var pics: ListBuffer[Image] = ListBuffer()
+    for(card <- tmpCards)
+      var one = ""
+      var two = ""
+      card.getCardName._1 match {
+        case "Heart" => two = "H"
+        case "Diamond" => two = "D"
+        case "Club" => two = "C"
+        case "Spades" => two = "S"
+        case "Joker" => two = "J"
+      }
+      card.getCardName._2 match {
+        case "two" => one = "2"
+        case "three" => one = "3"
+        case "four" => one = "4"
+        case "five" => one = "5"
+        case "six" => one = "6"
+        case "seven" => one = "7"
+        case "eight" => one = "8"
+        case "nine" => one = "9"
+        case "ten" => one = "10"
+        case "jack" => one = "J"
+        case "queen" => one = "Q"
+        case "king" => one = "K"
+        case "ace" => one = "A"
+        case "" => one = "J"
+      }
+      var f = new File("C:\\Users\\Till\\Desktop\\SoftwareEngineering\\Romme\\romme\\src\\PNG\\"+one + two +".png")
+      pics.addOne(ImageIO.read(f).getScaledInstance(52,80,java.awt.Image.SCALE_SMOOTH))
+    this.preferredSize = new Dimension(900, 125)
+
+    override def paintComponent(g: java.awt.Graphics2D) =  {
+      super.paintComponent(g)
+      g.setColor(Color.DARK_GRAY)
+      g.fillRect(0,0,1300,140)
+      var x = 30
+      var i = 0
+      g.setColor(Color.WHITE)
+      for(pic <- pics)
+        g.drawImage(pic,x,10,null)
+        g.drawString(i.toString,x + 20, 110)
+        x = x + 60
+        i = i + 1
+    }
+
+  visible = true
+  redrawF
+  centerOnScreen()
+
+  reactions += {
+    case event: showPlayerCards => redraw
+    case event: showPlayerTable => redraw
+  }
+
+  def redrawF: Unit = 
+    contents = new BorderPanel {
+      add(infoAboutGame,BorderPanel.Position.Center)
+    }
+    repaint()
+
+  def redraw: Unit = {
+    contents = new BorderPanel {
+      add(infoAboutGame, BorderPanel.Position.North)
+      add(theTable,BorderPanel.Position.Center)
+      add(playerAction, BorderPanel.Position.East)
+      add(showCards,BorderPanel.Position.South)
+      this.preferredSize_=(new Dimension(900,400))
+    }
+    repaint()
+    centerOnScreen()
+  }
+}

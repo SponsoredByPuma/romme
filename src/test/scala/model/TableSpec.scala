@@ -44,7 +44,7 @@ class TableSpec extends AnyWordSpec {
         var testList: ListBuffer[Integer] = new ListBuffer()
         for (x <- 0 to 4)
           testList.addOne(x)
-        hand.dropCardsOnTable(testList, 1)
+        hand.dropCardsOnTable(testList, 1, false)
         table.droppedCardsList.isEmpty should be(false)
       }
     }

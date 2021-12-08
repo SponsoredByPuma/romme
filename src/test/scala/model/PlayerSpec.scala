@@ -65,7 +65,7 @@ class PlayerSpec extends AnyWordSpec {
       list.addOne(4)
 
       "be able to drop multiple cards on the table" in {
-        player.dropMultipleCards(list, 1) //--------------------------0
+        player.dropMultipleCards(list, 1, false) //--------------------------0
         player.hands.playerOneHand.size should be(1)
         table.droppedCardsList(0).size should be(5)
       }
@@ -83,7 +83,7 @@ class PlayerSpec extends AnyWordSpec {
         list2.addOne(0)
         list2.addOne(1)
         list2.addOne(2)
-        player.dropMultipleCards(list2, 0) // --------------------------1
+        player.dropMultipleCards(list2, 0, false) // --------------------------1
         player.hands.playerOneHand.size should be(1)
         player.table.droppedCardsList(1).size should be(3)
         player.addCard(0, 1)
@@ -103,7 +103,8 @@ class PlayerSpec extends AnyWordSpec {
         list2.addOne(3)
         player.dropMultipleCards(
           list2,
-          0
+          0,
+          false
         ) // ------------------------------------2
         player.hands.playerOneHand.size should be(1)
         player.table.droppedCardsList(2).size should be(4)
@@ -116,7 +117,6 @@ class PlayerSpec extends AnyWordSpec {
 
   "A Player" when {
     "created for testing" should {
-
       val table = new Table()
       val deck = new Deck()
       val hand = new PlayerHands(table)
@@ -137,7 +137,7 @@ class PlayerSpec extends AnyWordSpec {
       list3.addOne(5)
 
       "not be able to add a wrong card to a set on the table" in {
-        player.dropMultipleCards(list3, 1) // --------------------3
+        player.dropMultipleCards(list3, 1, false) // --------------------3
         player.hands.playerOneHand.size should be(1)
         player.table.droppedCardsList(0).size should be(6)
         player.addCard(0, 0)
@@ -153,7 +153,7 @@ class PlayerSpec extends AnyWordSpec {
         list4.addOne(0)
         list4.addOne(1)
         list4.addOne(2)
-        player.dropMultipleCards(list4, 0) // --------------------3
+        player.dropMultipleCards(list4, 0, false) // --------------------3
         player.hands.playerOneHand.size should be(1)
         player.table.droppedCardsList(1).size should be(3)
         player.addCard(0, 1)
@@ -161,6 +161,33 @@ class PlayerSpec extends AnyWordSpec {
         player.table.droppedCardsList(1).size should be(3)
       }
 
+    }
+  }
+  "A Player" when {
+    "created for testing " should {
+      val table = new Table()
+      val deck = new Deck()
+      val hand = new PlayerHands(table)
+      val player = new Player("Player 1", hand, table)
+      val test: ListBuffer[Card] = ListBuffer()
+      var c = Joker()
+      c.setValue("jack")
+      test.addOne(Card(0, 12))
+      test.addOne(Card(0, 11))
+      test.addOne(Card(0, 10))
+      test.addOne(c)
+      table.droppedCardsList.addOne(test)
+      table.droppedCardsList.addOne(test)
+      player.hands.playerOneHand.addOne(Card(0, 9))
+      "take the Joker on the board with the right Card" in {
+        player.takeJoker(0, 0)
+        player.hands.playerOneHand(0).getCardName should be("Joker", "")
+      }
+      "not be able to take the Joker with the wrong Card" in {
+        player.hands.playerOneHand.addOne(Card(0, 8))
+        player.takeJoker(1, 1)
+        player.hands.playerOneHand(1).getCardName should be("Heart", "ten")
+      }
     }
   }
 

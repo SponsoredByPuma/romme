@@ -15,16 +15,14 @@ class Deck() {
 
     for (suitCounter <- 0 to 3) {
       for (rankCounter <- 0 to 12) {
-        //val c = new de.htwg.se.romme.model.Card(suitCounter, rankCounter)
         val c = Card(suitCounter, rankCounter)
-        deckList.addOne(c) // add every Card twice
+        deckList.addOne(c)
         deckList.addOne(c)
       }
     }
 
     var jokerCounter = 0
     for (jokerCounter <- 1 to 6) {
-      //val jokerCard = new de.htwg.se.romme.model.Card(4, 13)
       val jokerCard = Card(4, 0)
       deckList.addOne(jokerCard)
     }
