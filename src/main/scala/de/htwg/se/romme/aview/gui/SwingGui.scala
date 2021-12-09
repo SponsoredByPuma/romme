@@ -32,7 +32,7 @@ case class SwingGui(controller: Controller) extends Frame {
         controller.gameStart
         redraw
       })
-      contents += new MenuItem(Action("Quit") { System.exit(0) })
+      contents += new MenuItem(Action("Quit") {System.exit(0)})
     }
   }
 
@@ -55,75 +55,56 @@ case class SwingGui(controller: Controller) extends Frame {
       for(cnt2 <- 0 to controller.getCardsTable(cnt).size - 1)
         tmpCardsInsideList.addOne(controller.getCardsTable(cnt)(cnt2))
 
-    var pics: ListBuffer[Image] = ListBuffer()
-    for(card <- tmpCardsInsideList)
-      var one = ""
-      var two = ""
-      card.getCardName._1 match {
-        case "Heart" => two = "H"
-        case "Diamond" => two = "D"
-        case "Club" => two = "C"
-        case "Spades" => two = "S"
-        case "Joker" => two = "J"
-      }
-      card.getCardName._2 match {
-        case "two" => one = "2"
-        case "three" => one = "3"
-        case "four" => one = "4"
-        case "five" => one = "5"
-        case "six" => one = "6"
-        case "seven" => one = "7"
-        case "eight" => one = "8"
-        case "nine" => one = "9"
-        case "ten" => one = "10"
-        case "jack" => one = "J"
-        case "queen" => one = "Q"
-        case "king" => one = "K"
-        case "ace" => one = "A"
-        case "" => one = "J"
-      }
-      var f = new File("C:\\Users\\Till\\Desktop\\SoftwareEngineering\\Romme\\romme\\src\\PNG\\" + one + two +".png")
-      pics.addOne(ImageIO.read(f).getScaledInstance(52,80,java.awt.Image.SCALE_SMOOTH))
-    
-    var one = ""
-    var two = ""
-    controller.getGraveyardCard.getCardName._1 match {
-        case "Heart" => two = "H"
-        case "Diamond" => two = "D"
-        case "Club" => two = "C"
-        case "Spades" => two = "S"
-        case "Joker" => two = "J"
-        case "" => two = ""
-    }
-    controller.getGraveyardCard.getCardName._2 match {
-        case "two" => one = "2"
-        case "three" => one = "3"
-        case "four" => one = "4"
-        case "five" => one = "5"
-        case "six" => one = "6"
-        case "seven" => one = "7"
-        case "eight" => one = "8"
-        case "nine" => one = "9"
-        case "ten" => one = "10"
-        case "jack" => one = "J"
-        case "queen" => one = "Q"
-        case "king" => one = "K"
-        case "ace" => one = "A"
-        case "" => one = "J"
-    }
-    var f = new File("C:\\Users\\Till\\Desktop\\SoftwareEngineering\\Romme\\romme\\src\\PNG\\" + one + two +".png")
+    var pics: ListBuffer[ListBuffer[Image]] = ListBuffer()
+    var f = new File("C:\\Users\\Till\\Desktop\\SoftwareEngineering\\Romme\\romme\\src\\PNG\\" + getPictureName(controller.getGraveyardCard.getCardName._1, controller.getGraveyardCard.getCardName._2) +".png")
     var friedhof = ImageIO.read(f).getScaledInstance(52,80,java.awt.Image.SCALE_SMOOTH)
+    for(list <- controller.getCardsTable)
+      var list2: ListBuffer[Image] = ListBuffer()
+      for(card <- list)
+        var fil = new File("C:\\Users\\Till\\Desktop\\SoftwareEngineering\\Romme\\romme\\src\\PNG\\" + getPictureName(card.getCardName._1,card.getCardName._2) +".png")
+        list2.addOne(ImageIO.read(fil).getScaledInstance(52,80,java.awt.Image.SCALE_SMOOTH))
+      pics.append(list2)
     override def paintComponent(g: java.awt.Graphics2D) =  {
       super.paintComponent(g)
-      var x = 30
-      for(pic <- pics)
-        g.drawImage(pic,x,10,null)
-        x = x + 60
+      var y = 10
+      for(list <- pics)
+        var x = 30
+        for(card <- list)
+          g.drawImage(card,x,y,null)
+          x = x + 60
+        y = y + 90
       g.drawImage(friedhof,700,10,null)
     }
-      
 
-  
+  def getPictureName(s1: String,s2: String): String = {
+    var returnString = ""
+    s2 match {
+      case "two" => returnString = "2"
+      case "three" => returnString = "3"
+      case "four" => returnString = "4"
+      case "five" => returnString = "5"
+      case "six" => returnString = "6"
+      case "seven" => returnString = "7"
+      case "eight" => returnString = "8"
+      case "nine" => returnString = "9"
+      case "ten" => returnString = "10"
+      case "jack" => returnString = "J"
+      case "queen" => returnString = "Q"
+      case "king" => returnString = "K"
+      case "ace" => returnString = "A"
+      case "" => returnString = "J"
+    }
+    s1 match {
+      case "Heart" => returnString += "H"
+      case "Diamond" => returnString += "D"
+      case "Club" => returnString += "C"
+      case "Spades" => returnString += "S"
+      case "Joker" => returnString += "J"
+      case "" => returnString += ""
+    }
+    returnString
+  }
+
   def playerAction: GridPanel = new GridPanel(8,1):
     val pickButton = new Button("pick")
     contents += pickButton
@@ -180,13 +161,13 @@ case class SwingGui(controller: Controller) extends Frame {
           if(dec == 0) // nach Suit
             for (x <- 0 to tt.size - 1)
               stringList.addOne(JOptionPane.showInputDialog(null,"","Which Suit should your Joker have ?", JOptionPane.DEFAULT_OPTION))
-              controller.replaceCardSuit(tt,stringList)
-              controller.dropMultipleCards(tmpList,dec,true)
+            controller.replaceCardSuit(tt,stringList)
+            controller.dropMultipleCards(tmpList,dec,true)
           else
             for (x <- 0 to tt.size - 1)
-              stringList.addOne(JOptionPane.showInputDialog(null,"","Which Suit should your Joker have ?", JOptionPane.DEFAULT_OPTION))
-              controller.replaceCardOrder(tt,stringList)
-              controller.dropMultipleCards(tmpList,dec,true)
+              stringList.addOne(JOptionPane.showInputDialog(null,"","Which Rank should your Joker have ?", JOptionPane.DEFAULT_OPTION))
+            controller.replaceCardOrder(tt,stringList)
+            controller.dropMultipleCards(tmpList,dec,true)
           end if
         end if
       case ButtonClicked(`jokerButton`) =>
@@ -204,32 +185,7 @@ case class SwingGui(controller: Controller) extends Frame {
     var tmpCards = controller.getCards
     var pics: ListBuffer[Image] = ListBuffer()
     for(card <- tmpCards)
-      var one = ""
-      var two = ""
-      card.getCardName._1 match {
-        case "Heart" => two = "H"
-        case "Diamond" => two = "D"
-        case "Club" => two = "C"
-        case "Spades" => two = "S"
-        case "Joker" => two = "J"
-      }
-      card.getCardName._2 match {
-        case "two" => one = "2"
-        case "three" => one = "3"
-        case "four" => one = "4"
-        case "five" => one = "5"
-        case "six" => one = "6"
-        case "seven" => one = "7"
-        case "eight" => one = "8"
-        case "nine" => one = "9"
-        case "ten" => one = "10"
-        case "jack" => one = "J"
-        case "queen" => one = "Q"
-        case "king" => one = "K"
-        case "ace" => one = "A"
-        case "" => one = "J"
-      }
-      var f = new File("C:\\Users\\Till\\Desktop\\SoftwareEngineering\\Romme\\romme\\src\\PNG\\"+one + two +".png")
+      var f = new File("C:\\Users\\Till\\Desktop\\SoftwareEngineering\\Romme\\romme\\src\\PNG\\"+ getPictureName(card.getCardName._1,card.getCardName._2) +".png")
       pics.addOne(ImageIO.read(f).getScaledInstance(52,80,java.awt.Image.SCALE_SMOOTH))
     this.preferredSize = new Dimension(900, 125)
 
