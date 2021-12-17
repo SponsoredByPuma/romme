@@ -2,8 +2,9 @@ package de.htwg.se.romme
 
 package aview
 
-import de.htwg.se.romme.controller.Controller
-import model.{Card, Deck, Player, PlayerHands, Table, Drops, Game}
+import de.htwg.se.romme.controller.controllerComponent.controllerBaseImpl.Controller
+import model.modelComponent.dropsBaseImpl._
+import model.modelComponent.gameBaseImpl._
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._

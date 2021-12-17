@@ -1,6 +1,6 @@
 package de.htwg.se.romme
 
-package model
+package model.modelComponent.gameBaseImpl
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
@@ -21,7 +21,7 @@ class GameSpec() extends AnyWordSpec {
         game.victory(true) should be(true)
       }
       "create a new Deck with and drop 13 Cards to the player " in {
-        game.gameStart()
+        game.gameStart
         game.player.hands.playerOneHand.size should be(13)
         game.deck.deckList.size should be(84)
       }

@@ -1,13 +1,17 @@
-package de.htwg.se.romme
-package model
+package de.htwg.se.romme.model.modelComponent.gameBaseImpl
+
+import de.htwg.se.romme.model.modelComponent.GameInterface
+import de.htwg.se.romme.model.modelComponent.gameBaseImpl.Table
+import de.htwg.se.romme.model.modelComponent.gameBaseImpl.Player
+import de.htwg.se.romme.model.modelComponent.gameBaseImpl.Deck
 
 import scala.collection.mutable.ListBuffer
 
-case class Game(table: Table,var player: Player, var player2: Player, deck: Deck):
+case class Game(table: Table,var player: Player, var player2: Player, deck: Deck) extends GameInterface:
 
     def set(table: Table,player: Player, player2: Player,deck: Deck): Game = copy(table,player,player2,deck)
 
-    def gameStart(): Game = {
+    def gameStart: Game = {
         deck.createNewDeck()
         player.hands.draw13Cards(deck)
         player2.hands.draw13Cards(deck)

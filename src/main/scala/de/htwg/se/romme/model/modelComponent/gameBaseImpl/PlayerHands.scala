@@ -1,15 +1,12 @@
-package de.htwg.se.romme
-
-package model
+package de.htwg.se.romme.model.modelComponent.gameBaseImpl
 
 import scala.collection.mutable.ListBuffer
-import de.htwg.se.romme.model.Deck
-import de.htwg.se.romme.model.Table
-import de.htwg.se.romme.model.Drops
-import de.htwg.se.romme.model.State
+import de.htwg.se.romme.model.modelComponent.gameBaseImpl._
+import de.htwg.se.romme.model.modelComponent.dropsBaseImpl._
+
 
 class PlayerHands(table: Table) {
-  var playerOneHand: ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
+  var playerOneHand: ListBuffer[Card] = new ListBuffer()
  // var outside: Boolean = false
   var outside = StateContext()
   outside.setState(StateOutsideFalse())
@@ -27,11 +24,11 @@ class PlayerHands(table: Table) {
   }
 
   def sortMyCards(): Unit = {
-    var heart: ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
-    var club: ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
-    var diamond: ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
-    var spades: ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
-    var joker: ListBuffer[de.htwg.se.romme.model.Card] = new ListBuffer()
+    var heart: ListBuffer[Card] = new ListBuffer()
+    var club: ListBuffer[Card] = new ListBuffer()
+    var diamond: ListBuffer[Card] = new ListBuffer()
+    var spades: ListBuffer[Card] = new ListBuffer()
+    var joker: ListBuffer[Card] = new ListBuffer()
 
     for (cardIterator <- playerOneHand)
       cardIterator.getSuit match {

@@ -1,16 +1,8 @@
 package de.htwg.se.romme
 
-import de.htwg.se.romme.model.{
-  Card,
-  Deck,
-  Player,
-  PlayerHands,
-  Drops,
-  Game,
-  State,
-  Table
-}
-import de.htwg.se.romme.controller.Controller
+import de.htwg.se.romme.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.romme.model.modelComponent.GameInterface
+import de.htwg.se.romme.model.modelComponent.gameBaseImpl._
 import de.htwg.se.romme.aview.gui.SwingGui
 import de.htwg.se.romme.aview.Tui
 import scala.io.StdIn.readLine

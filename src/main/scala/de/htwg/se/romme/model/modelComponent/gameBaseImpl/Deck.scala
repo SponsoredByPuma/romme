@@ -1,12 +1,10 @@
-package de.htwg.se.romme
-
-package model
+package de.htwg.se.romme.model.modelComponent.gameBaseImpl
 
 import scala.collection.mutable.ListBuffer
 
 class Deck() {
 
-  var deckList: ListBuffer[de.htwg.se.romme.model.Card] = ListBuffer()
+  var deckList: ListBuffer[Card] = ListBuffer()
 
   def createNewDeck(): ListBuffer[Card] = {
 
@@ -29,7 +27,7 @@ class Deck() {
     deckList
   }
 
-  def drawFromDeck(): de.htwg.se.romme.model.Card = {
+  def drawFromDeck(): Card = {
     val random = new scala.util.Random // random generator
     // safe a random value between 0 and the size of the current deck - 1
     val tmp = random.nextInt(deckList.size - 1)

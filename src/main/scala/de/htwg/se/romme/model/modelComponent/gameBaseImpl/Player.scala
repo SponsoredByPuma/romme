@@ -1,5 +1,4 @@
-package de.htwg.se.romme
-package model
+package de.htwg.se.romme.model.modelComponent.gameBaseImpl
 
 import scala.collection.mutable.ListBuffer
 
@@ -80,16 +79,22 @@ case class Player(name: String, hands: PlayerHands, table: Table) {
     if(lowestCard == 0 && checkForAce(list)) // if there is an ace and a two in the order the ace and two need to be flexible
       var splitter = 0
       while(splitter == list(splitter).placeInList.get) // solange die Reihenfolge noch passt erhöhe den counter
+        println("In der While " + list(splitter).placeInList.get) // test
         splitter = splitter + 1
+      var tmpSplitterSafer = splitter - 1
+      println("Nach der While: " + list(splitter).placeInList.get)
       var secondList: ListBuffer[Card] = ListBuffer()
       for (x <- splitter to list.size - 1) // adde alle Element nach der Lücke hinzu
+        println("In der For: "+list(splitter).getCardName) // test
         secondList.addOne(list(splitter))
         splitter = splitter + 1
       var newList: ListBuffer[Card] = ListBuffer()
       newList.addAll(secondList) // füge erst die Bube,Dame, König, Ass hinzu
 
       var thirdList: ListBuffer[Card] = ListBuffer() 
-      thirdList = list.filter(_.placeInList.get < splitter)
+      thirdList = list.filter(_.placeInList.get <= tmpSplitterSafer)
+      for(cd <- thirdList) // test
+        print("In der For Each: " + cd.getCardName) //) test
       newList.addAll(thirdList) // danach die 2,3,4,5...
 
       var next = newList(0).placeInList.get
@@ -215,4 +220,3 @@ case class Player(name: String, hands: PlayerHands, table: Table) {
     def showTable: String = table.showPlacedCardsOnTable()
 
 }
-

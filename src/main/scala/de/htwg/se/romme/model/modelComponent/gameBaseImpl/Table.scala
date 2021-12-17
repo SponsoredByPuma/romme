@@ -1,8 +1,6 @@
-package de.htwg.se.romme
-package model
+package de.htwg.se.romme.model.modelComponent.gameBaseImpl
 
 import scala.collection.mutable.ListBuffer
-import scala.util.Try
 
 class Table() {
 

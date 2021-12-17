@@ -1,18 +1,18 @@
-package de.htwg.se.romme
-
-package model
+package de.htwg.se.romme.model.modelComponent.dropsBaseImpl
 
 import scala.collection.mutable.ListBuffer
 import scala.io.StdIn.readLine
+import de.htwg.se.romme.model.modelComponent.gameBaseImpl.Card
+import de.htwg.se.romme.model.modelComponent.DropsInterface
 
 object Drops {
 
-  abstract class Drops() {
+  abstract class Drops() extends DropsInterface {
     def strategy(numberOfStrategy: Integer): Integer
 
-    def strategySameSuit(): Integer
+    def strategySameSuit: Integer
 
-    def strategyOrder(): Integer
+    def strategyOrder: Integer
 
     def execute(cards: ListBuffer[Card], numberOfStrategy: Integer,hasJoker:Boolean): Integer
 

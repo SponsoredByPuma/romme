@@ -2,17 +2,15 @@ package de.htwg.se.romme
 
 package aview
 
-import controller.Controller
-import model.{Card, Deck, Player, PlayerHands, Table}
+import controller.controllerComponent._
+import controller.controllerComponent.controllerBaseImpl._
 import util.Observable
 import scala.io.StdIn.readLine
 import scala.collection.mutable.ListBuffer
 import scala.swing.Reactor
-import de.htwg.se.romme.controller.showPlayerCards
-import de.htwg.se.romme.controller.showPlayerTable
 import scala.compiletime.ops.string
 
-class Tui(controller: Controller) extends Reactor {
+class Tui(controller: ControllerInterface) extends Reactor {
   //controller.add(this)
   listenTo(controller)
   

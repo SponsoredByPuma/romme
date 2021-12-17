@@ -1,6 +1,4 @@
-package de.htwg.se.romme
-
-package model
+package de.htwg.se.romme.model.modelComponent.gameBaseImpl
 
 trait State: // Interface State
     def outside(state_Context: StateContext): Boolean
@@ -30,4 +28,3 @@ class StateContext() :
     def getStateB() : Boolean =  mystate.outside(this)
     def outside(): Boolean = mystate.outside(this)
         
-    

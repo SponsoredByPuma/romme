@@ -1,14 +1,15 @@
-package de.htwg.se.romme.controller
+package de.htwg.se.romme
+package controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.romme.model.Game
 import de.htwg.se.romme.util.Command
-import de.htwg.se.romme.model.Table
-import de.htwg.se.romme.model.Deck
-import de.htwg.se.romme.model.PlayerHands
-import de.htwg.se.romme.model.Player
-import de.htwg.se.romme.model.Card
+import de.htwg.se.romme.model.modelComponent.gameBaseImpl._
+import de.htwg.se.romme.model.modelComponent.GameInterface
+import de.htwg.se.romme.controller.controllerComponent.ControllerInterface
 
-class GameCommand(gaming: Game, controller: Controller) extends Command {
+class GameCommand(
+    gaming: GameInterface,
+    controller: de.htwg.se.romme.controller.controllerComponent.controllerBaseImpl.Controller
+) extends Command {
   override def doStep: Unit = controller.game = controller.game.set(
     gaming.table,
     gaming.player,

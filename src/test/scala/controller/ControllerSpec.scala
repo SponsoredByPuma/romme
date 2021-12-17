@@ -3,7 +3,10 @@ package de.htwg.se.romme
 package controller
 
 import de.htwg.se.romme.util.Observer
-import model.{Card, Deck, Player, PlayerHands, Table, Drops, Game}
+import model.modelComponent.DropsInterface
+import model.modelComponent.GameInterface
+import model.modelComponent.gameBaseImpl._
+import controller.controllerComponent.controllerBaseImpl.Controller
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._

@@ -1,25 +1,25 @@
 package de.htwg.se.romme
-package controller
+package controller.controllerComponent.controllerBaseImpl
 
-import model.{Card, Deck, Player, PlayerHands, Table, State, Game}
+import model.modelComponent.GameInterface
+import model.modelComponent.gameBaseImpl._
+import controller.controllerComponent.ControllerInterface
 import _root_.de.htwg.se.romme.util.Observable
 import de.htwg.se.romme.util.UndoManager
 import scala.io.StdIn.readLine
 import util.Observable
 import scala.collection.mutable.ListBuffer
-import de.htwg.se.romme.model.StateContext
 
 import scala.swing.Publisher
-import de.htwg.se.romme.model.Club
 
-class Controller(var game: Game) extends Publisher {
+class Controller(var game: GameInterface) extends ControllerInterface with Publisher{
 
   private val undoManager = new UndoManager
 
   var player1Turn: Boolean = true
 
   def gameStart: Unit = {
-    game = game.gameStart()
+    game = game.gameStart 
     //notifyObservers
     publish(new showPlayerTable)
   }
@@ -144,7 +144,6 @@ class Controller(var game: Game) extends Publisher {
 
   def showTable: String = {
     //notifyObservers
-    //print(game.showTable)
     game.showTable
   }
 

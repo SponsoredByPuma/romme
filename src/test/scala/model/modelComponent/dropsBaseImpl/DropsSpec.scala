@@ -1,6 +1,8 @@
 package de.htwg.se.romme
 
-package model
+package model.modelComponent.dropsBaseImpl
+import model.modelComponent.gameBaseImpl._
+import model.modelComponent.gameBaseImpl.Joker
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._

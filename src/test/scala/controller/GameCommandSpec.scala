@@ -3,13 +3,9 @@ package controller
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import de.htwg.se.romme.model.Table
-import de.htwg.se.romme.model.Deck
-import de.htwg.se.romme.model.PlayerHands
-import de.htwg.se.romme.model.Game
-import de.htwg.se.romme.model.Player
-import de.htwg.se.romme.model.Card
-
+import model.modelComponent.gameBaseImpl._
+import controller.controllerComponent.controllerBaseImpl.Controller
+import controller.controllerComponent.controllerBaseImpl.GameCommand
 class GameCommandSpec() extends AnyWordSpec with Matchers {
   "A GameCommand" when {
     "created " should {

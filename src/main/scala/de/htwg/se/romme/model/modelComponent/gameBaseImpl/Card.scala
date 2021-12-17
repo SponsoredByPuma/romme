@@ -1,4 +1,4 @@
-package de.htwg.se.romme.model
+package de.htwg.se.romme.model.modelComponent.gameBaseImpl
 
 trait Card {
   def getSuit: String
@@ -53,7 +53,7 @@ private class Club(rank: Integer) extends Card {
   override def placeInList: Option[Integer] = Some(rank)
 }
 
- private class Joker() extends Card {
+ class Joker() extends Card {
   var rank = 15
   var suit = "Joker"
   override def getSuit: String = suit

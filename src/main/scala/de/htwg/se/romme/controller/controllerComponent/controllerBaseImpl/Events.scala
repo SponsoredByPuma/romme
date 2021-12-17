@@ -1,6 +1,5 @@
 package de.htwg.se.romme
-
-package controller
+package controller.controllerComponent.controllerBaseImpl
 
 import scala.swing.event.Event
 
