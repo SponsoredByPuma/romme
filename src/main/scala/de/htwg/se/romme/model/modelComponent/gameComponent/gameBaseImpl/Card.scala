@@ -1,5 +1,4 @@
-package de.htwg.se.romme.model.modelComponent.gameBaseImpl
-
+package de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl
 trait Card {
   def getSuit: String
   def getValue: Integer 

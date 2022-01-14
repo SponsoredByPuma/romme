@@ -1,9 +1,9 @@
-package de.htwg.se.romme.model.modelComponent
+package de.htwg.se.romme.model.modelComponent.gameComponent
 
-import de.htwg.se.romme.model.modelComponent.gameBaseImpl.Card
-import de.htwg.se.romme.model.modelComponent.gameBaseImpl.Table
-import de.htwg.se.romme.model.modelComponent.gameBaseImpl.Deck
-import de.htwg.se.romme.model.modelComponent.gameBaseImpl.Player
+import de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl.Card
+import de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl.Table
+import de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl.Deck
+import de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl.Player
 import scala.collection.mutable.ListBuffer
 
 trait GameInterface:

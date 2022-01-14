@@ -1,4 +1,5 @@
-package de.htwg.se.romme.model.modelComponent.gameBaseImpl
+package de.htwg.se.romme.model.modelComponent.gameComponent
+package gameBaseImpl
 
 import scala.collection.mutable.ListBuffer
 

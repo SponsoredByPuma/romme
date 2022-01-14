@@ -1,8 +1,13 @@
-package de.htwg.se.romme.model.modelComponent.gameBaseImpl
+package de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl
 
+import de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl.Card
+import de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl.Deck
 import scala.collection.mutable.ListBuffer
+import de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl.Table
+import de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl.PlayerHands
+import com.google.inject.Inject
 
-case class Player(name: String, hands: PlayerHands, table: Table) {
+case class Player @Inject() (name: String, hands: PlayerHands, table: Table) {
   def getName: String = name
 
   def pickUpGraveYard: Player = {

@@ -1,7 +1,7 @@
-package de.htwg.se.romme.model.modelComponent
+package de.htwg.se.romme.model.modelComponent.dropsComponent
 
 import scala.collection.mutable.ListBuffer
-import de.htwg.se.romme.model.modelComponent.gameBaseImpl.Card
+import de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl.Card
 
 trait DropsInterface:
 

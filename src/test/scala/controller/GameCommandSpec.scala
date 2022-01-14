@@ -3,7 +3,7 @@ package controller
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import model.modelComponent.gameBaseImpl._
+import model.modelComponent.gameComponent.gameBaseImpl._
 import controller.controllerComponent.controllerBaseImpl.Controller
 import controller.controllerComponent.controllerBaseImpl.GameCommand
 class GameCommandSpec() extends AnyWordSpec with Matchers {

@@ -1,13 +1,13 @@
-package de.htwg.se.romme.model.modelComponent.gameBaseImpl
+package de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl
 
-import de.htwg.se.romme.model.modelComponent.GameInterface
-import de.htwg.se.romme.model.modelComponent.gameBaseImpl.Table
-import de.htwg.se.romme.model.modelComponent.gameBaseImpl.Player
-import de.htwg.se.romme.model.modelComponent.gameBaseImpl.Deck
+import de.htwg.se.romme.model.modelComponent.gameComponent.GameInterface
 
 import scala.collection.mutable.ListBuffer
+import de.htwg.se.romme.model.modelComponent.gameComponent.GameInterface
 
-case class Game(table: Table,var player: Player, var player2: Player, deck: Deck) extends GameInterface:
+import com.google.inject.Inject
+
+case class Game @Inject() (table: Table,var player: Player, var player2: Player, deck: Deck) extends GameInterface:
 
     def set(table: Table,player: Player, player2: Player,deck: Deck): Game = copy(table,player,player2,deck)
 
@@ -70,7 +70,7 @@ case class Game(table: Table,var player: Player, var player2: Player, deck: Deck
       copy(table,player,player2,deck)
     }
 
-    def dropASpecificCard(index: Integer, player1Turn: Boolean) : Game = {
+    def dropASpecificCard(index: Integer, player1Turn: Boolean): Game = {
       if(player1Turn)
         player = player.dropASpecificCard(index)
       else

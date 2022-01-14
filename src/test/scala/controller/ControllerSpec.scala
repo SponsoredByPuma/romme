@@ -3,9 +3,9 @@ package de.htwg.se.romme
 package controller
 
 import de.htwg.se.romme.util.Observer
-import model.modelComponent.DropsInterface
-import model.modelComponent.GameInterface
-import model.modelComponent.gameBaseImpl._
+import model.modelComponent.dropsComponent.DropsInterface
+import model.modelComponent.gameComponent.GameInterface
+import model.modelComponent.gameComponent.gameBaseImpl._
 import controller.controllerComponent.controllerBaseImpl.Controller
 
 import org.scalatest.wordspec.AnyWordSpec

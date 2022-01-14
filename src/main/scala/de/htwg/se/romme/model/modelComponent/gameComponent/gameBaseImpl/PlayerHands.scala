@@ -1,11 +1,12 @@
-package de.htwg.se.romme.model.modelComponent.gameBaseImpl
+package de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl
 
 import scala.collection.mutable.ListBuffer
-import de.htwg.se.romme.model.modelComponent.gameBaseImpl._
-import de.htwg.se.romme.model.modelComponent.dropsBaseImpl._
+import de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl._
+import de.htwg.se.romme.model.modelComponent.dropsComponent.dropsBaseImpl._
+import com.google.inject.Inject
 
 
-class PlayerHands(table: Table) {
+class PlayerHands @Inject() (table: Table) {
   var playerOneHand: ListBuffer[Card] = new ListBuffer()
  // var outside: Boolean = false
   var outside = StateContext()

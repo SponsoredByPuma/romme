@@ -1,14 +1,20 @@
-package de.htwg.se.romme.model.modelComponent.gameBaseImpl
+package de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl
 
 import scala.collection.mutable.ListBuffer
+import com.google.inject.Inject
 
-class Table() {
+class Table @Inject() () {
 
   var droppedCardsList: ListBuffer[ListBuffer[Card]] = new ListBuffer()
 
   var graveYard = Card(5, 0)
   
-  def replaceGraveYard(card: Card): Unit = graveYard = card
+  //def replaceGraveYard(card: Card): Unit = graveYard = card
+  def replaceGraveYard(card: Card): Unit = {
+    graveYard = card
+    println("HALLO")
+    println(graveYard.getCardName)
+  }
 
   def placeCardsOnTable(cards: ListBuffer[Card]): Unit = droppedCardsList.append(cards)
 

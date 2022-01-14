@@ -1,4 +1,4 @@
-package de.htwg.se.romme.model.modelComponent.gameBaseImpl
+package de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl
 
 trait State: // Interface State
     def outside(state_Context: StateContext): Boolean

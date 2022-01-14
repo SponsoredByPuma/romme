@@ -3,11 +3,14 @@ package de.htwg.se.romme
 package aview
 
 import de.htwg.se.romme.controller.controllerComponent.controllerBaseImpl.Controller
-import model.modelComponent.dropsBaseImpl._
-import model.modelComponent.gameBaseImpl._
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
+import de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl.Table
+import de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl.Deck
+import de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl.PlayerHands
+import de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl.Player
+import de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl.Game
 
 class TuiSpec extends AnyWordSpec {
   "A Romme Tui" should {

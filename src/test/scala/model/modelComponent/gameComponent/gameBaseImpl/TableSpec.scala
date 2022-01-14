@@ -1,6 +1,6 @@
 package de.htwg.se.romme
 
-package model.modelComponent.gameBaseImpl
+package model.modelComponent.gameComponent.gameBaseImpl
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._

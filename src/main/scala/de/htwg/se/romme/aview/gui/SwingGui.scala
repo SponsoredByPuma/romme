@@ -4,7 +4,7 @@ import de.htwg.se.romme.controller.controllerComponent.ControllerInterface
 import de.htwg.se.romme.controller.controllerComponent.controllerBaseImpl._
 
 
-import de.htwg.se.romme.model.modelComponent.gameBaseImpl.Card
+import de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl.Card
 
 import scala.swing._
 import scala.swing.event._
@@ -23,7 +23,7 @@ import javax.swing.SwingContainer
 import javax.imageio.ImageIO
 import java.io.File
 
-case class SwingGui(controller: Controller) extends Frame {
+case class SwingGui(controller: ControllerInterface) extends Frame { // Controllerinterface anstelle von Controller
   listenTo(controller)
 
   title = "HTWG-Romme"

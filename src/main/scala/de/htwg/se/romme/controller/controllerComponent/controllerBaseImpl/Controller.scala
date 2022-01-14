@@ -1,8 +1,8 @@
 package de.htwg.se.romme
 package controller.controllerComponent.controllerBaseImpl
 
-import model.modelComponent.GameInterface
-import model.modelComponent.gameBaseImpl._
+import model.modelComponent.gameComponent.GameInterface
+import model.modelComponent.gameComponent.gameBaseImpl._
 import controller.controllerComponent.ControllerInterface
 import _root_.de.htwg.se.romme.util.Observable
 import de.htwg.se.romme.util.UndoManager
@@ -11,8 +11,9 @@ import util.Observable
 import scala.collection.mutable.ListBuffer
 
 import scala.swing.Publisher
+import com.google.inject.Inject
 
-class Controller(var game: GameInterface) extends ControllerInterface with Publisher{
+class Controller @Inject() (var game: GameInterface) extends ControllerInterface with Publisher{
 
   private val undoManager = new UndoManager
 
