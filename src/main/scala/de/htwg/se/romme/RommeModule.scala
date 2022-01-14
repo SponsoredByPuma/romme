@@ -14,10 +14,13 @@ import de.htwg.se.romme.controller.controllerComponent.controllerBaseImpl._
 
 class RommeModule extends AbstractModule {
   override def configure(): Unit = {
-    bind[ControllerInterface](new TypeLiteral[ControllerInterface]() {})
-      .to(classOf[Controller])
-    bind[GameInterface](new TypeLiteral[GameInterface]() {}).to(classOf[Game])
+    //bind[ControllerInterface](new TypeLiteral[ControllerInterface]() {})
+    //  .to(classOf[Controller])
+    //bind[GameInterface](new TypeLiteral[GameInterface]() {}).to(classOf[Game])
     // bind[DropsInterface](new TypeLiteral[DropsInterface]() {})
     //  .to(classOf[Drops])
+    bind(classOf[ControllerInterface]).to(classOf[Controller])
+    bind(classOf[GameInterface]).to(classOf[Game])
+    //bind(classOf[DropsInterface]).to(classOf[Drops])
   }
 }
