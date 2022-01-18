@@ -11,7 +11,6 @@ import scala.swing.Reactor
 import scala.compiletime.ops.string
 
 class Tui(controller: ControllerInterface) extends Reactor {
-  //controller.add(this)
   listenTo(controller)
   
 
@@ -94,8 +93,6 @@ class Tui(controller: ControllerInterface) extends Reactor {
       case _ =>  
     }
   }
- // override def update: Unit = println() // showCards()
-  //override def updated: Boolean = true
 
   reactions += {
     case event: showPlayerCards => printCards

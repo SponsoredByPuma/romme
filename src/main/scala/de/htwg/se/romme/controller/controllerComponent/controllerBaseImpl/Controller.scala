@@ -12,16 +12,18 @@ import scala.collection.mutable.ListBuffer
 
 import scala.swing.Publisher
 import com.google.inject.Inject
+import com.google.inject.Guice
 
 class Controller @Inject() (var game: GameInterface) extends ControllerInterface with Publisher{
+
+  val injector = Guice.createInjector(new RommeModule)
 
   private val undoManager = new UndoManager
 
   var player1Turn: Boolean = true
 
   def gameStart: Unit = {
-    game = game.gameStart 
-    //notifyObservers
+    game = game.gameStart
     publish(new showPlayerTable)
   }
 
@@ -67,7 +69,6 @@ class Controller @Inject() (var game: GameInterface) extends ControllerInterface
 
   def pickUpGraveYard: Unit = {
     game = game.pickUpGraveYard(player1Turn)
-   //notifyObservers
     publish(new showPlayerCards)
     publish(new showPlayerTable)
   }
@@ -75,13 +76,11 @@ class Controller @Inject() (var game: GameInterface) extends ControllerInterface
   def pickUpACard: Unit = {
     game = game.pickUpACard(player1Turn)
     undoManager.doStep(new GameCommand(game, this))
-    //notifyObservers
     publish(new showPlayerCards)
   }
 
   def dropASpecificCard(index: Integer): Unit = {
     game = game.dropASpecificCard(index, player1Turn)
-    //notifyObservers
     publish(new showPlayerCards)
     publish(new showPlayerTable)
   }
@@ -90,7 +89,6 @@ class Controller @Inject() (var game: GameInterface) extends ControllerInterface
       idxlist: Integer,
       idxCard: Integer): Unit = {
     game = game.takeJoker(idxlist, idxCard, player1Turn)
-    //notifyObservers
     publish(new showPlayerCards)
     publish(new showPlayerTable)
   }
@@ -101,25 +99,21 @@ class Controller @Inject() (var game: GameInterface) extends ControllerInterface
       hasJoker:Boolean
   ): Unit = {
     game = game.dropMultipleCards(list, dec, player1Turn,hasJoker)
-    //notifyObservers
     publish(new showPlayerCards)
     publish(new showPlayerTable)
   }
 
   def sortPlayersCards: Unit = {
     game = game.sortPlayersCards(player1Turn)
-    //notifyObservers
     publish(new showPlayerCards)
   }
 
   def victory: Boolean = {
-    //notifyObservers
     game.victory(player1Turn)
   }
 
   def showCards: String = {
     var s = ""
-    //notifyObservers
     if(player1Turn)
       s = "PLAYER 1: "
     else
@@ -144,26 +138,22 @@ class Controller @Inject() (var game: GameInterface) extends ControllerInterface
   def getGraveyardCard: Card = game.table.graveYard
 
   def showTable: String = {
-    //notifyObservers
     game.showTable
   }
 
   def undo: Unit = {
     undoManager.undoStep
     print(game.deck.deckList.size)
-    //notifyObservers
   }
   def redo: Unit = {
     undoManager.redoStep
     print(game.deck.deckList.size)
-    //notifyObservers
   }
 
   def addCard(
       idxCard: Integer,
       idxlist: Integer
   ): Unit = {
-    //notifyObservers
     game = game.addCard(idxCard, idxlist, player1Turn)
     publish(new showPlayerCards)
     publish(new showPlayerTable)

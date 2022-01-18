@@ -8,7 +8,6 @@ import com.google.inject.Inject
 
 class PlayerHands @Inject() (table: Table) {
   var playerOneHand: ListBuffer[Card] = new ListBuffer()
- // var outside: Boolean = false
   var outside = StateContext()
   outside.setState(StateOutsideFalse())
 
@@ -19,7 +18,7 @@ class PlayerHands @Inject() (table: Table) {
     playerOneHand
   }
 
-  def dropASingleCard(index: Integer): Unit = { // eventuell return ListBuffer[Card]
+  def dropASingleCard(index: Integer): Unit = {
     table.replaceGraveYard(playerOneHand(index))
     playerOneHand.remove(index)
   }
