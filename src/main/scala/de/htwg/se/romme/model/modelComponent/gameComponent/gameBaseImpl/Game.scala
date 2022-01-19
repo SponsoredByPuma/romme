@@ -4,7 +4,6 @@ import de.htwg.se.romme.model.modelComponent.gameComponent.GameInterface
 
 import scala.collection.mutable.ListBuffer
 import de.htwg.se.romme.model.modelComponent.gameComponent.GameInterface
-
 import com.google.inject.Inject
 
 case class Game @Inject() (table: Table,var player: Player, var player2: Player, deck: Deck) extends GameInterface:

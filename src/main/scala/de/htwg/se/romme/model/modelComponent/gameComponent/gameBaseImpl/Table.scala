@@ -1,7 +1,6 @@
 package de.htwg.se.romme.model.modelComponent.gameComponent.gameBaseImpl
 
 import scala.collection.mutable.ListBuffer
-import com.google.inject.Inject
 
 class Table() {
 

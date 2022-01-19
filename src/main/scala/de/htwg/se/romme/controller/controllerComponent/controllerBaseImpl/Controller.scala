@@ -3,7 +3,7 @@ package controller.controllerComponent.controllerBaseImpl
 
 import model.modelComponent.gameComponent.GameInterface
 import model.modelComponent.gameComponent.gameBaseImpl._
-import controller.controllerComponent.ControllerInterface
+import controller.controllerComponent._
 import _root_.de.htwg.se.romme.util.Observable
 import de.htwg.se.romme.util.UndoManager
 import scala.io.StdIn.readLine
@@ -14,7 +14,7 @@ import scala.swing.Publisher
 import com.google.inject.Inject
 import com.google.inject.Guice
 
-class Controller @Inject() (var game: GameInterface) extends ControllerInterface with Publisher{
+case class Controller @Inject() (var game: GameInterface) extends ControllerInterface with Publisher{
 
   val injector = Guice.createInjector(new RommeModule)
 
