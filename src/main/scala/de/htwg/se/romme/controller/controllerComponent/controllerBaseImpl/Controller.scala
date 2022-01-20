@@ -13,6 +13,8 @@ import scala.collection.mutable.ListBuffer
 import scala.swing.Publisher
 import com.google.inject.Inject
 import com.google.inject.Guice
+import de.htwg.se.romme.model.modelComponent.fileIOComponent.fileIOXmlImpl.FileIO
+import de.htwg.se.romme.model.modelComponent.fileIOComponent.FileIOInterface
 
 case class Controller @Inject() (var game: GameInterface) extends ControllerInterface with Publisher{
 
@@ -20,6 +22,10 @@ case class Controller @Inject() (var game: GameInterface) extends ControllerInte
 
   private val undoManager = new UndoManager
 
+  //val fileIO = injector.asInstanceOf[FileIOInterface]
+
+  val fileIO = FileIOInterface()
+  
   var player1Turn: Boolean = true
 
   def gameStart: Unit = {
@@ -155,6 +161,18 @@ case class Controller @Inject() (var game: GameInterface) extends ControllerInte
       idxlist: Integer
   ): Unit = {
     game = game.addCard(idxCard, idxlist, player1Turn)
+    publish(new showPlayerCards)
+    publish(new showPlayerTable)
+  }
+
+  def load: Unit = {
+    game = fileIO.load
+    publish(new showPlayerCards)
+    publish(new showPlayerTable)
+  }
+
+  def save: Unit = {
+    fileIO.save(game)
     publish(new showPlayerCards)
     publish(new showPlayerTable)
   }

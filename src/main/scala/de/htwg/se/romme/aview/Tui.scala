@@ -13,7 +13,6 @@ import scala.compiletime.ops.string
 class Tui(controller: ControllerInterface) extends Reactor {
   listenTo(controller)
   
-
   def processInputReadLine(input: String): Unit = {
     input match {
       case "quit"    => System.exit(0)
@@ -90,6 +89,8 @@ class Tui(controller: ControllerInterface) extends Reactor {
         else
           println("You havent won the Game yet !")
         end if
+      case "load" => controller.load
+      case "save" => controller.save
       case _ =>  
     }
   }

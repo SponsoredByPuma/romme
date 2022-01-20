@@ -47,4 +47,7 @@ trait ControllerInterface extends Publisher {
   def undo: Unit
   def redo: Unit
   def addCard(idxCard: Integer, idxlist: Integer): Unit
+
+  def load: Unit
+  def save: Unit
 }
