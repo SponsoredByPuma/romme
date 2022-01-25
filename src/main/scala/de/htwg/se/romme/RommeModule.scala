@@ -29,3 +29,4 @@ class RommeModule extends AbstractModule {
     bind(classOf[FileIOInterface]).toInstance(FileIO())
   }
 }
+//
