@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+web:
+build:
+context: .
+dockerfile: Dockerfile
+container_name: versuch
+ports:
+     -"8080:80"
