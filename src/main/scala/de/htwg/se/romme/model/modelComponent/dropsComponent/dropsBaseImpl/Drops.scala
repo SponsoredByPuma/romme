@@ -8,7 +8,7 @@ import com.google.inject.Inject
 
 object Drops {
 
-  abstract class Drops @Inject() () extends DropsInterface {
+  abstract class Drops () extends DropsInterface {
     def strategy(numberOfStrategy: Integer): Integer
 
     def strategySameSuit: Integer

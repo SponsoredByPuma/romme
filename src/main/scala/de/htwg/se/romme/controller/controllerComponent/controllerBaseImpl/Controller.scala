@@ -15,6 +15,7 @@ import com.google.inject.Inject
 import com.google.inject.Guice
 import de.htwg.se.romme.model.modelComponent.fileIOComponent.fileIOXmlImpl.FileIO
 import de.htwg.se.romme.model.modelComponent.fileIOComponent.FileIOInterface
+import de.htwg.se.romme.model.modelComponent.fileIOComponent.fileIOJsonImpl.FileIO
 
 case class Controller @Inject() (var game: GameInterface) extends ControllerInterface with Publisher{
 

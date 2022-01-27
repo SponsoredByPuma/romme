@@ -4,6 +4,7 @@ trait Card {
   def getValue: Integer 
   def getCardName: (String, String)
   def placeInList: Option[Integer]
+  def getCardNameAsString: String
   val rankList: List[String] = List(
     "two",
     "three",
@@ -28,6 +29,11 @@ private class Heart(rank: Integer) extends Card {
   override def getCardName: (String, String) = ("Heart", rankList(rank))
 
   override def placeInList: Option[Integer] = Some(rank)
+
+  override def getCardNameAsString: String = {
+    var s = "(Heart," + rankList(rank) + ")"
+    s
+  }
 }
 
 private class Diamond(rank: Integer) extends Card {
@@ -35,6 +41,11 @@ private class Diamond(rank: Integer) extends Card {
   override def getValue: Integer = valueForCard.apply(rank)
   override def getCardName: (String, String) = ("Diamond", rankList(rank))
   override def placeInList: Option[Integer] = Some(rank)
+
+  override def getCardNameAsString: String = {
+    var s = "(Diamond," + rankList(rank) + ")"
+    s
+  }
 }
 
 private class Spades(rank: Integer) extends Card {
@@ -42,6 +53,11 @@ private class Spades(rank: Integer) extends Card {
   override def getValue: Integer = valueForCard.apply(rank)
   override def getCardName: (String, String) = ("Spades", rankList(rank))
   override def placeInList: Option[Integer] = Some(rank)
+
+  override def getCardNameAsString: String = {
+    var s = "(Spades," + rankList(rank) + ")"
+    s
+  }
 }
 
 private class Club(rank: Integer) extends Card {
@@ -50,6 +66,11 @@ private class Club(rank: Integer) extends Card {
   override def getCardName: (String, String) = ("Club", rankList(rank))
   
   override def placeInList: Option[Integer] = Some(rank)
+
+  override def getCardNameAsString: String = {
+    var s = "(Club," + rankList(rank) + ")"
+    s
+  }
 }
 
  class Joker() extends Card {
@@ -66,6 +87,11 @@ private class Club(rank: Integer) extends Card {
   }
   def setSuit(s: String): Unit = this.suit = s
   override def placeInList: Option[Integer] = Some(rank)
+
+  override def getCardNameAsString: String = {
+    var s = "(Joker, )"
+    s
+  }
 }
 
 private class EmptyCard() extends Card {
@@ -73,6 +99,8 @@ private class EmptyCard() extends Card {
   override def getValue: Integer = 0
   override def getCardName: (String, String) = ("", "")
   override def placeInList: Option[Integer] = None
+
+  override def getCardNameAsString: String = "(,)"
   
 }
 

@@ -6,7 +6,7 @@ import de.htwg.se.romme.model.modelComponent.dropsComponent.dropsBaseImpl._
 import com.google.inject.Inject
 
 
-class PlayerHands @Inject() (table: Table) {
+class PlayerHands(table: Table) {
   var playerOneHand: ListBuffer[Card] = new ListBuffer()
   var outside = StateContext()
   outside.setState(StateOutsideFalse())
